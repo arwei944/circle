@@ -62,6 +62,17 @@ describe('updateIssueStatus optimistic', () => {
       // 回滚到用户可用的最后状态
       expect(useIssuesStore.getState().issues[0].status.id).toBe('in-progress');
    });
+
+   it('status-only update does not send assignee/dueDate in patch', async () => {
+      const a = mkIssue('i1');
+      useIssuesStore.getState().hydrate([a]);
+      const updateSpy = vi.spyOn(realApi, 'updateIssue').mockResolvedValueOnce({ ...a });
+      await useIssuesStore.getState().updateIssueStatus('i1', status[0]);
+      const patch = updateSpy.mock.calls[0][1] as Record<string, unknown>;
+      expect(patch.statusId).toBe('in-progress');
+      expect('assigneeId' in patch).toBe(false);
+      expect('dueDate' in patch).toBe(false);
+   });
 });
 
 describe('addIssue optimistic replace', () => {
