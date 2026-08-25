@@ -1,6 +1,6 @@
 import { desc, eq, inArray } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
-import { LexoRank } from '@/lib/utils';
+import { topRankFrom } from '@/lib/rank';
 import type { Db } from '@/db/client';
 import { issues, issueLabels, labels as labelsTable, projects, users } from '@/db/schema';
 import type { LeanIssue, LeanLabel, LeanProject, LeanUser } from '@/lib/dto';
@@ -152,8 +152,7 @@ function topRank(db: Db): string {
    const row = db.$client.prepare('SELECT rank FROM issues ORDER BY rank DESC LIMIT 1').get() as
       | { rank: string }
       | undefined;
-   if (!row) return 'a3c';
-   return LexoRank.between(LexoRank.from(row.rank), null).toString();
+   return topRankFrom(row?.rank ?? null);
 }
 
 export function listIssues(db: Db): LeanIssue[] {
