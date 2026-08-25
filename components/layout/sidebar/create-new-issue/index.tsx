@@ -15,40 +15,24 @@ import { status } from '@/mock-data/status';
 import { useIssuesStore } from '@/store/issues-store';
 import { useCreateIssueStore } from '@/store/create-issue-store';
 import { toast } from 'sonner';
-import { v4 as uuidv4 } from 'uuid';
 import { StatusSelector } from './status-selector';
 import { PrioritySelector } from './priority-selector';
 import { AssigneeSelector } from './assignee-selector';
 import { ProjectSelector } from './project-selector';
 import { LabelSelector } from './label-selector';
-import { ranks } from '@/mock-data/issues';
 import { DialogTitle } from '@radix-ui/react-dialog';
 import { useTranslations } from 'next-intl';
 
 export function CreateNewIssue() {
    const [createMore, setCreateMore] = useState<boolean>(false);
    const { isOpen, defaultStatus, openModal, closeModal } = useCreateIssueStore();
-   const { addIssue, getAllIssues } = useIssuesStore();
+   const { addIssue } = useIssuesStore();
    const t = useTranslations('common');
 
-   const generateUniqueIdentifier = useCallback(() => {
-      const identifiers = getAllIssues().map((issue) => issue.identifier);
-      let identifier = Math.floor(Math.random() * 999)
-         .toString()
-         .padStart(3, '0');
-      while (identifiers.includes(`LNUI-${identifier}`)) {
-         identifier = Math.floor(Math.random() * 999)
-            .toString()
-            .padStart(3, '0');
-      }
-      return identifier;
-   }, [getAllIssues]);
-
    const createDefaultData = useCallback(() => {
-      const identifier = generateUniqueIdentifier();
       return {
-         id: uuidv4(),
-         identifier: `LNUI-${identifier}`,
+         id: `temp_${crypto.randomUUID()}`,
+         identifier: 'P-000',
          title: '',
          description: '',
          status: defaultStatus || status.find((s) => s.id === 'to-do')!,
@@ -59,9 +43,9 @@ export function CreateNewIssue() {
          cycleId: '',
          project: undefined,
          subissues: [],
-         rank: ranks[ranks.length - 1],
+         rank: '',
       };
-   }, [defaultStatus, generateUniqueIdentifier]);
+   }, [defaultStatus]);
 
    const [addIssueForm, setAddIssueForm] = useState<Issue>(createDefaultData());
 

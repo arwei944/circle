@@ -1,4 +1,5 @@
 {
+   "dataLoadError": "Failed to load data. Please refresh.",
    "list": {
       "issueCount": "{count, plural, one {# issue} other {# issues}}",
       "hiddenByFilters": "hidden by filters",
