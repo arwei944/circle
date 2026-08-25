@@ -1599,7 +1599,7 @@ export const deleteIssue = async (id: string) =>
 
 ```ts
 import { NextResponse } from 'next/server';
-import { ensureDb } from '@/db/client';
+import { ensureDb, getDb } from '@/db/client';
 import { createIssueSchema, apiError } from '@/lib/api-contract';
 import { createIssue, listIssues } from '@/lib/services/issues-service';
 
@@ -1607,9 +1607,7 @@ export const runtime = 'nodejs';
 
 export async function GET() {
    await ensureDb();
-   const { createDb } = await import('@/db/client');
-   const db = createDb();
-   return NextResponse.json({ issues: listIssues(db) });
+   return NextResponse.json({ issues: listIssues(getDb()) });
 }
 
 export async function POST(request: Request) {
