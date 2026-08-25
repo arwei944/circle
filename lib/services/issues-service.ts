@@ -280,6 +280,9 @@ function applyRank(db: Db, issueId: string, move: RankMove): string | undefined 
    const beforeId = move.beforeIssueId;
    const afterId = move.afterIssueId;
    if (!beforeId && !afterId) return undefined;
+   if (beforeId === afterId) {
+      throw new Error('rank move: before and after are the same issue');
+   }
 
    let lo: string | null = null; // 升序下方（更小 rank）
    let hi: string | null = null; // 升序上方（更大 rank）
@@ -300,6 +303,9 @@ function applyRank(db: Db, issueId: string, move: RankMove): string | undefined 
       hi = aRank;
    }
 
+   if (lo !== null && hi !== null && lo >= hi) {
+      throw new Error('rank move: before/after order inverted');
+   }
    if (lo === null && hi === null) return undefined;
    const newRank = computeRankBetween(lo, hi);
    db.update(issues).set({ rank: newRank }).where(eq(issues.id, issueId)).run();
@@ -323,6 +329,14 @@ export function updateIssue(db: Db, id: string, input: UpdateIssueInput): LeanIs
          projectId: input.projectId !== undefined ? input.projectId : existing.projectId,
          labelIds: input.labels,
       });
+   }
+   if (input.rank) {
+      if (input.rank.beforeIssueId && !rankByIssueId(db, input.rank.beforeIssueId)) {
+         throw new Error(`unknown before issue: ${input.rank.beforeIssueId}`);
+      }
+      if (input.rank.afterIssueId && !rankByIssueId(db, input.rank.afterIssueId)) {
+         throw new Error(`unknown after issue: ${input.rank.afterIssueId}`);
+      }
    }
 
    db.$client.transaction(() => {

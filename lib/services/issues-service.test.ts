@@ -89,3 +89,32 @@ it('deleteIssue returns false for missing and removes labels', async () => {
       .get(created.id) as { c: number };
    expect(rels.c).toBe(0);
 });
+
+it('updateIssue rejects unknown rank anchors', async () => {
+   const db = fresh();
+   await runSeed(db);
+   const created = createIssue(db, { title: 'x' });
+   expect(() => updateIssue(db, created.id, { rank: { beforeIssueId: 'nope' } })).toThrow(
+      /unknown before issue/
+   );
+   expect(() => updateIssue(db, created.id, { rank: { afterIssueId: 'nope' } })).toThrow(
+      /unknown after issue/
+   );
+});
+
+it('updateIssue rejects same or inverted rank anchors', async () => {
+   const db = fresh();
+   await runSeed(db);
+   const a = createIssue(db, { title: 'a' });
+   const b = createIssue(db, { title: 'b' });
+   expect(() =>
+      updateIssue(db, b.id, { rank: { beforeIssueId: a.id, afterIssueId: a.id } })
+   ).toThrow();
+   updateIssue(db, b.id, { rank: { afterIssueId: a.id } });
+   expect(() =>
+      updateIssue(db, a.id, { rank: { beforeIssueId: b.id, afterIssueId: b.id } })
+   ).toThrow(/same issue/);
+   expect(() =>
+      updateIssue(db, a.id, { rank: { beforeIssueId: b.id, afterIssueId: a.id } })
+   ).toThrow(/inverted|order/);
+});
