@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { ChevronRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { SelectMenu, SettingsCard, SettingsRow, SettingsSection, SettingsShell } from './shared';
 
 /** Fake diff shown in the "Code theme" preview (invented snippet). */
@@ -27,29 +28,31 @@ const DIFF_LINES: { number?: string; text: string; kind: 'context' | 'removed' |
 
 /** Personal "Code & reviews" settings (PR reviews inside the app). */
 export default function AccountCodeReviews() {
+   const t = useTranslations('settings');
    return (
-      <SettingsShell
-         title="Code & reviews"
-         description="Review GitHub pull requests and agent code diffs in LNDev UI"
-      >
+      <SettingsShell title={t('codeReviews.title')} description={t('codeReviews.description')}>
          <SettingsSection>
             <SettingsCard>
                <SettingsRow
-                  title="Enable code reviews"
-                  description="Review GitHub pull requests, accessible from the sidebar"
+                  title={t('codeReviews.enableCodeReviews')}
+                  description={t('codeReviews.enableCodeReviewsDesc')}
                   trailing={<Switch defaultChecked />}
                />
                <SettingsRow
-                  title="Auto-convert draft pull requests"
-                  description="Automatically mark your drafts as ready upon approval or requesting a review"
+                  title={t('codeReviews.autoConvertDrafts')}
+                  description={t('codeReviews.autoConvertDraftsDesc')}
                   trailing={<Switch />}
                />
                <SettingsRow
-                  title="Merge strategy"
-                  description="Choose the default merge strategy for pull requests. Repository configuration can affect available strategies"
+                  title={t('codeReviews.mergeStrategy')}
+                  description={t('codeReviews.mergeStrategyDesc')}
                   trailing={
                      <SelectMenu
-                        options={['Squash and merge', 'Merge commit', 'Rebase and merge']}
+                        options={[
+                           t('codeReviews.mergeStrategyOptions.squash'),
+                           t('codeReviews.mergeStrategyOptions.mergeCommit'),
+                           t('codeReviews.mergeStrategyOptions.rebaseMerge'),
+                        ]}
                      />
                   }
                />
@@ -59,18 +62,39 @@ export default function AccountCodeReviews() {
          <SettingsSection>
             <SettingsCard>
                <SettingsRow
-                  title="Code theme"
-                  description="Select the syntax highlighting theme used in code diffs and viewers"
-                  trailing={<SelectMenu options={['LNDev Light', 'LNDev Dark', 'Contrast']} />}
+                  title={t('codeReviews.codeTheme')}
+                  description={t('codeReviews.codeThemeDesc')}
+                  trailing={
+                     <SelectMenu
+                        options={[
+                           t('codeReviews.codeThemeOptions.light'),
+                           t('codeReviews.codeThemeOptions.dark'),
+                           t('codeReviews.codeThemeOptions.contrast'),
+                        ]}
+                     />
+                  }
                />
                <SettingsRow
-                  title="Font"
-                  trailing={<SelectMenu options={['12px, Regular, Default', '13px, Medium']} />}
+                  title={t('codeReviews.font')}
+                  trailing={
+                     <SelectMenu
+                        options={[
+                           t('codeReviews.fontOptions.regular'),
+                           t('codeReviews.fontOptions.medium'),
+                        ]}
+                     />
+                  }
                />
                <div className="p-3">
                   <div className="relative rounded-md border overflow-hidden bg-container">
                      <div className="absolute top-2 right-2 z-10">
-                        <SelectMenu options={['TypeScript', 'JavaScript', 'Python']} />
+                        <SelectMenu
+                           options={[
+                              t('codeReviews.diffLanguages.typescript'),
+                              t('codeReviews.diffLanguages.javascript'),
+                              t('codeReviews.diffLanguages.python'),
+                           ]}
+                        />
                      </div>
                      <pre className="text-xs leading-5 font-mono overflow-x-auto py-2">
                         {DIFF_LINES.map((line, index) => (
@@ -97,72 +121,88 @@ export default function AccountCodeReviews() {
          </SettingsSection>
 
          <SettingsSection
-            title="Notifications"
-            description="Choose which review activity appears in your inbox and push notifications"
+            title={t('codeReviews.notifications.title')}
+            description={t('codeReviews.notifications.description')}
          >
             <SettingsCard>
                <SettingsRow
-                  title="Comments & reviews"
-                  description="Comments, mentions, and submitted reviews"
-                  trailing={<SelectMenu options={['Exclude Bots', 'Everyone', 'None']} />}
+                  title={t('codeReviews.notifications.commentsReviews')}
+                  description={t('codeReviews.notifications.commentsReviewsDesc')}
+                  trailing={
+                     <SelectMenu
+                        options={[
+                           t('codeReviews.notifications.commentsReviewsOptions.excludeBots'),
+                           t('codeReviews.notifications.commentsReviewsOptions.everyone'),
+                           t('codeReviews.notifications.commentsReviewsOptions.none'),
+                        ]}
+                     />
+                  }
                />
                <SettingsRow
-                  title="Review requests"
-                  description="Requests for your personal review"
+                  title={t('codeReviews.notifications.reviewRequests')}
+                  description={t('codeReviews.notifications.reviewRequestsDesc')}
                   trailing={<Switch defaultChecked />}
                />
                <SettingsRow
-                  title="GitHub team review requests"
-                  description="Requests for review from your GitHub teams with 10 or fewer members"
+                  title={t('codeReviews.notifications.githubTeamReviewRequests')}
+                  description={t('codeReviews.notifications.githubTeamReviewRequestsDesc')}
                   trailing={<Switch defaultChecked />}
                />
                <SettingsRow
-                  title="Checks & merge queue"
-                  description="Check failures and merge queue updates"
+                  title={t('codeReviews.notifications.checksMergeQueue')}
+                  description={t('codeReviews.notifications.checksMergeQueueDesc')}
                   trailing={<Switch defaultChecked />}
                />
             </SettingsCard>
          </SettingsSection>
 
-         <SettingsSection title="Signed commits">
+         <SettingsSection title={t('codeReviews.signedCommits.title')}>
             <SettingsCard>
                <SettingsRow
-                  title="Require signed commits"
-                  description="Users must upload a signing key before starting a coding session"
+                  title={t('codeReviews.signedCommits.requireSigned')}
+                  description={t('codeReviews.signedCommits.requireSignedDesc')}
                   trailing={<Switch />}
                />
                <SettingsRow
-                  title="No signing key added"
+                  title={t('codeReviews.signedCommits.noSigningKey')}
                   trailing={
                      <Button size="xs" variant="ghost">
-                        Add key
+                        {t('codeReviews.signedCommits.addKey')}
                      </Button>
                   }
                />
             </SettingsCard>
          </SettingsSection>
 
-         <SettingsSection title="External tools">
+         <SettingsSection title={t('codeReviews.externalTools.title')}>
             <SettingsCard>
                <SettingsRow
-                  title="Configure coding tools"
-                  description="Configure the external coding tools you can open issues in"
+                  title={t('codeReviews.externalTools.configureTools')}
+                  description={t('codeReviews.externalTools.configureToolsDesc')}
                   trailing={<ChevronRight className="size-4" />}
                   onClick={() => {}}
                />
                <SettingsRow
-                  title="Git attachment format"
-                  description="The format of GitHub/GitLab attachments on issues"
-                  trailing={<SelectMenu options={['Title', 'URL', 'Compact']} />}
+                  title={t('codeReviews.externalTools.gitAttachmentFormat')}
+                  description={t('codeReviews.externalTools.gitAttachmentFormatDesc')}
+                  trailing={
+                     <SelectMenu
+                        options={[
+                           t('codeReviews.externalTools.gitAttachmentFormatOptions.title'),
+                           t('codeReviews.externalTools.gitAttachmentFormatOptions.url'),
+                           t('codeReviews.externalTools.gitAttachmentFormatOptions.compact'),
+                        ]}
+                     />
+                  }
                />
                <SettingsRow
-                  title="On git branch copy, move issue to started status"
-                  description="After copying the git branch name, issue status is moved to the team's first started workflow status. Hold ⌥ to disable."
+                  title={t('codeReviews.externalTools.branchCopyStatus')}
+                  description={t('codeReviews.externalTools.branchCopyStatusDesc')}
                   trailing={<Switch defaultChecked />}
                />
                <SettingsRow
-                  title="On open in coding tool, move issue to started status"
-                  description="After opening an issue in a coding tool or copying as prompt, issue status is moved to the team's first started workflow status. Hold ⌥ to disable."
+                  title={t('codeReviews.externalTools.openInToolStatus')}
+                  description={t('codeReviews.externalTools.openInToolStatusDesc')}
                   trailing={<Switch defaultChecked />}
                />
             </SettingsCard>

@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { SettingsCard, SettingsRow, SettingsSection } from './shared';
 
 interface TeamSettingsProps {
@@ -32,11 +33,12 @@ interface TeamSettingsProps {
 export default function TeamSettings({ teamId }: TeamSettingsProps) {
    const { orgId } = useParams<{ orgId: string }>();
    const team = teams.find((candidate) => candidate.id === teamId);
+   const t = useTranslations('settings');
 
    if (!team) {
       return (
          <div className="max-w-2xl mx-auto px-6 py-10">
-            <h1 className="text-2xl font-medium">Team not found</h1>
+            <h1 className="text-2xl font-medium">{t('teams.notFound')}</h1>
          </div>
       );
    }
@@ -52,15 +54,13 @@ export default function TeamSettings({ teamId }: TeamSettingsProps) {
                </span>
                <div className="flex-1">
                   <h1 className="text-2xl font-medium">{team.name}</h1>
-                  <p className="text-sm text-muted-foreground">
-                     Accessible to all workspace members
-                  </p>
+                  <p className="text-sm text-muted-foreground">{t('teams.accessibleToAll')}</p>
                </div>
                <Link
                   href={`/${orgId}/team/${team.id}/overview`}
                   className="text-sm inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
                >
-                  Team overview
+                  {t('teams.overview')}
                   <ChevronRight className="size-4" />
                </Link>
             </div>
@@ -70,138 +70,148 @@ export default function TeamSettings({ teamId }: TeamSettingsProps) {
                   <SettingsCard>
                      <SettingsRow
                         icon={<Settings className="size-4" />}
-                        title="General"
-                        description="Name, identifier, timezone, estimates, and broader settings"
+                        title={t('teams.general.title')}
+                        description={t('teams.general.description')}
                         chevron
                         onClick={() => {}}
                      />
                      <SettingsRow
                         icon={<Lock className="size-4" />}
-                        title="Access and permissions"
-                        description="Manage team access and who in the team can take certain actions"
+                        title={t('teams.access.title')}
+                        description={t('teams.access.description')}
                         chevron
                         onClick={() => {}}
                      />
                      <SettingsRow
                         icon={<Users className="size-4" />}
-                        title="Members"
-                        description="Manage team members"
-                        trailing={<span>{team.members.length} members</span>}
+                        title={t('teams.members.title')}
+                        description={t('teams.members.description')}
+                        trailing={
+                           <span>{t('teams.members.count', { count: team.members.length })}</span>
+                        }
                         chevron
                         onClick={() => {}}
                      />
                      <SettingsRow
                         icon={<Zap className="size-4" />}
-                        title="Slack notifications"
-                        description="Broadcast notifications to Slack"
-                        trailing={<span>Off</span>}
+                        title={t('teams.slackNotifications.title')}
+                        description={t('teams.slackNotifications.description')}
+                        trailing={<span>{t('common.off')}</span>}
                         chevron
                         onClick={() => {}}
                      />
                   </SettingsCard>
                </SettingsSection>
 
-               <SettingsSection title="Issues, projects, and docs">
+               <SettingsSection title={t('teams.issuesProjectsDocs.title')}>
                   <SettingsCard>
                      <SettingsRow
                         icon={<Tag className="size-4" />}
-                        title="Issue labels"
-                        description="Labels available to this team's issues"
-                        trailing={<span>7 labels</span>}
+                        title={t('teams.issueLabels.title')}
+                        description={t('teams.issueLabels.description')}
+                        trailing={<span>{t('teams.issueLabels.count', { count: 7 })}</span>}
                         chevron
                         onClick={() => {}}
                      />
                      <SettingsRow
                         icon={<FileText className="size-4" />}
-                        title="Templates"
-                        description="Pre-filled templates for issues, documents, and projects"
-                        trailing={<span>3 templates</span>}
+                        title={t('teams.templates.title')}
+                        description={t('teams.templates.description')}
+                        trailing={<span>{t('teams.templates.count', { count: 3 })}</span>}
                         chevron
                         onClick={() => {}}
                      />
                      <SettingsRow
                         icon={<Repeat className="size-4" />}
-                        title="Recurring issues"
-                        description="Automatically create issues on a schedule"
-                        trailing={<span>None</span>}
+                        title={t('teams.recurringIssues.title')}
+                        description={t('teams.recurringIssues.description')}
+                        trailing={<span>{t('common.none')}</span>}
                         chevron
                         onClick={() => {}}
                      />
                   </SettingsCard>
                </SettingsSection>
 
-               <SettingsSection title="Workflow">
+               <SettingsSection title={t('teams.workflow.title')}>
                   <SettingsCard>
                      <SettingsRow
                         icon={<Target className="size-4" />}
-                        title="Issue statuses"
-                        description="Customize the statuses issues go through"
-                        trailing={<span>{status.length} statuses</span>}
+                        title={t('teams.issueStatuses.title')}
+                        description={t('teams.issueStatuses.description')}
+                        trailing={
+                           <span>{t('teams.issueStatuses.count', { count: status.length })}</span>
+                        }
                         chevron
                         onClick={() => {}}
                      />
                      <SettingsRow
                         icon={<Workflow className="size-4" />}
-                        title="Workflows & automations"
-                        description="Manage issue automations, git workflows and other workflows"
+                        title={t('teams.workflows.title')}
+                        description={t('teams.workflows.description')}
                         chevron
                         onClick={() => {}}
                      />
                      <SettingsRow
                         icon={<Radar className="size-4" />}
-                        title="Triage"
-                        description="Streamline how you handle requests from outside your team"
-                        trailing={<span>Enabled</span>}
+                        title={t('teams.triage.title')}
+                        description={t('teams.triage.description')}
+                        trailing={<span>{t('common.enabled')}</span>}
                         chevron
                         onClick={() => {}}
                      />
                      <SettingsRow
                         icon={<RefreshCcw className="size-4" />}
-                        title="Cycles"
-                        description="Focus your team over short, time-boxed windows"
-                        trailing={<span>{cycles.length > 0 ? 'Every 2 weeks' : 'Off'}</span>}
+                        title={t('teams.cycles.title')}
+                        description={t('teams.cycles.description')}
+                        trailing={
+                           <span>
+                              {cycles.length > 0
+                                 ? t('teams.cycles.everyTwoWeeks')
+                                 : t('common.off')}
+                           </span>
+                        }
                         chevron
                         onClick={() => {}}
                      />
                   </SettingsCard>
                </SettingsSection>
 
-               <SettingsSection title="AI & Agents">
+               <SettingsSection title={t('teams.ai.title')}>
                   <SettingsCard>
                      <SettingsRow
                         icon={<Bot className="size-4" />}
-                        title="Team agents"
-                        description="Add guidance for how agents should operate within this team"
+                        title={t('teams.ai.teamAgents')}
+                        description={t('teams.ai.teamAgentsDesc')}
                         chevron
                         onClick={() => {}}
                      />
                      <SettingsRow
                         icon={<Sparkles className="size-4" />}
-                        title="Agent skills"
-                        description="Agent skills shared with this team"
-                        trailing={<span>None</span>}
+                        title={t('teams.ai.agentSkills')}
+                        description={t('teams.ai.agentSkillsDesc')}
+                        trailing={<span>{t('common.none')}</span>}
                         chevron
                         onClick={() => {}}
                      />
                      <SettingsRow
                         icon={<RefreshCcw className="size-4" />}
-                        title="Loops"
-                        description="Automated agent workflows that run on a schedule or when an issue is updated"
-                        trailing={<span>None</span>}
+                        title={t('teams.ai.loops')}
+                        description={t('teams.ai.loopsDesc')}
+                        trailing={<span>{t('common.none')}</span>}
                         chevron
                         onClick={() => {}}
                      />
                      <SettingsRow
                         icon={<Zap className="size-4" />}
-                        title="Project updates"
-                        description="Automatically generate updates using recent activity and defined rules"
+                        title={t('teams.ai.projectUpdates')}
+                        description={t('teams.ai.projectUpdatesDesc')}
                         chevron
                         onClick={() => {}}
                      />
                      <SettingsRow
                         icon={<FileText className="size-4" />}
-                        title="Resolved thread summaries"
-                        description="Automatically generate summaries for resolved threads"
+                        title={t('teams.ai.threadSummaries')}
+                        description={t('teams.ai.threadSummariesDesc')}
                         chevron
                         onClick={() => {}}
                      />
@@ -209,40 +219,40 @@ export default function TeamSettings({ teamId }: TeamSettingsProps) {
                </SettingsSection>
 
                <SettingsSection
-                  title="Team hierarchy"
-                  description="Teams can be nested to reflect your team structure and to share workflows and settings."
+                  title={t('teams.hierarchy.title')}
+                  description={t('teams.hierarchy.description')}
                >
                   <div />
                </SettingsSection>
 
-               <SettingsSection title="Danger zone">
+               <SettingsSection title={t('teams.dangerZone.title')}>
                   <SettingsCard>
                      <SettingsRow
-                        title="Leave team"
-                        description="Remove yourself as a member of this team"
+                        title={t('teams.dangerZone.leave.title')}
+                        description={t('teams.dangerZone.leave.description')}
                         trailing={
                            <Button size="xs" variant="ghost">
-                              Leave team...
+                              {t('teams.dangerZone.leave.button')}
                            </Button>
                         }
                      />
                      <SettingsRow
-                        title="Retire team"
-                        description="Prevent creating and updating issues in this team while preserving all historical data"
+                        title={t('teams.dangerZone.retire.title')}
+                        description={t('teams.dangerZone.retire.description')}
                         muted
                         trailing={
                            <Button size="xs" variant="ghost">
-                              Retire...
+                              {t('teams.dangerZone.retire.button')}
                            </Button>
                         }
                      />
                      <SettingsRow
-                        title="Delete team"
-                        description="Permanently delete this team and all its data, with a 30-day restoration window"
+                        title={t('teams.dangerZone.delete.title')}
+                        description={t('teams.dangerZone.delete.description')}
                         muted
                         trailing={
                            <Button size="xs" variant="ghost">
-                              Delete...
+                              {t('teams.dangerZone.delete.button')}
                            </Button>
                         }
                      />

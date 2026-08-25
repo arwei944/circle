@@ -1,0 +1,18 @@
+{
+   "newChat": "新建对话",
+   "startNewChat": "开始新对话",
+   "composer": {
+      "placeholder": "向智能体提问…",
+      "skills": "技能",
+      "send": "发送"
+   },
+   "banner": {
+      "text": "智能体现已设为默认视图",
+      "change": "更改",
+      "keep": "保留"
+   },
+   "hero": {
+      "examples": "从一些示例开始",
+      "dismissExamples": "隐藏示例"
+   }
+}

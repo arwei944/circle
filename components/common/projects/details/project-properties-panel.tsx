@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 import { format, parseISO } from 'date-fns';
 import { ProjectProgressChart } from './project-progress-chart';
 import { ArrowRight, Calendar, Check, Compass, Plus, Slack, Tag, UserPlus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
 interface ProjectPropertiesPanelProps {
@@ -62,8 +63,9 @@ function BreakdownList({
    rows: BreakdownRow[];
    panelFilter: ReturnType<typeof usePanelFilter>;
 }) {
+   const t = useTranslations('projects');
    if (rows.length === 0) {
-      return <p className="text-xs text-muted-foreground px-1 py-3">Nothing to show yet.</p>;
+      return <p className="text-xs text-muted-foreground px-1 py-3">{t('empty.nothingToShow')}</p>;
    }
    return (
       <div className="flex flex-col">
@@ -87,7 +89,10 @@ function BreakdownList({
                   <div className="flex items-center gap-2 shrink-0 text-sm text-muted-foreground">
                      <CapacityRing value={row.completedPercent} color="#6771c5" />
                      <span className="whitespace-nowrap">
-                        {row.completedPercent}% of {row.total}
+                        {t('properties.percentOf', {
+                           percent: row.completedPercent,
+                           total: row.total,
+                        })}
                      </span>
                   </div>
                </button>
@@ -111,6 +116,7 @@ function PropertyRow({ label, children }: { label: string; children: React.React
  * progress breakdowns and a compact activity feed.
  */
 export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPropertiesPanelProps) {
+   const t = useTranslations('projects');
    const panelFilter = usePanelFilter();
    const completed = issues.filter(isCompleted).length;
 
@@ -152,12 +158,12 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
                     }
                   : {
                        key: 'no-assignee',
-                       label: 'No assignee',
+                       label: t('properties.noAssignee'),
                        leading: null,
                        target: { columnId: 'assignee', value: 'unassigned' },
                     }
          ),
-      [issues]
+      [issues, t]
    );
 
    const labelRows = useMemo(
@@ -167,7 +173,7 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
             (issue) => issue.labels[0]?.id,
             (key, sample) => ({
                key: String(key),
-               label: sample.labels[0]?.name ?? 'Unlabeled',
+               label: sample.labels[0]?.name ?? t('properties.unlabeled'),
                leading: (
                   <span
                      className="size-2.5 rounded-full shrink-0"
@@ -177,7 +183,7 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
                target: { columnId: 'labels', value: String(key) },
             })
          ),
-      [issues]
+      [issues, t]
    );
 
    const cycleRows = useMemo(
@@ -187,36 +193,36 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
             (issue) => (issue.cycleId === '' ? undefined : issue.cycleId),
             (key) => ({
                key: String(key),
-               label: getCycleById(String(key))?.name ?? `Cycle ${key}`,
+               label: getCycleById(String(key))?.name ?? t('properties.cycle', { id: String(key) }),
                leading: null,
                target: { columnId: 'cycle', value: String(key) },
             })
          ),
-      [issues]
+      [issues, t]
    );
 
    return (
       <div className="flex flex-col h-full w-full overflow-y-auto">
          {/* Properties */}
          <div className="px-5 pt-4 pb-4 border-b">
-            <h3 className="text-sm font-medium mb-2.5">Properties</h3>
+            <h3 className="text-sm font-medium mb-2.5">{t('properties.title')}</h3>
             <div className="flex flex-col gap-1">
-               <PropertyRow label="Status">
+               <PropertyRow label={t('properties.status')}>
                   <project.status.icon />
                   <span>{project.status.name}</span>
                </PropertyRow>
-               <PropertyRow label="Priority">
+               <PropertyRow label={t('properties.priority')}>
                   <project.priority.icon className="size-3.5 text-muted-foreground" />
                   <span>{project.priority.name}</span>
                </PropertyRow>
-               <PropertyRow label="Lead">
+               <PropertyRow label={t('properties.lead')}>
                   <Avatar className="size-5">
                      <AvatarImage src={project.lead.avatarUrl} alt={project.lead.name} />
                      <AvatarFallback>{project.lead.name[0]}</AvatarFallback>
                   </Avatar>
                   <span className="truncate max-w-36">{project.lead.name}</span>
                </PropertyRow>
-               <PropertyRow label="Members">
+               <PropertyRow label={t('properties.members')}>
                   {members.length > 0 ? (
                      <span className="inline-flex items-center gap-1.5">
                         <span className="flex -space-x-1.5">
@@ -227,16 +233,16 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
                               </Avatar>
                            ))}
                         </span>
-                        {members.length} {members.length === 1 ? 'member' : 'members'}
+                        {t('properties.memberCount', { count: members.length })}
                      </span>
                   ) : (
                      <button className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
                         <UserPlus className="size-3.5" />
-                        Add members
+                        {t('properties.addMembers')}
                      </button>
                   )}
                </PropertyRow>
-               <PropertyRow label="Dates">
+               <PropertyRow label={t('properties.dates')}>
                   <span className="inline-flex items-center gap-1">
                      <Calendar className="size-3.5 text-muted-foreground" />
                      {formatDay(project.startDate)}
@@ -244,36 +250,36 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
                   <ArrowRight className="size-3 text-muted-foreground" />
                   <span className="inline-flex items-center gap-1">
                      <Calendar className="size-3.5 text-muted-foreground" />
-                     {project.targetDate ? formatDay(project.targetDate) : 'Target'}
+                     {project.targetDate ? formatDay(project.targetDate) : t('properties.target')}
                   </span>
                </PropertyRow>
-               <PropertyRow label="Teams">
+               <PropertyRow label={t('properties.teams')}>
                   <span className="inline-flex items-center gap-1.5">
                      {team?.icon} {team?.name ?? project.teamId}
                   </span>
                </PropertyRow>
-               <PropertyRow label="Slack">
+               <PropertyRow label={t('properties.slack')}>
                   <button className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
                      <Slack className="size-3.5" />
-                     Connect channel
+                     {t('properties.connectChannel')}
                   </button>
                </PropertyRow>
-               <PropertyRow label="Initiatives">
+               <PropertyRow label={t('properties.initiatives')}>
                   {project.initiative ? (
                      <span className="truncate max-w-44">{project.initiative}</span>
                   ) : (
                      <span className="inline-flex items-center gap-1.5 text-muted-foreground">
                         <Compass className="size-3.5" />
-                        No initiative
+                        {t('properties.noInitiative')}
                      </span>
                   )}
                </PropertyRow>
-               <PropertyRow label="Labels">
+               <PropertyRow label={t('properties.labels')}>
                   <div className="flex items-center gap-1.5">
                      {project.labels.length === 0 && (
                         <span className="inline-flex items-center gap-1.5 text-muted-foreground">
                            <Tag className="size-3.5" />
-                           Add label
+                           {t('properties.addLabel')}
                         </span>
                      )}
                      {project.labels.map((label) => (
@@ -299,15 +305,15 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
          {/* Milestones */}
          <div className="px-5 py-4 border-b">
             <div className="flex items-center justify-between mb-2">
-               <h3 className="text-sm font-medium">Milestones</h3>
+               <h3 className="text-sm font-medium">{t('milestones.title')}</h3>
                <button className="text-muted-foreground hover:text-foreground transition-colors">
                   <Plus className="size-3.5" />
                </button>
             </div>
             {detail.milestones.length === 0 ? (
                <p className="text-xs text-muted-foreground">
-                  Add milestones to organize work within your project and break it into more
-                  granular stages. <span className="text-foreground/70 underline">Learn more</span>
+                  {t('milestones.empty')}{' '}
+                  <span className="text-foreground/70 underline">{t('milestones.learnMore')}</span>
                </p>
             ) : (
                <div className="flex flex-col gap-1.5">
@@ -347,26 +353,26 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
 
          {/* Progress */}
          <div className="px-5 py-4 border-b">
-            <h3 className="text-sm font-medium mb-3">Progress</h3>
+            <h3 className="text-sm font-medium mb-3">{t('progress.title')}</h3>
             <div className="grid grid-cols-3 gap-2 mb-2">
                <div className="flex flex-col gap-0.5">
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                      <span className="size-2 rounded-[2px] bg-[#8f9299]" />
-                     Scope
+                     {t('progress.scope')}
                   </div>
                   <span className="text-sm font-medium">{issues.length}</span>
                </div>
                <div className="flex flex-col gap-0.5">
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                      <span className="size-2 rounded-[2px] bg-[#facc15]" />
-                     Started
+                     {t('progress.started')}
                   </div>
                   <span className="text-sm font-medium">{started}</span>
                </div>
                <div className="flex flex-col gap-0.5">
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                      <span className="size-2 rounded-[2px] bg-[#6771c5]" />
-                     Completed
+                     {t('progress.completed')}
                   </div>
                   <span className="text-sm font-medium">{completed}</span>
                </div>
@@ -383,13 +389,13 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
             <Tabs defaultValue="assignees">
                <TabsList className="h-8 bg-transparent gap-1 p-0">
                   <TabsTrigger value="assignees" className="text-xs px-2.5 rounded-full">
-                     Assignees
+                     {t('properties.tabs.assignees')}
                   </TabsTrigger>
                   <TabsTrigger value="labels" className="text-xs px-2.5 rounded-full">
-                     Labels
+                     {t('properties.tabs.labels')}
                   </TabsTrigger>
                   <TabsTrigger value="cycles" className="text-xs px-2.5 rounded-full">
-                     Cycles
+                     {t('properties.tabs.cycles')}
                   </TabsTrigger>
                </TabsList>
                <TabsContent value="assignees">
@@ -407,9 +413,9 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
          {/* Activity */}
          <div className="px-5 py-4">
             <div className="flex items-center justify-between mb-2">
-               <h3 className="text-sm font-medium">Activity</h3>
+               <h3 className="text-sm font-medium">{t('properties.activity')}</h3>
                <button className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  See all
+                  {t('properties.seeAll')}
                </button>
             </div>
             <div className="flex flex-col gap-3">

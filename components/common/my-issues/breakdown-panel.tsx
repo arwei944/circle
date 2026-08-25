@@ -5,6 +5,7 @@ import { Issue } from '@/mock-data/issues';
 import { teams } from '@/mock-data/teams';
 import { useRightPanelStore } from '@/store/right-panel-store';
 import { X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 
 type BreakdownTab = 'labels' | 'priority' | 'projects' | 'teams';
@@ -45,6 +46,7 @@ const PRIORITY_COLORS: Record<string, string> = {
 export function BreakdownPanel({ issues }: { issues: Issue[] }) {
    const { closePanel } = useRightPanelStore();
    const [tab, setTab] = useState<BreakdownTab>('labels');
+   const t = useTranslations('my-issues');
 
    const rows = useMemo<BreakdownRow[]>(() => {
       const counter = new Map<string, BreakdownRow>();
@@ -89,10 +91,10 @@ export function BreakdownPanel({ issues }: { issues: Issue[] }) {
             <div className="flex items-center gap-1.5 flex-wrap">
                {(
                   [
-                     ['labels', 'Labels'],
-                     ['priority', 'Priority'],
-                     ['projects', 'Projects'],
-                     ['teams', 'Teams'],
+                     ['labels', t('breakdown.labels')],
+                     ['priority', t('breakdown.priority')],
+                     ['projects', t('breakdown.projects')],
+                     ['teams', t('breakdown.teams')],
                   ] as const
                ).map(([key, label]) => (
                   <button
@@ -112,7 +114,7 @@ export function BreakdownPanel({ issues }: { issues: Issue[] }) {
             <button
                onClick={() => closePanel()}
                className="text-muted-foreground hover:text-foreground transition-colors shrink-0"
-               aria-label="Close panel"
+               aria-label={t('breakdown.close')}
             >
                <X className="size-4" />
             </button>
@@ -134,7 +136,9 @@ export function BreakdownPanel({ issues }: { issues: Issue[] }) {
                </div>
             ))}
             {rows.length === 0 && (
-               <span className="text-sm text-muted-foreground py-6 text-center">No data</span>
+               <span className="text-sm text-muted-foreground py-6 text-center">
+                  {t('breakdown.noData')}
+               </span>
             )}
          </div>
       </div>

@@ -1,3 +1,5 @@
+'use client';
+
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import {
    ContextMenuContent,
@@ -41,6 +43,7 @@ import { users } from '@/mock-data/users';
 import { labels } from '@/mock-data/labels';
 import { projects } from '@/mock-data/projects';
 import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
 
 interface IssueContextMenuProps {
    issueId?: string;
@@ -49,6 +52,7 @@ interface IssueContextMenuProps {
 export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
    const [isSubscribed, setIsSubscribed] = useState(false);
    const [isFavorite, setIsFavorite] = useState(false);
+   const t = useTranslations('issues');
 
    const {
       updateIssueStatus,
@@ -66,7 +70,7 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       const newStatus = status.find((s) => s.id === statusId);
       if (newStatus) {
          updateIssueStatus(issueId, newStatus);
-         toast.success(`Status updated to ${newStatus.name}`);
+         toast.success(t('contextMenu.toasts.statusUpdated', { status: newStatus.name }));
       }
    };
 
@@ -75,7 +79,7 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       const newPriority = priorities.find((p) => p.id === priorityId);
       if (newPriority) {
          updateIssuePriority(issueId, newPriority);
-         toast.success(`Priority updated to ${newPriority.name}`);
+         toast.success(t('contextMenu.toasts.priorityUpdated', { priority: newPriority.name }));
       }
    };
 
@@ -83,7 +87,11 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       if (!issueId) return;
       const newAssignee = userId ? users.find((u) => u.id === userId) || null : null;
       updateIssueAssignee(issueId, newAssignee);
-      toast.success(newAssignee ? `Assigned to ${newAssignee.name}` : 'Unassigned');
+      toast.success(
+         newAssignee
+            ? t('contextMenu.toasts.assignedTo', { name: newAssignee.name })
+            : t('contextMenu.toasts.unassigned')
+      );
    };
 
    const handleLabelToggle = (labelId: string) => {
@@ -97,10 +105,10 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
 
       if (hasLabel) {
          removeIssueLabel(issueId, labelId);
-         toast.success(`Removed label: ${label.name}`);
+         toast.success(t('contextMenu.toasts.removedLabel', { label: label.name }));
       } else {
          addIssueLabel(issueId, label);
-         toast.success(`Added label: ${label.name}`);
+         toast.success(t('contextMenu.toasts.addedLabel', { label: label.name }));
       }
    };
 
@@ -108,7 +116,11 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       if (!issueId) return;
       const newProject = projectId ? projects.find((p) => p.id === projectId) : undefined;
       updateIssueProject(issueId, newProject);
-      toast.success(newProject ? `Project set to ${newProject.name}` : 'Project removed');
+      toast.success(
+         newProject
+            ? t('contextMenu.toasts.projectSetTo', { project: newProject.name })
+            : t('contextMenu.toasts.projectRemoved')
+      );
    };
 
    const handleSetDueDate = () => {
@@ -116,37 +128,43 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       const dueDate = new Date();
       dueDate.setDate(dueDate.getDate() + 7);
       updateIssue(issueId, { dueDate: dueDate.toISOString() });
-      toast.success('Due date set to 7 days from now');
+      toast.success(t('contextMenu.toasts.dueDateSet'));
    };
 
    const handleAddLink = () => {
-      toast.success('Link added');
+      toast.success(t('contextMenu.toasts.linkAdded'));
    };
 
    const handleMakeCopy = () => {
-      toast.success('Issue copied');
+      toast.success(t('contextMenu.toasts.issueCopied'));
    };
 
    const handleCreateRelated = () => {
-      toast.success('Related issue created');
+      toast.success(t('contextMenu.toasts.relatedCreated'));
    };
 
    const handleMarkAs = (type: string) => {
-      toast.success(`Marked as ${type}`);
+      toast.success(t('contextMenu.toasts.markedAs', { type }));
    };
 
    const handleMove = () => {
-      toast.success('Issue moved');
+      toast.success(t('contextMenu.toasts.issueMoved'));
    };
 
    const handleSubscribe = () => {
       setIsSubscribed(!isSubscribed);
-      toast.success(isSubscribed ? 'Unsubscribed from issue' : 'Subscribed to issue');
+      toast.success(
+         isSubscribed ? t('contextMenu.toasts.unsubscribed') : t('contextMenu.toasts.subscribed')
+      );
    };
 
    const handleFavorite = () => {
       setIsFavorite(!isFavorite);
-      toast.success(isFavorite ? 'Removed from favorites' : 'Added to favorites');
+      toast.success(
+         isFavorite
+            ? t('contextMenu.toasts.removedFromFavorites')
+            : t('contextMenu.toasts.addedToFavorites')
+      );
    };
 
    const handleCopy = () => {
@@ -154,12 +172,12 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       const issue = getIssueById(issueId);
       if (issue) {
          navigator.clipboard.writeText(issue.title);
-         toast.success('Copied to clipboard');
+         toast.success(t('contextMenu.toasts.copiedToClipboard'));
       }
    };
 
    const handleRemindMe = () => {
-      toast.success('Reminder set');
+      toast.success(t('contextMenu.toasts.reminderSet'));
    };
 
    return (
@@ -167,7 +185,7 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
          <ContextMenuGroup>
             <ContextMenuSub>
                <ContextMenuSubTrigger>
-                  <CircleCheck className="mr-2 size-4" /> Status
+                  <CircleCheck className="mr-2 size-4" /> {t('contextMenu.status')}
                </ContextMenuSubTrigger>
                <ContextMenuSubContent className="w-48">
                   {status.map((s) => {
@@ -183,11 +201,11 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
 
             <ContextMenuSub>
                <ContextMenuSubTrigger>
-                  <User className="mr-2 size-4" /> Assignee
+                  <User className="mr-2 size-4" /> {t('contextMenu.assignee')}
                </ContextMenuSubTrigger>
                <ContextMenuSubContent className="w-48">
                   <ContextMenuItem onClick={() => handleAssigneeChange(null)}>
-                     <User className="size-4" /> Unassigned
+                     <User className="size-4" /> {t('contextMenu.unassigned')}
                   </ContextMenuItem>
                   {users
                      .filter((user) => user.teamIds.includes('CORE'))
@@ -208,7 +226,7 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
 
             <ContextMenuSub>
                <ContextMenuSubTrigger>
-                  <BarChart3 className="mr-2 size-4" /> Priority
+                  <BarChart3 className="mr-2 size-4" /> {t('contextMenu.priority')}
                </ContextMenuSubTrigger>
                <ContextMenuSubContent className="w-48">
                   {priorities.map((priority) => (
@@ -224,7 +242,7 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
 
             <ContextMenuSub>
                <ContextMenuSubTrigger>
-                  <Tag className="mr-2 size-4" /> Labels
+                  <Tag className="mr-2 size-4" /> {t('contextMenu.labels')}
                </ContextMenuSubTrigger>
                <ContextMenuSubContent className="w-48">
                   {labels.map((label) => (
@@ -242,11 +260,11 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
 
             <ContextMenuSub>
                <ContextMenuSubTrigger>
-                  <Folder className="mr-2 size-4" /> Project
+                  <Folder className="mr-2 size-4" /> {t('contextMenu.project')}
                </ContextMenuSubTrigger>
                <ContextMenuSubContent className="w-64">
                   <ContextMenuItem onClick={() => handleProjectChange(null)}>
-                     <Folder className="size-4" /> No Project
+                     <Folder className="size-4" /> {t('contextMenu.noProject')}
                   </ContextMenuItem>
                   {projects.slice(0, 5).map((project) => (
                      <ContextMenuItem
@@ -260,93 +278,95 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
             </ContextMenuSub>
 
             <ContextMenuItem onClick={handleSetDueDate}>
-               <CalendarClock className="size-4" /> Set due date...
+               <CalendarClock className="size-4" /> {t('contextMenu.setDueDate')}
                <ContextMenuShortcut>D</ContextMenuShortcut>
             </ContextMenuItem>
 
             <ContextMenuItem>
-               <Pencil className="size-4" /> Rename...
+               <Pencil className="size-4" /> {t('contextMenu.rename')}
                <ContextMenuShortcut>R</ContextMenuShortcut>
             </ContextMenuItem>
 
             <ContextMenuSeparator />
 
             <ContextMenuItem onClick={handleAddLink}>
-               <LinkIcon className="size-4" /> Add link...
+               <LinkIcon className="size-4" /> {t('contextMenu.addLink')}
                <ContextMenuShortcut>Ctrl L</ContextMenuShortcut>
             </ContextMenuItem>
 
             <ContextMenuSub>
                <ContextMenuSubTrigger>
-                  <Repeat2 className="mr-2 size-4" /> Convert into
+                  <Repeat2 className="mr-2 size-4" /> {t('contextMenu.convertInto')}
                </ContextMenuSubTrigger>
                <ContextMenuSubContent className="w-48">
                   <ContextMenuItem>
-                     <FileText className="size-4" /> Document
+                     <FileText className="size-4" /> {t('contextMenu.document')}
                   </ContextMenuItem>
                   <ContextMenuItem>
-                     <MessageSquare className="size-4" /> Comment
+                     <MessageSquare className="size-4" /> {t('contextMenu.comment')}
                   </ContextMenuItem>
                </ContextMenuSubContent>
             </ContextMenuSub>
 
             <ContextMenuItem onClick={handleMakeCopy}>
-               <CopyIcon className="size-4" /> Make a copy...
+               <CopyIcon className="size-4" /> {t('contextMenu.makeACopy')}
             </ContextMenuItem>
          </ContextMenuGroup>
 
          <ContextMenuSeparator />
 
          <ContextMenuItem onClick={handleCreateRelated}>
-            <PlusSquare className="size-4" /> Create related
+            <PlusSquare className="size-4" /> {t('contextMenu.createRelated')}
          </ContextMenuItem>
 
          <ContextMenuSub>
             <ContextMenuSubTrigger>
-               <Flag className="mr-2 size-4" /> Mark as
+               <Flag className="mr-2 size-4" /> {t('contextMenu.markAs')}
             </ContextMenuSubTrigger>
             <ContextMenuSubContent className="w-48">
-               <ContextMenuItem onClick={() => handleMarkAs('Completed')}>
-                  <CheckCircle2 className="size-4" /> Completed
+               <ContextMenuItem onClick={() => handleMarkAs(t('contextMenu.completed'))}>
+                  <CheckCircle2 className="size-4" /> {t('contextMenu.completed')}
                </ContextMenuItem>
-               <ContextMenuItem onClick={() => handleMarkAs('Duplicate')}>
-                  <CopyIcon className="size-4" /> Duplicate
+               <ContextMenuItem onClick={() => handleMarkAs(t('contextMenu.duplicate'))}>
+                  <CopyIcon className="size-4" /> {t('contextMenu.duplicate')}
                </ContextMenuItem>
-               <ContextMenuItem onClick={() => handleMarkAs("Won't Fix")}>
-                  <Clock className="size-4" /> Won&apos;t Fix
+               <ContextMenuItem onClick={() => handleMarkAs(t('contextMenu.wontFix'))}>
+                  <Clock className="size-4" /> {t('contextMenu.wontFix')}
                </ContextMenuItem>
             </ContextMenuSubContent>
          </ContextMenuSub>
 
          <ContextMenuItem onClick={handleMove}>
-            <ArrowRightLeft className="size-4" /> Move
+            <ArrowRightLeft className="size-4" /> {t('contextMenu.move')}
          </ContextMenuItem>
 
          <ContextMenuSeparator />
 
          <ContextMenuItem onClick={handleSubscribe}>
-            <Bell className="size-4" /> {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+            <Bell className="size-4" />{' '}
+            {isSubscribed ? t('contextMenu.unsubscribe') : t('contextMenu.subscribe')}
             <ContextMenuShortcut>S</ContextMenuShortcut>
          </ContextMenuItem>
 
          <ContextMenuItem onClick={handleFavorite}>
-            <Star className="size-4" /> {isFavorite ? 'Unfavorite' : 'Favorite'}
+            <Star className="size-4" />{' '}
+            {isFavorite ? t('contextMenu.unfavorite') : t('contextMenu.favorite')}
             <ContextMenuShortcut>F</ContextMenuShortcut>
          </ContextMenuItem>
 
          <ContextMenuItem onClick={handleCopy}>
-            <Clipboard className="size-4" /> Copy
+            <Clipboard className="size-4" /> {t('contextMenu.copy')}
          </ContextMenuItem>
 
          <ContextMenuItem onClick={handleRemindMe}>
-            <AlarmClock className="size-4" /> Remind me
+            <AlarmClock className="size-4" /> {t('contextMenu.remindMe')}
             <ContextMenuShortcut>H</ContextMenuShortcut>
          </ContextMenuItem>
 
          <ContextMenuSeparator />
 
          <ContextMenuItem variant="destructive">
-            <Trash2 className="size-4" /> Delete...
+            <Trash2 className="size-4" /> {t('contextMenu.delete')}
             <ContextMenuShortcut>⌘⌫</ContextMenuShortcut>
          </ContextMenuItem>
       </ContextMenuContent>

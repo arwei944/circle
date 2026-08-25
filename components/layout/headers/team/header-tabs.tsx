@@ -2,17 +2,15 @@
 
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useParams, usePathname } from 'next/navigation';
 
-const TEAM_TABS = [
-   { label: 'Overview', segment: 'overview' },
-   { label: 'Documents', segment: 'documents' },
-   { label: 'Members', segment: 'members' },
-];
+const TEAM_TABS = [{ segment: 'overview' }, { segment: 'documents' }, { segment: 'members' }];
 
 export default function HeaderTabs() {
    const { orgId, teamId } = useParams<{ orgId: string; teamId: string }>();
    const pathname = usePathname();
+   const t = useTranslations('teams');
 
    return (
       <div className="w-full flex justify-between items-center border-b py-1.5 px-6 h-10">
@@ -31,7 +29,7 @@ export default function HeaderTabs() {
                            : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-accent/50'
                      )}
                   >
-                     {tab.label}
+                     {t(`tabs.${tab.segment}`)}
                   </Link>
                );
             })}

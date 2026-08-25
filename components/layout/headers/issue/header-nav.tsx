@@ -8,6 +8,7 @@ import { teams } from '@/mock-data/teams';
 import { useIssuesStore } from '@/store/issues-store';
 import { ChevronDown, ChevronRight, ChevronUp, MoreHorizontal, Star } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
 /**
@@ -17,6 +18,7 @@ import { useParams } from 'next/navigation';
 export default function HeaderNav() {
    const { orgId, issueId } = useParams<{ orgId: string; issueId: string }>();
    const { issues } = useIssuesStore();
+   const t = useTranslations('issues');
 
    const team = teams[0];
    const index = issues.findIndex((candidate) => candidate.identifier === issueId);
@@ -80,7 +82,7 @@ export default function HeaderNav() {
                {previousIssue ? (
                   <Link
                      href={`/${orgId}/issue/${previousIssue.identifier}`}
-                     aria-label="Previous issue"
+                     aria-label={t('header.previousIssue')}
                   >
                      <ChevronUp className="size-4" />
                   </Link>
@@ -96,7 +98,10 @@ export default function HeaderNav() {
                asChild={!!nextIssue}
             >
                {nextIssue ? (
-                  <Link href={`/${orgId}/issue/${nextIssue.identifier}`} aria-label="Next issue">
+                  <Link
+                     href={`/${orgId}/issue/${nextIssue.identifier}`}
+                     aria-label={t('header.nextIssue')}
+                  >
                      <ChevronDown className="size-4" />
                   </Link>
                ) : (

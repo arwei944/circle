@@ -16,22 +16,24 @@ import {
    useTeamsDisplayStore,
 } from '@/store/teams-display-store';
 import { ArrowUpNarrowWide, SlidersHorizontal } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
-const ORDERINGS: { value: TeamsOrdering; label: string }[] = [
-   { value: 'name', label: 'Name' },
-   { value: 'members', label: 'Members' },
-   { value: 'projects', label: 'Projects' },
+const ORDERINGS: { value: TeamsOrdering }[] = [
+   { value: 'name' },
+   { value: 'members' },
+   { value: 'projects' },
 ];
 
 /** Linear-style Display popover for the Teams page. */
 export function TeamsDisplayOptions() {
    const { ordering, displayProperties, setOrdering, toggleDisplayProperty } =
       useTeamsDisplayStore();
+   const t = useTranslations('teams');
 
    return (
       <Popover>
          <PopoverTrigger asChild>
-            <Button size="xs" variant="ghost" aria-label="Display options">
+            <Button size="xs" variant="ghost" aria-label={t('displayOptions.ariaLabel')}>
                <SlidersHorizontal className="size-4" />
             </Button>
          </PopoverTrigger>
@@ -39,7 +41,7 @@ export function TeamsDisplayOptions() {
             <div className="flex items-center justify-between gap-3">
                <span className="flex items-center gap-2 text-sm">
                   <ArrowUpNarrowWide className="size-4 text-muted-foreground" />
-                  Ordering
+                  {t('displayOptions.ordering')}
                </span>
                <Select
                   value={ordering}
@@ -51,7 +53,7 @@ export function TeamsDisplayOptions() {
                   <SelectContent>
                      {ORDERINGS.map((option) => (
                         <SelectItem key={option.value} value={option.value}>
-                           {option.label}
+                           {t(`columns.${option.value}`)}
                         </SelectItem>
                      ))}
                   </SelectContent>
@@ -59,7 +61,9 @@ export function TeamsDisplayOptions() {
             </div>
 
             <div className="flex flex-col gap-2">
-               <span className="text-sm text-muted-foreground">Display properties</span>
+               <span className="text-sm text-muted-foreground">
+                  {t('displayOptions.displayProperties')}
+               </span>
                <div className="flex flex-wrap gap-1.5">
                   {TEAM_DISPLAY_PROPERTIES.map((property) => {
                      const enabled = displayProperties[property.key];
@@ -75,7 +79,7 @@ export function TeamsDisplayOptions() {
                                  : 'border-border/60 text-muted-foreground hover:text-foreground'
                            )}
                         >
-                           {property.label}
+                           {t(`columns.${property.key}`)}
                         </button>
                      );
                   })}

@@ -3,6 +3,7 @@
 import { CapacityRing } from '@/components/common/cycles/capacity-ring';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Project } from '@/mock-data/projects';
+import { useTranslations } from 'next-intl';
 import { useProjectsDisplayStore } from '@/store/projects-display-store';
 import { format, parseISO } from 'date-fns';
 import { Calendar } from 'lucide-react';
@@ -65,9 +66,7 @@ function ProjectCard({ project }: { project: Project }) {
                   {project.percentComplete}%
                </span>
             )}
-            {displayProperties.priority && (
-               <project.priority.icon className="size-3.5 shrink-0" />
-            )}
+            {displayProperties.priority && <project.priority.icon className="size-3.5 shrink-0" />}
             {displayProperties.targetDate && project.targetDate && (
                <span className="inline-flex items-center gap-1">
                   <Calendar className="size-3" />
@@ -87,6 +86,7 @@ function ProjectCard({ project }: { project: Project }) {
 
 /** Projects "Board" view: one column per group (team by default). */
 export default function ProjectsBoard({ groups }: { groups: ProjectGroup[] }) {
+   const t = useTranslations('projects');
    return (
       <div className="w-full h-full overflow-x-auto">
          <div className="flex h-full gap-3 px-4 py-3 min-w-max">
@@ -103,7 +103,7 @@ export default function ProjectsBoard({ groups }: { groups: ProjectGroup[] }) {
                      ))}
                      {group.projects.length === 0 && (
                         <div className="text-xs text-muted-foreground border border-dashed rounded-md p-4 text-center">
-                           No projects
+                           {t('board.noProjects')}
                         </div>
                      )}
                   </div>

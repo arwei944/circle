@@ -3,6 +3,7 @@
 import { projects } from '@/mock-data/projects';
 import { StatusCategory } from '@/mock-data/status';
 import { Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { SettingsShell } from './shared';
 
@@ -11,15 +12,16 @@ import { SettingsShell } from './shared';
  * workflow in the mock data) are mapped onto the five project categories.
  */
 const CATEGORY_GROUPS: { label: string; categories: StatusCategory[] }[] = [
-   { label: 'Backlog', categories: ['backlog', 'triage'] },
-   { label: 'Planned', categories: ['unstarted'] },
-   { label: 'In Progress', categories: ['started'] },
-   { label: 'Completed', categories: ['completed'] },
-   { label: 'Canceled', categories: ['canceled'] },
+   { label: 'projectStatuses.categories.backlog', categories: ['backlog', 'triage'] },
+   { label: 'projectStatuses.categories.planned', categories: ['unstarted'] },
+   { label: 'projectStatuses.categories.inProgress', categories: ['started'] },
+   { label: 'projectStatuses.categories.completed', categories: ['completed'] },
+   { label: 'projectStatuses.categories.canceled', categories: ['canceled'] },
 ];
 
 /** Workspace "Project statuses" settings. */
 export default function ProjectStatusesSettings() {
+   const t = useTranslations('settings');
    const groups = useMemo(
       () =>
          CATEGORY_GROUPS.map((group) => {
@@ -45,20 +47,22 @@ export default function ProjectStatusesSettings() {
 
    return (
       <SettingsShell
-         title="Project statuses"
-         description="Project statuses define the workflow that projects go through from start to completion"
+         title={t('projectStatuses.title')}
+         description={t('projectStatuses.description')}
       >
          <div className="rounded-lg border bg-container overflow-hidden">
             {groups.map((group) => (
                <div key={group.label}>
                   <div className="flex items-center justify-between px-4 py-2 bg-accent/30 border-y first:border-t-0 border-border/50">
-                     <span className="text-sm text-muted-foreground">{group.label}</span>
+                     <span className="text-sm text-muted-foreground">{t(group.label)}</span>
                      <button className="text-muted-foreground hover:text-foreground transition-colors">
                         <Plus className="size-3.5" />
                      </button>
                   </div>
                   {group.statuses.length === 0 && (
-                     <div className="px-4 py-3 text-xs text-muted-foreground">No statuses</div>
+                     <div className="px-4 py-3 text-xs text-muted-foreground">
+                        {t('projectStatuses.noStatuses')}
+                     </div>
                   )}
                   {group.statuses.map((status) => (
                      <div key={status.name} className="flex items-center gap-3 px-4 py-3">
@@ -68,7 +72,7 @@ export default function ProjectStatusesSettings() {
                         <div>
                            <div className="text-sm font-medium">{status.name}</div>
                            <div className="text-xs text-muted-foreground">
-                              {status.count} {status.count === 1 ? 'project' : 'projects'}
+                              {t('projectStatuses.projectsCount', { count: status.count })}
                            </div>
                         </div>
                      </div>

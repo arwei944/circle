@@ -2,53 +2,60 @@
 
 import { Button } from '@/components/ui/button';
 import { KeyRound, Laptop, Smartphone } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { SettingsCard, SettingsRow, SettingsSection, SettingsShell } from './shared';
 
 /** Personal "Security & access" settings (sessions, passkeys, API keys). */
 export default function AccountSecurity() {
+   const t = useTranslations('settings');
    return (
-      <SettingsShell title="Security & access">
-         <SettingsSection title="Sessions" description="Devices logged into your account">
+      <SettingsShell title={t('security.title')}>
+         <SettingsSection
+            title={t('security.sessions.title')}
+            description={t('security.sessions.description')}
+         >
             <SettingsCard>
                <SettingsRow
                   icon={<Laptop className="size-4" />}
-                  title="Chrome on macOS"
+                  title={t('security.sessions.currentDevice')}
                   description={
                      <span className="inline-flex items-center gap-1.5">
                         <span className="size-1.5 rounded-full bg-[#00cc66]" />
-                        <span className="text-[#00a05a]">Current session</span> · Paris, FR · (EN,
-                        FR)
+                        <span className="text-[#00a05a]">
+                           {t('security.sessions.currentSession')}
+                        </span>{' '}
+                        · Paris, FR · (EN, FR)
                      </span>
                   }
                />
             </SettingsCard>
             <SettingsCard>
                <SettingsRow
-                  title="1 other session"
+                  title={t('security.sessions.otherSessions', { count: 1 })}
                   trailing={
                      <Button size="xs" variant="ghost">
-                        Revoke all
+                        {t('security.sessions.revokeAll')}
                      </Button>
                   }
                />
                <SettingsRow
                   icon={<Smartphone className="size-4" />}
-                  title="LNDev UI iOS"
-                  description="Paris, FR · Last seen about 3 hours ago"
+                  title={t('security.sessions.iosDevice')}
+                  description={t('security.sessions.lastSeen')}
                />
             </SettingsCard>
          </SettingsSection>
 
          <SettingsSection
-            title="Passkeys"
-            description="Passkeys are a secure way to sign in to your account"
+            title={t('security.passkeys.title')}
+            description={t('security.passkeys.description')}
          >
             <SettingsCard>
                <SettingsRow
-                  title="No passkeys registered"
+                  title={t('security.passkeys.none')}
                   trailing={
                      <Button size="xs" variant="ghost">
-                        New passkey
+                        {t('security.passkeys.new')}
                      </Button>
                   }
                />
@@ -56,15 +63,15 @@ export default function AccountSecurity() {
          </SettingsSection>
 
          <SettingsSection
-            title="Personal API keys"
-            description="Use the GraphQL API to build your own integrations"
+            title={t('security.apiKeys.title')}
+            description={t('security.apiKeys.description')}
          >
             <SettingsCard>
                <SettingsRow
-                  title="1 API key"
+                  title={t('security.apiKeys.count', { count: 1 })}
                   trailing={
                      <Button size="xs" variant="ghost">
-                        New API key
+                        {t('security.apiKeys.new')}
                      </Button>
                   }
                />
@@ -74,25 +81,25 @@ export default function AccountSecurity() {
                      <>
                         LNDEV_PERSONAL_API_KEY
                         <span className="text-xs text-muted-foreground font-normal">
-                           · full access · public & private teams
+                           {t('security.apiKeys.accessDetails')}
                         </span>
                      </>
                   }
-                  description="Created 2 months ago · last used on Jul 16, 2026"
+                  description={t('security.apiKeys.createdInfo')}
                />
             </SettingsCard>
          </SettingsSection>
 
          <SettingsSection
-            title="Commit signing key"
-            description="Coding sessions use this key to sign your commits"
+            title={t('security.signingKey.title')}
+            description={t('security.signingKey.description')}
          >
             <SettingsCard>
                <SettingsRow
-                  title="No signing key added"
+                  title={t('security.signingKey.none')}
                   trailing={
                      <Button size="xs" variant="ghost">
-                        Add key
+                        {t('security.signingKey.addKey')}
                      </Button>
                   }
                />

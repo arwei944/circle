@@ -5,6 +5,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { CircleCheck, CircleX, AlertCircle, HelpCircle, Bell } from 'lucide-react';
 import { Project } from '@/mock-data/projects';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useTranslations } from 'next-intl';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
@@ -13,6 +14,7 @@ interface HealthPopoverProps {
 }
 
 export function HealthPopover({ project }: HealthPopoverProps) {
+   const t = useTranslations('projects');
    const getHealthIcon = (healthId: string) => {
       switch (healthId) {
          case 'on-track':
@@ -56,7 +58,7 @@ export function HealthPopover({ project }: HealthPopoverProps) {
                </div>
                <div className="flex items-center gap-2">
                   <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">
-                     Subscribe
+                     {t('healthPopover.subscribe')}
                   </Button>
                   <Button
                      variant="outline"
@@ -64,7 +66,7 @@ export function HealthPopover({ project }: HealthPopoverProps) {
                      className="h-7 px-2 text-xs flex items-center gap-1"
                   >
                      <Bell className="size-3" />
-                     New update
+                     {t('healthPopover.newUpdate')}
                   </Button>
                </div>
             </div>

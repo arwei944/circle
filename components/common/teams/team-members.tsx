@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { teams } from '@/mock-data/teams';
 import { Plus, SlidersHorizontal } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
 /**
@@ -13,17 +14,18 @@ import { useParams } from 'next/navigation';
 export default function TeamMembers() {
    const { teamId } = useParams<{ orgId: string; teamId: string }>();
    const team = teams.find((t) => t.id === teamId) ?? teams[0];
+   const t = useTranslations('teams');
 
    const members = [...team.members].sort((a, b) => a.name.localeCompare(b.name));
 
    return (
       <div className="w-full">
          <div className="flex items-center justify-between px-6 py-3">
-            <span className="text-sm text-muted-foreground font-medium">Name ↓</span>
+            <span className="text-sm text-muted-foreground font-medium">{t('members.name')}</span>
             <div className="flex items-center gap-2">
                <Button size="xs" variant="secondary">
                   <Plus className="size-4 mr-1" />
-                  Add a member
+                  {t('members.addMember')}
                </Button>
                <Button size="xs" variant="ghost">
                   <SlidersHorizontal className="size-4" />
@@ -32,9 +34,9 @@ export default function TeamMembers() {
          </div>
 
          <div className="bg-container px-6 py-1.5 text-sm flex items-center text-muted-foreground border-b sticky top-0 z-10">
-            <div className="w-[55%] md:w-[45%]">Name</div>
-            <div className="hidden md:block md:w-[35%]">Email</div>
-            <div className="w-[45%] md:w-[20%]">Role</div>
+            <div className="w-[55%] md:w-[45%]">{t('columns.name')}</div>
+            <div className="hidden md:block md:w-[35%]">{t('members.email')}</div>
+            <div className="w-[45%] md:w-[20%]">{t('members.role')}</div>
          </div>
 
          {members.map((member) => (

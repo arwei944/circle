@@ -1,0 +1,221 @@
+{
+   "tabs": {
+      "all": "所有项目",
+      "active": "进行中项目"
+   },
+   "projectsHeader": {
+      "title": "项目",
+      "createProject": "新建项目",
+      "display": "显示"
+   },
+   "projectHeader": {
+      "breadcrumb": "项目",
+      "toggleInsights": "切换洞察面板",
+      "toggleSidePanel": "切换侧边面板",
+      "tabs": {
+         "overview": "概览",
+         "activity": "动态",
+         "issues": "问题"
+      }
+   },
+   "filter": {
+      "title": "筛选",
+      "health": "健康度",
+      "priority": "优先级",
+      "sortBy": "排序方式",
+      "clearAll": "清除所有筛选",
+      "searchHealth": "搜索健康度...",
+      "noHealthFound": "未找到健康度。",
+      "searchPriorities": "搜索优先级...",
+      "noPrioritiesFound": "未找到优先级。",
+      "sortGroups": {
+         "title": "标题",
+         "targetDate": "目标日期",
+         "status": "状态"
+      },
+      "sort": {
+         "aToZ": "A → Z",
+         "zToA": "Z → A",
+         "oldestToNewest": "从最早到最新",
+         "newestToOldest": "从最新到最早",
+         "lowestToHighest": "从低到高",
+         "highestToLowest": "从高到低"
+      }
+   },
+   "display": {
+      "optionsAria": "显示选项",
+      "groupingLabel": "分组",
+      "orderingLabel": "排序",
+      "showClosedProjects": "显示已关闭项目",
+      "closed": {
+         "all": "全部",
+         "hide": "隐藏已关闭"
+      },
+      "viewOptions": {
+         "timeline": "时间线选项",
+         "board": "看板选项",
+         "list": "列表选项"
+      },
+      "showProjectList": "显示项目列表",
+      "showWeekNumbers": "显示周数",
+      "showEmptyGroups": {
+         "board": "显示空列",
+         "list": "显示空分组"
+      },
+      "displayProperties": "显示属性",
+      "reset": "重置",
+      "setDefaultForEveryone": "为所有人设置默认",
+      "view": {
+         "list": "列表",
+         "board": "看板",
+         "timeline": "时间线"
+      },
+      "grouping": {
+         "team": "团队",
+         "none": "不分组"
+      },
+      "ordering": {
+         "start-date": "开始日期",
+         "target-date": "目标日期",
+         "title": "标题"
+      },
+      "properties": {
+         "milestones": "里程碑",
+         "priority": "优先级",
+         "status": "状态",
+         "health": "健康度",
+         "lead": "负责人",
+         "members": "成员",
+         "targetDate": "目标日期",
+         "issues": "问题",
+         "labels": "标签"
+      }
+   },
+   "board": {
+      "noProjects": "无项目"
+   },
+   "list": {
+      "noProjects": "无项目",
+      "columns": {
+         "name": "名称",
+         "health": "健康度",
+         "priority": "优先级",
+         "lead": "负责人",
+         "targetDate": "目标日期",
+         "issues": "问题",
+         "status": "状态"
+      }
+   },
+   "timeline": {
+      "today": "今天",
+      "zoom": {
+         "year": "年",
+         "quarter": "季度",
+         "month": "月",
+         "week": "周"
+      }
+   },
+   "insights": {
+      "projects": "个项目",
+      "noUpdateExpected": "暂不更新",
+      "clearFilter": "清除筛选",
+      "filter": "筛选",
+      "togglePanel": "切换项目洞察面板",
+      "tabs": {
+         "health": "健康度",
+         "teams": "团队",
+         "leads": "负责人"
+      }
+   },
+   "empty": {
+      "nothingToShow": "暂无内容可显示。"
+   },
+   "selectors": {
+      "setLead": "设置负责人...",
+      "noUserFound": "未找到用户。",
+      "setPriority": "设置优先级...",
+      "noPriorityFound": "未找到优先级。",
+      "setStatus": "设置状态...",
+      "noStatusFound": "未找到状态。"
+   },
+   "datePicker": {
+      "noDate": "无日期"
+   },
+   "healthPopover": {
+      "subscribe": "订阅",
+      "newUpdate": "新更新"
+   },
+   "properties": {
+      "title": "属性",
+      "status": "状态",
+      "priority": "优先级",
+      "lead": "负责人",
+      "members": "成员",
+      "memberCount": "{count} 名成员",
+      "addMembers": "添加成员",
+      "dates": "日期",
+      "target": "目标",
+      "teams": "团队",
+      "slack": "Slack",
+      "connectChannel": "连接频道",
+      "initiatives": "计划",
+      "noInitiative": "无计划",
+      "labels": "标签",
+      "addLabel": "添加标签",
+      "resources": "资源",
+      "noAssignee": "无负责人",
+      "unlabeled": "未标记",
+      "cycle": "周期 {id}",
+      "percentOf": "{percent}% / {total} 项",
+      "tabs": {
+         "assignees": "负责人",
+         "labels": "标签",
+         "cycles": "周期"
+      },
+      "activity": "动态",
+      "seeAll": "查看全部"
+   },
+   "milestones": {
+      "title": "里程碑",
+      "empty": "添加里程碑来组织项目内的工作，并将其拆分为更细的阶段。",
+      "learnMore": "了解更多"
+   },
+   "progress": {
+      "title": "进度",
+      "scope": "范围",
+      "started": "进行中",
+      "completed": "已完成"
+   },
+   "peekPanel": {
+      "openProject": "打开项目",
+      "closePanel": "关闭面板"
+   },
+   "outline": {
+      "description": "描述"
+   },
+   "overview": {
+      "description": "描述",
+      "writeUpdate": "发布项目更新",
+      "writeFirstUpdate": "发布首个项目更新"
+   },
+   "activity": {
+      "updatePlaceholder": "撰写项目更新…",
+      "commentPlaceholder": "发表评论…",
+      "priority": "优先级",
+      "lead": "负责人",
+      "targetDate": "目标日期",
+      "progress": "进度",
+      "assigned": "已指派",
+      "setTo": "设置为",
+      "noPriorityPrefix": "无优先级 →",
+      "progressPrefix": "0% →",
+      "writeWithAgent": "使用 Agent 撰写",
+      "postUpdate": "发布更新",
+      "postComment": "发布评论",
+      "empty": "暂无更新 — 发布第一条以让团队保持同步。",
+      "mode": {
+         "comment": "评论",
+         "update": "更新"
+      }
+   }
+}

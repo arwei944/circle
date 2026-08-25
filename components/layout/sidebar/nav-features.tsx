@@ -10,11 +10,13 @@ import {
    SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { featuresItems } from '@/mock-data/side-bar-nav';
+import { useTranslations } from 'next-intl';
 
 export function NavFeatures() {
+   const t = useTranslations('common');
    return (
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-         <SidebarGroupLabel>Features</SidebarGroupLabel>
+         <SidebarGroupLabel>{t('sidebar.features')}</SidebarGroupLabel>
          <SidebarMenu>
             {featuresItems.map((item) => (
                <SidebarMenuItem key={item.name}>

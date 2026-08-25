@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { statusUserColors, User, users } from '@/mock-data/users';
 import { CheckIcon, CircleUserRound, Send, UserIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 
 interface AssigneeUserProps {
@@ -19,6 +20,7 @@ interface AssigneeUserProps {
 export function AssigneeUser({ user }: AssigneeUserProps) {
    const [open, setOpen] = useState(false);
    const [currentAssignee, setCurrentAssignee] = useState<User | null>(user);
+   const t = useTranslations('issues');
 
    useEffect(() => {
       setCurrentAssignee(user);
@@ -57,7 +59,7 @@ export function AssigneeUser({ user }: AssigneeUserProps) {
             </button>
          </DropdownMenuTrigger>
          <DropdownMenuContent align="start" className="w-[206px]">
-            <DropdownMenuLabel>Assign to...</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('assignee.assignTo')}</DropdownMenuLabel>
             <DropdownMenuItem
                onClick={(e) => {
                   e.stopPropagation();
@@ -67,7 +69,7 @@ export function AssigneeUser({ user }: AssigneeUserProps) {
             >
                <div className="flex items-center gap-2">
                   <UserIcon className="h-5 w-5" />
-                  <span>No assignee</span>
+                  <span>{t('assignee.noAssignee')}</span>
                </div>
                {!currentAssignee && <CheckIcon className="ml-auto h-4 w-4" />}
             </DropdownMenuItem>
@@ -94,11 +96,11 @@ export function AssigneeUser({ user }: AssigneeUserProps) {
                   </DropdownMenuItem>
                ))}
             <DropdownMenuSeparator />
-            <DropdownMenuLabel>New user</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('assignee.newUser')}</DropdownMenuLabel>
             <DropdownMenuItem>
                <div className="flex items-center gap-2">
                   <Send className="h-4 w-4" />
-                  <span>Invite and assign...</span>
+                  <span>{t('assignee.inviteAndAssign')}</span>
                </div>
             </DropdownMenuItem>
          </DropdownMenuContent>

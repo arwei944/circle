@@ -14,6 +14,7 @@ import { useIssuesStore } from '@/store/issues-store';
 import { priorities, Priority } from '@/mock-data/priorities';
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface PrioritySelectorProps {
    priority: Priority;
@@ -22,6 +23,7 @@ interface PrioritySelectorProps {
 
 export function PrioritySelector({ priority, onChange }: PrioritySelectorProps) {
    const id = useId();
+   const t = useTranslations('common');
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(priority.id);
 
@@ -62,7 +64,9 @@ export function PrioritySelector({ priority, onChange }: PrioritySelectorProps) 
                      return null;
                   })()}
                   <span>
-                     {value ? priorities.find((p) => p.id === value)?.name : 'No priority'}
+                     {value
+                        ? priorities.find((p) => p.id === value)?.name
+                        : t('createIssue.noPriority')}
                   </span>
                </Button>
             </PopoverTrigger>
@@ -71,9 +75,9 @@ export function PrioritySelector({ priority, onChange }: PrioritySelectorProps) 
                align="start"
             >
                <Command>
-                  <CommandInput placeholder="Set priority..." />
+                  <CommandInput placeholder={t('createIssue.setPriority')} />
                   <CommandList>
-                     <CommandEmpty>No priority found.</CommandEmpty>
+                     <CommandEmpty>{t('createIssue.noPriorityFound')}</CommandEmpty>
                      <CommandGroup>
                         {priorities.map((item) => (
                            <CommandItem

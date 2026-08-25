@@ -24,12 +24,12 @@ export interface DocumentFolder {
 export const documentFolders: DocumentFolder[] = [
    {
       id: 'team-documents',
-      name: 'Team documents',
+      name: '团队文档',
       icon: '📁',
       documents: [
          {
             id: 'doc-1',
-            name: 'LNDev UI Team Calendar',
+            name: 'LNDev UI 团队日历',
             icon: '📆',
             creator: users[0],
             createdAt: '2026-07-08',
@@ -40,12 +40,12 @@ export const documentFolders: DocumentFolder[] = [
    },
    {
       id: 'design-tokens-v2',
-      name: 'Design Tokens v2',
+      name: '设计令牌 v2',
       icon: '🎨',
       documents: [
          {
             id: 'doc-2',
-            name: 'PRD - Design Tokens v2 (OKLCH migration)',
+            name: 'PRD - 设计令牌 v2（OKLCH 迁移）',
             icon: '📄',
             creator: users[2],
             createdAt: '2026-06-15',
@@ -53,7 +53,7 @@ export const documentFolders: DocumentFolder[] = [
          },
          {
             id: 'doc-3',
-            name: 'Spec: Token naming conventions',
+            name: '规范：令牌命名约定',
             icon: '📐',
             creator: users[4],
             createdAt: '2026-06-18',
@@ -63,12 +63,12 @@ export const documentFolders: DocumentFolder[] = [
    },
    {
       id: 'component-playground',
-      name: 'Component Playground',
+      name: '组件演练场',
       icon: '🧪',
       documents: [
          {
             id: 'doc-4',
-            name: 'PRD - Interactive component playground',
+            name: 'PRD - 交互式组件演练场',
             icon: '📄',
             creator: users[6],
             createdAt: '2026-06-02',
@@ -76,7 +76,7 @@ export const documentFolders: DocumentFolder[] = [
          },
          {
             id: 'doc-5',
-            name: 'Playground sharing via URL — technical notes',
+            name: '通过 URL 共享演练场 — 技术说明',
             icon: '🔗',
             creator: users[8],
             createdAt: '2026-06-10',
@@ -86,12 +86,12 @@ export const documentFolders: DocumentFolder[] = [
    },
    {
       id: 'data-table-virtualization',
-      name: 'Data Table Virtualization',
+      name: '数据表格虚拟化',
       icon: '🗂️',
       documents: [
          {
             id: 'doc-6',
-            name: 'PRD - Virtualized Data Table (10k+ rows)',
+            name: 'PRD - 虚拟化数据表格（10k+ 行）',
             icon: '📄',
             creator: users[4],
             createdAt: '2026-07-05',
@@ -101,12 +101,12 @@ export const documentFolders: DocumentFolder[] = [
    },
    {
       id: 'accessibility-audit',
-      name: 'Accessibility Audit Q3',
+      name: '无障碍审计 Q3',
       icon: '♿',
       documents: [
          {
             id: 'doc-7',
-            name: 'WCAG 2.2 AA audit checklist',
+            name: 'WCAG 2.2 AA 审计清单',
             icon: '✅',
             creator: users[10],
             createdAt: '2026-06-20',
@@ -114,7 +114,7 @@ export const documentFolders: DocumentFolder[] = [
          },
          {
             id: 'doc-8',
-            name: 'Focus management guidelines',
+            name: '焦点管理指南',
             icon: '🎯',
             creator: users[10],
             createdAt: '2026-06-22',
@@ -124,12 +124,12 @@ export const documentFolders: DocumentFolder[] = [
    },
    {
       id: 'docs-revamp',
-      name: 'Docs Site Revamp',
+      name: '文档站点改版',
       icon: '📚',
       documents: [
          {
             id: 'doc-9',
-            name: 'PRD - Docs search & prop table indexing',
+            name: 'PRD - 文档搜索与属性表索引',
             icon: '📄',
             creator: users[14],
             createdAt: '2026-05-28',
@@ -137,7 +137,7 @@ export const documentFolders: DocumentFolder[] = [
          },
          {
             id: 'doc-10',
-            name: 'Content style guide for component docs',
+            name: '组件文档内容风格指南',
             icon: '✍️',
             creator: users[9],
             createdAt: '2026-05-30',
@@ -147,12 +147,12 @@ export const documentFolders: DocumentFolder[] = [
    },
    {
       id: 'theming-engine',
-      name: 'Theming Engine',
+      name: '主题引擎',
       icon: '🌗',
       documents: [
          {
             id: 'doc-11',
-            name: 'PRD - AI-assisted theme generator',
+            name: 'PRD - AI 辅助主题生成器',
             icon: '📄',
             creator: users[7],
             createdAt: '2026-07-09',
@@ -160,7 +160,7 @@ export const documentFolders: DocumentFolder[] = [
          },
          {
             id: 'doc-12',
-            name: 'High-contrast preset exploration',
+            name: '高对比度预设探索',
             icon: '🔆',
             creator: users[12],
             createdAt: '2026-07-11',
@@ -170,12 +170,12 @@ export const documentFolders: DocumentFolder[] = [
    },
    {
       id: 'release-process',
-      name: 'Release Process',
+      name: '发布流程',
       icon: '🚀',
       documents: [
          {
             id: 'doc-13',
-            name: 'v2.4 release checklist',
+            name: 'v2.4 发布检查清单',
             icon: '📋',
             creator: users[5],
             createdAt: '2026-07-15',
@@ -183,7 +183,7 @@ export const documentFolders: DocumentFolder[] = [
          },
          {
             id: 'doc-14',
-            name: 'Versioning & changelog conventions',
+            name: '版本与变更日志约定',
             icon: '🏷️',
             creator: users[16],
             createdAt: '2026-05-12',
@@ -193,12 +193,12 @@ export const documentFolders: DocumentFolder[] = [
    },
    {
       id: 'cli-tooling',
-      name: 'CLI & Tooling',
+      name: 'CLI 与工具链',
       icon: '🛠️',
       documents: [
          {
             id: 'doc-15',
-            name: 'PRD - Scaffolding CLI with test files',
+            name: 'PRD - 带测试文件的脚手架 CLI',
             icon: '📄',
             creator: users[8],
             createdAt: '2026-07-01',
@@ -208,12 +208,12 @@ export const documentFolders: DocumentFolder[] = [
    },
    {
       id: 'quality',
-      name: 'Quality & Testing',
+      name: '质量与测试',
       icon: '🧷',
       documents: [
          {
             id: 'doc-16',
-            name: 'Visual regression strategy (Playwright)',
+            name: '视觉回归策略（Playwright）',
             icon: '📷',
             creator: users[18],
             createdAt: '2026-05-14',

@@ -1,0 +1,26 @@
+{
+   "title": "Inbox",
+   "menu": {
+      "deleteAll": "Delete all notifications",
+      "deleteRead": "Delete all read notifications",
+      "deleteCompleted": "Delete notifications for completed issues"
+   },
+   "ordering": {
+      "title": "Ordering",
+      "newest": "Newest",
+      "oldest": "Oldest"
+   },
+   "showSnoozed": "Show snoozed",
+   "showRead": "Show read",
+   "showUnreadFirst": "Show unread first",
+   "displayProperties": "Display properties",
+   "displayId": "ID",
+   "displayStatusAndIcon": "Status and icon",
+   "empty": {
+      "unreadNotifications": "{count, plural, one {# unread notification} other {# unread notifications}}",
+      "hint": "Select a notification from the list to view its details and take action."
+   },
+   "markAsRead": "Mark as read",
+   "open": "Open",
+   "commentPlaceholder": "Leave a comment..."
+}

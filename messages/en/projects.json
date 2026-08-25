@@ -1,0 +1,221 @@
+{
+   "tabs": {
+      "all": "All projects",
+      "active": "Active projects"
+   },
+   "projectsHeader": {
+      "title": "Projects",
+      "createProject": "Create project",
+      "display": "Display"
+   },
+   "projectHeader": {
+      "breadcrumb": "Projects",
+      "toggleInsights": "Toggle insights panel",
+      "toggleSidePanel": "Toggle side panel",
+      "tabs": {
+         "overview": "Overview",
+         "activity": "Activity",
+         "issues": "Issues"
+      }
+   },
+   "filter": {
+      "title": "Filter",
+      "health": "Health",
+      "priority": "Priority",
+      "sortBy": "Sort by",
+      "clearAll": "Clear all filters",
+      "searchHealth": "Search health...",
+      "noHealthFound": "No health found.",
+      "searchPriorities": "Search priorities...",
+      "noPrioritiesFound": "No priorities found.",
+      "sortGroups": {
+         "title": "Title",
+         "targetDate": "Targeted Date",
+         "status": "Status"
+      },
+      "sort": {
+         "aToZ": "A → Z",
+         "zToA": "Z → A",
+         "oldestToNewest": "Oldest to Newest",
+         "newestToOldest": "Newest to Oldest",
+         "lowestToHighest": "Lowest to Highest",
+         "highestToLowest": "Highest to Lowest"
+      }
+   },
+   "display": {
+      "optionsAria": "Display options",
+      "groupingLabel": "Grouping",
+      "orderingLabel": "Ordering",
+      "showClosedProjects": "Show closed projects",
+      "closed": {
+         "all": "All",
+         "hide": "Hide closed"
+      },
+      "viewOptions": {
+         "timeline": "Timeline options",
+         "board": "Board options",
+         "list": "List options"
+      },
+      "showProjectList": "Show project list",
+      "showWeekNumbers": "Show week numbers",
+      "showEmptyGroups": {
+         "board": "Show empty columns",
+         "list": "Show empty groups"
+      },
+      "displayProperties": "Display properties",
+      "reset": "Reset",
+      "setDefaultForEveryone": "Set default for everyone",
+      "view": {
+         "list": "List",
+         "board": "Board",
+         "timeline": "Timeline"
+      },
+      "grouping": {
+         "team": "Team",
+         "none": "No grouping"
+      },
+      "ordering": {
+         "start-date": "Start date",
+         "target-date": "Target date",
+         "title": "Title"
+      },
+      "properties": {
+         "milestones": "Milestones",
+         "priority": "Priority",
+         "status": "Status",
+         "health": "Health",
+         "lead": "Lead",
+         "members": "Members",
+         "targetDate": "Target date",
+         "issues": "Issues",
+         "labels": "Labels"
+      }
+   },
+   "board": {
+      "noProjects": "No projects"
+   },
+   "list": {
+      "noProjects": "No projects",
+      "columns": {
+         "name": "Name",
+         "health": "Health",
+         "priority": "Priority",
+         "lead": "Lead",
+         "targetDate": "Target date",
+         "issues": "Issues",
+         "status": "Status"
+      }
+   },
+   "timeline": {
+      "today": "Today",
+      "zoom": {
+         "year": "Year",
+         "quarter": "Quarter",
+         "month": "Month",
+         "week": "Week"
+      }
+   },
+   "insights": {
+      "projects": "projects",
+      "noUpdateExpected": "No update expected",
+      "clearFilter": "Clear filter",
+      "filter": "Filter",
+      "togglePanel": "Toggle projects insights panel",
+      "tabs": {
+         "health": "Health",
+         "teams": "Teams",
+         "leads": "Leads"
+      }
+   },
+   "empty": {
+      "nothingToShow": "Nothing to show yet."
+   },
+   "selectors": {
+      "setLead": "Set lead...",
+      "noUserFound": "No user found.",
+      "setPriority": "Set priority...",
+      "noPriorityFound": "No priority found.",
+      "setStatus": "Set status...",
+      "noStatusFound": "No status found."
+   },
+   "datePicker": {
+      "noDate": "No date"
+   },
+   "healthPopover": {
+      "subscribe": "Subscribe",
+      "newUpdate": "New update"
+   },
+   "properties": {
+      "title": "Properties",
+      "status": "Status",
+      "priority": "Priority",
+      "lead": "Lead",
+      "members": "Members",
+      "memberCount": "{count, plural, one {# member} other {# members}}",
+      "addMembers": "Add members",
+      "dates": "Dates",
+      "target": "Target",
+      "teams": "Teams",
+      "slack": "Slack",
+      "connectChannel": "Connect channel",
+      "initiatives": "Initiatives",
+      "noInitiative": "No initiative",
+      "labels": "Labels",
+      "addLabel": "Add label",
+      "resources": "Resources",
+      "noAssignee": "No assignee",
+      "unlabeled": "Unlabeled",
+      "cycle": "Cycle {id}",
+      "percentOf": "{percent}% of {total}",
+      "tabs": {
+         "assignees": "Assignees",
+         "labels": "Labels",
+         "cycles": "Cycles"
+      },
+      "activity": "Activity",
+      "seeAll": "See all"
+   },
+   "milestones": {
+      "title": "Milestones",
+      "empty": "Add milestones to organize work within your project and break it into more granular stages.",
+      "learnMore": "Learn more"
+   },
+   "progress": {
+      "title": "Progress",
+      "scope": "Scope",
+      "started": "Started",
+      "completed": "Completed"
+   },
+   "peekPanel": {
+      "openProject": "Open project",
+      "closePanel": "Close panel"
+   },
+   "outline": {
+      "description": "Description"
+   },
+   "overview": {
+      "description": "Description",
+      "writeUpdate": "Write project update",
+      "writeFirstUpdate": "Write first project update"
+   },
+   "activity": {
+      "updatePlaceholder": "Write a project update…",
+      "commentPlaceholder": "Leave a comment…",
+      "priority": "Priority",
+      "lead": "Lead",
+      "targetDate": "Target date",
+      "progress": "Progress",
+      "assigned": "assigned",
+      "setTo": "set to",
+      "noPriorityPrefix": "No priority →",
+      "progressPrefix": "0% →",
+      "writeWithAgent": "Write with Agent",
+      "postUpdate": "Post update",
+      "postComment": "Post comment",
+      "empty": "No updates yet — post the first one to keep the team in the loop.",
+      "mode": {
+         "comment": "Comment",
+         "update": "Update"
+      }
+   }
+}

@@ -14,6 +14,7 @@ import { useIssuesStore } from '@/store/issues-store';
 import { Project, projects } from '@/mock-data/projects';
 import { Box, CheckIcon, FolderIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface ProjectSelectorProps {
    project: Project | undefined;
@@ -22,6 +23,7 @@ interface ProjectSelectorProps {
 
 export function ProjectSelector({ project, onChange }: ProjectSelectorProps) {
    const id = useId();
+   const t = useTranslations('common');
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string | undefined>(project?.id);
 
@@ -69,7 +71,11 @@ export function ProjectSelector({ project, onChange }: ProjectSelectorProps) {
                   ) : (
                      <Box className="size-4" />
                   )}
-                  <span>{value ? projects.find((p) => p.id === value)?.name : 'No project'}</span>
+                  <span>
+                     {value
+                        ? projects.find((p) => p.id === value)?.name
+                        : t('createIssue.noProject')}
+                  </span>
                </Button>
             </PopoverTrigger>
             <PopoverContent
@@ -77,9 +83,9 @@ export function ProjectSelector({ project, onChange }: ProjectSelectorProps) {
                align="start"
             >
                <Command>
-                  <CommandInput placeholder="Set project..." />
+                  <CommandInput placeholder={t('createIssue.setProject')} />
                   <CommandList>
-                     <CommandEmpty>No projects found.</CommandEmpty>
+                     <CommandEmpty>{t('createIssue.noProjectsFound')}</CommandEmpty>
                      <CommandGroup>
                         <CommandItem
                            value="no-project"
@@ -88,7 +94,7 @@ export function ProjectSelector({ project, onChange }: ProjectSelectorProps) {
                         >
                            <div className="flex items-center gap-2">
                               <FolderIcon className="size-4" />
-                              No Project
+                              {t('createIssue.noProjectItem')}
                            </div>
                            {value === undefined && <CheckIcon size={16} className="ml-auto" />}
                         </CommandItem>

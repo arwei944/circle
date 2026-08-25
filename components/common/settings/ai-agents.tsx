@@ -4,76 +4,74 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { RiSlackFill } from '@remixicon/react';
 import { Bot, MessageCircleQuestion, Radar, RefreshCcw, Sparkles, Terminal } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { SettingsCard, SettingsRow, SettingsSection, SettingsShell } from './shared';
 
 const AGENT_FEATURES = [
    {
       icon: <Bot className="size-4" />,
-      title: 'LNDev Agent',
-      description: 'Configure for your workspace',
+      titleKey: 'ai.agentSection.features.agent',
+      descriptionKey: 'ai.agentSection.features.agentDesc',
    },
    {
       icon: <Terminal className="size-4" />,
-      title: 'Coding sessions',
-      description: 'Assign or ask the agent to make code changes',
+      titleKey: 'ai.agentSection.features.codingSessions',
+      descriptionKey: 'ai.agentSection.features.codingSessionsDesc',
    },
    {
       icon: <RefreshCcw className="size-4" />,
-      title: 'Loops',
-      description: 'Automated agent workflows that run on a schedule or when an issue is updated',
+      titleKey: 'ai.agentSection.features.loops',
+      descriptionKey: 'ai.agentSection.features.loopsDesc',
    },
    {
       icon: <Sparkles className="size-4" />,
-      title: 'Code Intelligence',
+      titleKey: 'ai.agentSection.features.codeIntelligence',
+      descriptionKey: 'ai.agentSection.features.codeIntelligenceDesc',
       beta: true,
-      description: 'Allow the agent to analyze and answer questions about your repositories',
    },
    {
       icon: <Radar className="size-4" />,
-      title: 'Triage Intelligence',
-      description:
-         'Find related issues and infer properties like team, project, labels, and assignee',
+      titleKey: 'ai.agentSection.features.triageIntelligence',
+      descriptionKey: 'ai.agentSection.features.triageIntelligenceDesc',
    },
 ];
 
 /** Workspace "AI & Agents" settings. */
 export default function AiAgents() {
+   const t = useTranslations('settings');
    return (
-      <SettingsShell
-         title="AI & Agents"
-         description="Automate your product development processes and operations with AI"
-      >
+      <SettingsShell title={t('ai.title')} description={t('ai.description')}>
          <SettingsSection>
             <SettingsCard>
                <SettingsRow
-                  title="Enable usage feedback"
-                  description="Improve AI functionality by sharing usage feedback. Never used to train models"
+                  title={t('ai.usageFeedback')}
+                  description={t('ai.usageFeedbackDesc')}
                   trailing={<Switch defaultChecked />}
                />
             </SettingsCard>
          </SettingsSection>
 
          <SettingsSection
-            title="LNDev Agent"
-            description="Create issues and answer questions about your workspace"
+            title={t('ai.agentSection.title')}
+            description={t('ai.agentSection.description')}
          >
             <SettingsCard>
                {AGENT_FEATURES.map((feature) => (
                   <SettingsRow
-                     key={feature.title}
+                     key={feature.titleKey}
                      icon={feature.icon}
                      title={
                         <>
-                           {feature.title}
+                           {t(feature.titleKey)}
                            {feature.beta && (
                               <span className="text-[10px] font-medium uppercase tracking-wide border rounded px-1 py-px text-muted-foreground">
-                                 Beta
+                                 {t('ai.beta')}
                               </span>
                            )}
                         </>
                      }
-                     description={feature.description}
-                     trailing={<span>Enabled</span>}
+                     description={t(feature.descriptionKey)}
+                     trailing={<span>{t('common.enabled')}</span>}
                      chevron
                      onClick={() => {}}
                   />
@@ -82,11 +80,11 @@ export default function AiAgents() {
          </SettingsSection>
 
          <SettingsSection
-            title="Agent integrations"
-            description="Integrations available to the agent"
+            title={t('ai.integrations.title')}
+            description={t('ai.integrations.description')}
             action={
                <Button size="xs" variant="secondary">
-                  Browse integrations
+                  {t('ai.integrations.browse')}
                </Button>
             }
          >
@@ -94,16 +92,16 @@ export default function AiAgents() {
                <SettingsRow
                   icon={<RiSlackFill className="size-4" />}
                   title="Slack"
-                  description="Settings and additional guidance for creating issues from Slack messages"
-                  trailing={<span>Enabled</span>}
+                  description={t('ai.integrations.slackDescription')}
+                  trailing={<span>{t('common.enabled')}</span>}
                   chevron
                   onClick={() => {}}
                />
                <SettingsRow
                   icon={<MessageCircleQuestion className="size-4" />}
                   title="Asks for Slack"
-                  description="Settings and issue templates for creating issues from Asks for Slack"
-                  trailing={<span>Enabled</span>}
+                  description={t('ai.integrations.asksForSlackDescription')}
+                  trailing={<span>{t('common.enabled')}</span>}
                   chevron
                   onClick={() => {}}
                />

@@ -2,6 +2,7 @@
 
 import { Cycle } from '@/mock-data/cycles';
 import { format, parseISO } from 'date-fns';
+import { useTranslations } from 'next-intl';
 import {
    Area,
    CartesianGrid,
@@ -32,6 +33,7 @@ interface CycleBurnupChartProps {
  * indigo completed area and a dashed ideal line.
  */
 export function CycleBurnupChart({ cycle, height = 210, compact = false }: CycleBurnupChartProps) {
+   const t = useTranslations('cycles');
    const data = cycle.burnup ?? [];
 
    if (data.length === 0) {
@@ -40,7 +42,7 @@ export function CycleBurnupChart({ cycle, height = 210, compact = false }: Cycle
             className="flex items-center justify-center text-xs text-muted-foreground border border-dashed rounded-md"
             style={{ height }}
          >
-            No progress data yet
+            {t('chart.noProgressData')}
          </div>
       );
    }
@@ -82,7 +84,7 @@ export function CycleBurnupChart({ cycle, height = 210, compact = false }: Cycle
             <Line
                type="monotone"
                dataKey="ideal"
-               name="Ideal"
+               name={t('chart.ideal')}
                stroke={COLORS.ideal}
                strokeDasharray="4 4"
                strokeWidth={1.25}
@@ -92,7 +94,7 @@ export function CycleBurnupChart({ cycle, height = 210, compact = false }: Cycle
             <Line
                type="monotone"
                dataKey="scope"
-               name="Scope"
+               name={t('chart.scope')}
                stroke={COLORS.scope}
                strokeWidth={1.5}
                dot={false}
@@ -101,7 +103,7 @@ export function CycleBurnupChart({ cycle, height = 210, compact = false }: Cycle
             <Line
                type="monotone"
                dataKey="started"
-               name="Started"
+               name={t('chart.started')}
                stroke={COLORS.started}
                strokeWidth={1.5}
                dot={false}
@@ -110,7 +112,7 @@ export function CycleBurnupChart({ cycle, height = 210, compact = false }: Cycle
             <Area
                type="monotone"
                dataKey="completed"
-               name="Completed"
+               name={t('chart.completed')}
                stroke={COLORS.completed}
                strokeWidth={1.75}
                fill={`url(#completed-fill-${cycle.id})`}
@@ -122,13 +124,14 @@ export function CycleBurnupChart({ cycle, height = 210, compact = false }: Cycle
 }
 
 export function CycleProgressLegend({ cycle }: { cycle: Cycle }) {
+   const t = useTranslations('cycles');
    const completedPercent = cycle.scope > 0 ? Math.round((cycle.completed / cycle.scope) * 100) : 0;
    const startedPercent = cycle.scope > 0 ? Math.round((cycle.started / cycle.scope) * 100) : 0;
 
    const rows = [
       {
          key: 'scope',
-         label: 'Scope',
+         label: t('chart.scope'),
          swatch: COLORS.scope,
          value: cycle.scope,
          extra: cycle.scopeDelta !== 0 ? `+${cycle.scopeDelta}%` : undefined,
@@ -136,7 +139,7 @@ export function CycleProgressLegend({ cycle }: { cycle: Cycle }) {
       },
       {
          key: 'started',
-         label: 'Started',
+         label: t('chart.started'),
          swatch: COLORS.started,
          value: cycle.started,
          extra: `${startedPercent}%`,
@@ -144,7 +147,7 @@ export function CycleProgressLegend({ cycle }: { cycle: Cycle }) {
       },
       {
          key: 'completed',
-         label: 'Completed',
+         label: t('chart.completed'),
          swatch: COLORS.completed,
          value: cycle.completed,
          extra: `${completedPercent}%`,

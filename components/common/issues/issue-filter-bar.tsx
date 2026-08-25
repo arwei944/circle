@@ -2,9 +2,11 @@
 
 import { DataTableFilter } from '@/components/data-table-filter';
 import { useDataTableFilters } from '@/components/data-table-filter/hooks/use-data-table-filters';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 import { useFilterStore } from '@/store/filter-store';
 import { useIssuesStore } from '@/store/issues-store';
-import { issueFilterColumns } from './issue-filter-columns';
+import { getIssueFilterColumns } from './issue-filter-columns';
 
 /**
  * Linear-style applied-filters row: filter chips (subject / operator /
@@ -19,11 +21,13 @@ import { issueFilterColumns } from './issue-filter-columns';
 export function IssueFilterBar() {
    const { issues } = useIssuesStore();
    const { filters, setFilters } = useFilterStore();
+   const t = useTranslations('issues');
+   const columnsConfig = useMemo(() => getIssueFilterColumns(t), [t]);
 
    const { columns, actions, strategy } = useDataTableFilters({
       strategy: 'client',
       data: issues,
-      columnsConfig: issueFilterColumns,
+      columnsConfig,
       filters,
       onFiltersChange: setFilters,
    });

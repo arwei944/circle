@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { status as allStatus, Status } from '@/mock-data/status';
+import { useTranslations } from 'next-intl';
 import { CheckIcon } from 'lucide-react';
 import { useId, useState } from 'react';
 
@@ -25,6 +26,7 @@ export function StatusWithPercent({
    percentComplete,
    onStatusChange,
 }: StatusWithPercentProps) {
+   const t = useTranslations('projects');
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(status.id);
@@ -62,9 +64,9 @@ export function StatusWithPercent({
          </PopoverTrigger>
          <PopoverContent className="border-input w-48 p-0" align="start">
             <Command>
-               <CommandInput placeholder="Set status..." />
+               <CommandInput placeholder={t('selectors.setStatus')} />
                <CommandList>
-                  <CommandEmpty>No status found.</CommandEmpty>
+                  <CommandEmpty>{t('selectors.noStatusFound')}</CommandEmpty>
                   <CommandGroup>
                      {allStatus.map((item) => {
                         const Icon = item.icon;

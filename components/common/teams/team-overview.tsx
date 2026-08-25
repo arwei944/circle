@@ -7,6 +7,7 @@ import { teams } from '@/mock-data/teams';
 import { RiDonutChartFill } from '@remixicon/react';
 import { Box, CopyMinus, Layers, Plus, Settings, SquareStack } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
 /**
@@ -16,17 +17,22 @@ import { useParams } from 'next/navigation';
 export default function TeamOverview() {
    const { orgId, teamId } = useParams<{ orgId: string; teamId: string }>();
    const team = teams.find((t) => t.id === teamId) ?? teams[0];
+   const t = useTranslations('teams');
 
    const pinnedDocuments = documentFolders
       .flatMap((folder) => folder.documents)
       .filter((doc) => doc.pinned);
 
    const goToLinks = [
-      { label: 'Team settings', icon: Settings, href: `/${orgId}/settings` },
-      { label: 'Issues', icon: CopyMinus, href: `/${orgId}/team/${team.id}/all` },
-      { label: 'Cycles', icon: RiDonutChartFill, href: `/${orgId}/team/${team.id}/cycles` },
-      { label: 'Projects', icon: Box, href: `/${orgId}/projects` },
-      { label: 'Views', icon: Layers, href: '#' },
+      { label: t('overview.goToTeamSettings'), icon: Settings, href: `/${orgId}/settings` },
+      { label: t('overview.goToIssues'), icon: CopyMinus, href: `/${orgId}/team/${team.id}/all` },
+      {
+         label: t('overview.goToCycles'),
+         icon: RiDonutChartFill,
+         href: `/${orgId}/team/${team.id}/cycles`,
+      },
+      { label: t('overview.goToProjects'), icon: Box, href: `/${orgId}/projects` },
+      { label: t('overview.goToViews'), icon: Layers, href: '#' },
    ];
 
    return (
@@ -40,11 +46,11 @@ export default function TeamOverview() {
                <h1 className="text-3xl font-semibold">{team.name}</h1>
             </div>
 
-            <p className="mt-4 text-muted-foreground">Add a description...</p>
+            <p className="mt-4 text-muted-foreground">{t('overview.addDescription')}</p>
 
             <div className="mt-12">
                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold">Team resources</h2>
+                  <h2 className="text-xl font-semibold">{t('overview.teamResources')}</h2>
                   <div className="flex items-center gap-1">
                      <Button variant="ghost" size="icon" className="size-7 rounded-full border">
                         <Plus className="size-4" />
@@ -57,7 +63,7 @@ export default function TeamOverview() {
 
                <div className="mt-4 flex flex-col gap-1">
                   {pinnedDocuments.length === 0 && (
-                     <p className="text-sm text-muted-foreground">No resources yet.</p>
+                     <p className="text-sm text-muted-foreground">{t('overview.noResourcesYet')}</p>
                   )}
                   {pinnedDocuments.map((doc) => (
                      <Link
@@ -75,7 +81,7 @@ export default function TeamOverview() {
 
          {/* Side column */}
          <div className="w-full lg:w-60 shrink-0">
-            <h3 className="text-sm font-medium text-muted-foreground">Members</h3>
+            <h3 className="text-sm font-medium text-muted-foreground">{t('overview.members')}</h3>
             <Link
                href={`/${orgId}/team/${team.id}/members`}
                className="mt-2 flex items-center gap-2 hover:opacity-80"
@@ -91,7 +97,7 @@ export default function TeamOverview() {
                <span className="text-sm text-muted-foreground">{team.members.length}</span>
             </Link>
 
-            <h3 className="text-sm font-medium text-muted-foreground mt-8">Go to</h3>
+            <h3 className="text-sm font-medium text-muted-foreground mt-8">{t('overview.goTo')}</h3>
             <div className="mt-2 flex flex-col">
                {goToLinks.map((link) => (
                   <Link

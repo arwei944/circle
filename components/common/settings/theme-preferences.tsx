@@ -9,6 +9,7 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { DarkVariant, LightVariant, ThemeMode, useThemeStore } from '@/store/theme-store';
 import { Check, ChevronDown, Pipette } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { SettingsCard, SettingsRow } from './shared';
@@ -32,13 +33,13 @@ const SWATCHES: Record<string, ThemeOption['swatch']> = {
 };
 
 const LABELS: Record<string, string> = {
-   'system': 'System preference',
-   'light': 'Light',
-   'pure-light': 'Pure Light',
-   'dark': 'Dark',
-   'magic-blue': 'Magic Blue',
-   'classic-dark': 'Classic Dark',
-   'custom': 'Custom',
+   'system': 'theme.system',
+   'light': 'theme.light',
+   'pure-light': 'theme.pureLight',
+   'dark': 'theme.dark',
+   'magic-blue': 'theme.magicBlue',
+   'classic-dark': 'theme.classicDark',
+   'custom': 'theme.custom',
 };
 
 const option = (id: string): ThemeOption => ({ id, label: LABELS[id], swatch: SWATCHES[id] });
@@ -68,12 +69,13 @@ function ThemeSelect({
    value: string;
    onChange: (id: string) => void;
 }) {
+   const t = useTranslations('settings');
    const current = options.find((candidate) => candidate.id === value) ?? options[0];
    return (
       <DropdownMenu>
          <DropdownMenuTrigger className="h-8 px-2.5 rounded-md border bg-container text-sm inline-flex items-center gap-1.5 hover:bg-accent transition-colors outline-none">
             <ThemeSwatch swatch={current.swatch} />
-            {current.label}
+            {t(current.label)}
             <ChevronDown className="size-3.5 text-muted-foreground" />
          </DropdownMenuTrigger>
          <DropdownMenuContent align="end" className="min-w-52">
@@ -84,7 +86,7 @@ function ThemeSelect({
                   className="flex items-center gap-2 text-sm"
                >
                   <ThemeSwatch swatch={candidate.swatch} />
-                  <span className="flex-1">{candidate.label}</span>
+                  <span className="flex-1">{t(candidate.label)}</span>
                   {value === candidate.id && <Check className="size-3.5" />}
                </DropdownMenuItem>
             ))}
@@ -152,6 +154,7 @@ export function ThemePreferences() {
       setDarkVariant,
       setCustom,
    } = useThemeStore();
+   const t = useTranslations('settings');
    const [mounted, setMounted] = useState(false);
    useEffect(() => setMounted(true), []);
 
@@ -181,9 +184,9 @@ export function ThemePreferences() {
    const copyTheme = async () => {
       try {
          await navigator.clipboard.writeText(JSON.stringify(custom, null, 2));
-         toast.success('Theme copied to clipboard');
+         toast.success(t('theme.toastCopied'));
       } catch {
-         toast.error('Could not access the clipboard');
+         toast.error(t('theme.toastClipboardError'));
       }
    };
 
@@ -193,9 +196,9 @@ export function ThemePreferences() {
          if (typeof parsed !== 'object' || parsed === null) throw new Error('invalid');
          setCustom(parsed);
          setMode('custom');
-         toast.success('Theme imported from clipboard');
+         toast.success(t('theme.toastImported'));
       } catch {
-         toast.error('Clipboard does not contain a valid theme');
+         toast.error(t('theme.toastImportError'));
       }
    };
 
@@ -203,8 +206,8 @@ export function ThemePreferences() {
       <>
          <SettingsCard>
             <SettingsRow
-               title="Interface theme"
-               description="Select or customize your interface color scheme"
+               title={t('theme.interfaceTheme')}
+               description={t('theme.interfaceThemeDesc')}
                trailing={
                   <ThemeSelect
                      options={ALL_OPTIONS}
@@ -216,8 +219,8 @@ export function ThemePreferences() {
             {mode !== 'custom' && (
                <>
                   <SettingsRow
-                     title="Light"
-                     description="Theme to use for light system appearance"
+                     title={t('theme.light')}
+                     description={t('theme.lightDescription')}
                      trailing={
                         <ThemeSelect
                            options={LIGHT_VARIANTS}
@@ -227,8 +230,8 @@ export function ThemePreferences() {
                      }
                   />
                   <SettingsRow
-                     title="Dark"
-                     description="Theme to use for dark system appearance"
+                     title={t('theme.dark')}
+                     description={t('theme.darkDescription')}
                      trailing={
                         <ThemeSelect
                            options={DARK_VARIANTS}
@@ -242,7 +245,7 @@ export function ThemePreferences() {
             {mode === 'custom' && (
                <>
                   <SettingsRow
-                     title="Accent"
+                     title={t('theme.accent')}
                      trailing={
                         <ColorField
                            value={custom.accent}
@@ -251,7 +254,7 @@ export function ThemePreferences() {
                      }
                   />
                   <SettingsRow
-                     title="Background"
+                     title={t('theme.background')}
                      trailing={
                         <ColorField
                            value={custom.background}
@@ -260,7 +263,7 @@ export function ThemePreferences() {
                      }
                   />
                   <SettingsRow
-                     title="Contrast"
+                     title={t('theme.contrast')}
                      trailing={
                         <ContrastField
                            value={custom.contrast}
@@ -276,7 +279,7 @@ export function ThemePreferences() {
             <>
                <SettingsCard>
                   <SettingsRow
-                     title="Custom sidebar theme"
+                     title={t('theme.sidebarTheme')}
                      trailing={
                         <Switch
                            checked={custom.sidebar}
@@ -287,7 +290,7 @@ export function ThemePreferences() {
                   {custom.sidebar && (
                      <>
                         <SettingsRow
-                           title="Accent"
+                           title={t('theme.accent')}
                            trailing={
                               <ColorField
                                  value={custom.sidebarAccent}
@@ -296,7 +299,7 @@ export function ThemePreferences() {
                            }
                         />
                         <SettingsRow
-                           title="Background"
+                           title={t('theme.background')}
                            trailing={
                               <ColorField
                                  value={custom.sidebarBackground}
@@ -305,7 +308,7 @@ export function ThemePreferences() {
                            }
                         />
                         <SettingsRow
-                           title="Contrast"
+                           title={t('theme.contrast')}
                            trailing={
                               <ContrastField
                                  value={custom.sidebarContrast}
@@ -318,20 +321,20 @@ export function ThemePreferences() {
                </SettingsCard>
                <SettingsCard>
                   <SettingsRow
-                     title="Sharing"
+                     title={t('theme.sharing')}
                      trailing={
                         <span className="inline-flex items-center gap-4 text-sm">
                            <button
                               onClick={importTheme}
                               className="hover:text-foreground text-muted-foreground transition-colors"
                            >
-                              Import theme
+                              {t('theme.import')}
                            </button>
                            <button
                               onClick={copyTheme}
                               className="hover:text-foreground text-muted-foreground transition-colors"
                            >
-                              Copy current theme
+                              {t('theme.copy')}
                            </button>
                         </span>
                      }

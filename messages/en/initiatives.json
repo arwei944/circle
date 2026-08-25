@@ -1,0 +1,112 @@
+{
+   "title": "Initiatives",
+   "newInitiative": "New initiative",
+   "someone": "someone",
+   "notFound": "Initiative not found",
+   "tabs": {
+      "overview": "Overview",
+      "activity": "Activity",
+      "projects": "Projects"
+   },
+   "listTabs": {
+      "active": "Active",
+      "planned": "Planned",
+      "all": "All initiatives"
+   },
+   "table": {
+      "name": "Name",
+      "status": "Status",
+      "priority": "Priority",
+      "owner": "Owner",
+      "target": "Target",
+      "targetDate": "Target date",
+      "projects": "Projects",
+      "health": "Health",
+      "lead": "Lead",
+      "activeProjects": "Active Projects"
+   },
+   "group": {
+      "inProgress": "In Progress",
+      "planned": "Planned",
+      "backlog": "Backlog",
+      "completed": "Completed"
+   },
+   "filter": {
+      "addPlaceholder": "Add filter...",
+      "searchPlaceholder": "Filter...",
+      "noResults": "No results.",
+      "status": "Status",
+      "priority": "Priority",
+      "owner": "Owner",
+      "health": "Health",
+      "clearFilters": "Clear filters"
+   },
+   "display": {
+      "grouping": "Grouping",
+      "noGrouping": "No grouping",
+      "ordering": "Ordering",
+      "manual": "Manual",
+      "name": "Name",
+      "displayProperties": "Display properties",
+      "properties": {
+         "description": "Description",
+         "status": "Status",
+         "priority": "Priority",
+         "owner": "Owner",
+         "targetDate": "Target date",
+         "projects": "Projects",
+         "health": "Health",
+         "activeProjects": "Active projects"
+      }
+   },
+   "health": {
+      "noUpdates": "No updates"
+   },
+   "overview": {
+      "description": "Description",
+      "addSummary": "Add a short summary…",
+      "addDescription": "Add description…",
+      "addOwner": "Add owner",
+      "addTargetDate": "Add target date",
+      "addLabel": "Add label",
+      "writeFirstUpdate": "Write first initiative update",
+      "addDocumentOrLink": "Add document or link…",
+      "resources": "Resources"
+   },
+   "properties": {
+      "title": "Properties",
+      "status": "Status",
+      "priority": "Priority",
+      "owner": "Owner",
+      "targetDate": "Target date",
+      "labels": "Labels",
+      "projects": "Projects"
+   },
+   "activity": {
+      "title": "Activity",
+      "seeAll": "See all",
+      "renamed": "{name} renamed the initiative · {date}",
+      "created": "{name} created the initiative · {date}",
+      "statusChanged": "{name} changed the status to {status}",
+      "projectsAdded": "{count, plural, one {# project added to the initiative} other {# projects added to the initiative}}"
+   },
+   "projects": {
+      "completed": "{completed} / {total} completed"
+   },
+   "sidePanel": {
+      "owner": "Owner",
+      "team": "Team",
+      "health": "Health",
+      "noOwner": "No owner"
+   },
+   "progress": {
+      "title": "Progress",
+      "status": "Status",
+      "health": "Health",
+      "teams": "Teams",
+      "leads": "Leads",
+      "completed": "Completed",
+      "started": "Started",
+      "scope": "Scope"
+   }
+}

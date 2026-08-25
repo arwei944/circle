@@ -7,19 +7,21 @@ import { cn } from '@/lib/utils';
 import { useSearchStore } from '@/store/search-store';
 import { SearchIcon } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import Notifications from './notifications';
 
 const ISSUE_VIEW_TABS = [
-   { label: 'Active', segment: 'active' },
-   { label: 'Backlog', segment: 'backlog' },
-   { label: 'All issues', segment: 'all' },
-];
+   { key: 'active', segment: 'active' },
+   { key: 'backlog', segment: 'backlog' },
+   { key: 'allIssues', segment: 'all' },
+] as const;
 
 function IssueViewTabs() {
    const { orgId, teamId } = useParams<{ orgId: string; teamId: string }>();
    const pathname = usePathname();
+   const t = useTranslations('issues');
 
    return (
       <div className="flex items-center gap-1">
@@ -37,7 +39,7 @@ function IssueViewTabs() {
                         : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-accent/50'
                   )}
                >
-                  {tab.label}
+                  {t(`tabs.${tab.key}`)}
                </Link>
             );
          })}
@@ -51,6 +53,7 @@ export default function HeaderNav() {
    const searchInputRef = useRef<HTMLInputElement>(null);
    const searchContainerRef = useRef<HTMLDivElement>(null);
    const previousValueRef = useRef<string>('');
+   const t = useTranslations('issues');
 
    useEffect(() => {
       if (isSearchOpen && searchInputRef.current) {
@@ -110,7 +113,7 @@ export default function HeaderNav() {
                            }
                         }
                      }}
-                     placeholder="Search issues..."
+                     placeholder={t('search.placeholder')}
                      className="pl-8 h-7 text-sm"
                      onKeyDown={(e) => {
                         if (e.key === 'Escape') {
@@ -130,7 +133,7 @@ export default function HeaderNav() {
                      size="icon"
                      onClick={toggleSearch}
                      className="h-8 w-8"
-                     aria-label="Search"
+                     aria-label={t('search.label')}
                   >
                      <SearchIcon className="h-4 w-4" />
                   </Button>

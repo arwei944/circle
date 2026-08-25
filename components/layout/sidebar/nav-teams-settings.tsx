@@ -13,13 +13,15 @@ import {
 import { teams } from '@/mock-data/teams';
 import { Button } from '@/components/ui/button';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export function NavTeamsSettings() {
    const { orgId } = useParams<{ orgId: string }>();
+   const t = useTranslations('common');
    const joinedTeams = teams.filter((t) => t.joined);
    return (
       <SidebarGroup>
-         <SidebarGroupLabel>Your teams</SidebarGroupLabel>
+         <SidebarGroupLabel>{t('sidebar.yourTeams')}</SidebarGroupLabel>
          <SidebarMenu>
             {joinedTeams.map((team) => (
                <SidebarMenuItem key={team.id}>
@@ -38,7 +40,7 @@ export function NavTeamsSettings() {
                   <Button variant="ghost" className="w-full justify-start gap-2 px-2" asChild>
                      <Link href={`/${orgId}/settings/teams/new`}>
                         <PlusIcon className="size-4" />
-                        <span>Join or create a team</span>
+                        <span>{t('sidebar.joinOrCreateTeam')}</span>
                      </Link>
                   </Button>
                </SidebarMenuButton>

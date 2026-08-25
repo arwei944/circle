@@ -1,0 +1,57 @@
+{
+   "common": {
+      "filesChanged": "{count, plural, one {# file changed} other {# files changed}}",
+      "reviewed": "Reviewed",
+      "open": "Open",
+      "merged": "Merged",
+      "closed": "Closed"
+   },
+   "overview": {
+      "implementation": "Implementation",
+      "tests": "Tests",
+      "description": "Description",
+      "summary": "Summary",
+      "ticket": "Ticket",
+      "testPlan": "Test plan",
+      "project": "Project",
+      "deployment": "Deployment",
+      "actions": "Actions",
+      "leaveReply": "Leave a reply...",
+      "committedViaAgent": "Atlas committed via LNDev Agent",
+      "reviewResults": "Review results",
+      "review": "Review",
+      "verdict": "Verdict",
+      "critical": "Critical",
+      "high": "High",
+      "medium": "Medium",
+      "status": "Status",
+      "resolves": "Resolves",
+      "reviewers": "Reviewers",
+      "addReviewers": "Add reviewers",
+      "checks": "Checks",
+      "checksPassed": "{passed} / {total} passed",
+      "gate": "gate"
+   },
+   "diff": {
+      "files": "Files",
+      "commits": "Commits",
+      "allCommits": "All commits",
+      "commitCount": "{count, plural, one {# commit} other {# commits}}",
+      "filterFiles": "Filter files...",
+      "unchangedLines": "{count, plural, one {# unchanged line} other {# unchanged lines}}"
+   },
+   "detail": {
+      "overview": "Overview",
+      "guide": "Guide",
+      "diff": "Diff",
+      "reviewNotFound": "Review not found",
+      "preview": "Preview"
+   },
+   "list": {
+      "title": "Reviews",
+      "forYou": "For you",
+      "created": "Created",
+      "completed": "Completed",
+      "reviewCount": "{count, plural, one {# review} other {# reviews}}"
+   }
+}

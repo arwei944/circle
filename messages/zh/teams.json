@@ -1,0 +1,76 @@
+{
+   "tabs": {
+      "overview": "概览",
+      "documents": "文档",
+      "members": "成员"
+   },
+   "teamsPage": {
+      "title": "团队",
+      "addTeam": "添加团队",
+      "display": "显示",
+      "count": "{count, plural, one{# 个团队} other{# 个团队}}"
+   },
+   "columns": {
+      "name": "名称",
+      "membership": "成员身份",
+      "owners": "负责人",
+      "members": "成员",
+      "cycle": "周期",
+      "projects": "项目",
+      "created": "创建时间",
+      "updated": "更新时间"
+   },
+   "nav": {
+      "projects": "项目",
+      "views": "视图"
+   },
+   "membership": {
+      "joined": "已加入",
+      "notJoined": "未加入"
+   },
+   "overview": {
+      "addDescription": "添加描述...",
+      "teamResources": "团队资源",
+      "noResourcesYet": "暂无资源。",
+      "members": "成员",
+      "goTo": "跳转到",
+      "goToTeamSettings": "团队设置",
+      "goToIssues": "问题",
+      "goToCycles": "周期",
+      "goToProjects": "项目",
+      "goToViews": "视图"
+   },
+   "documents": {
+      "name": "名称 ↓",
+      "newDocument": "新建文档",
+      "created": "创建时间",
+      "lastEdited": "上次编辑"
+   },
+   "members": {
+      "name": "名称 ↓",
+      "addMember": "添加成员",
+      "email": "邮箱",
+      "role": "角色"
+   },
+   "filter": {
+      "filter": "筛选",
+      "members": "成员",
+      "identifiers": "标识符",
+      "sortBy": "排序方式",
+      "clearAllFilters": "清除所有筛选",
+      "status": "状态",
+      "name": "名称",
+      "sortAsc": "A → Z",
+      "sortDesc": "Z → A",
+      "membersAsc": "成员数量（升序）",
+      "membersDesc": "成员数量（降序）",
+      "projects": "项目",
+      "projectsAsc": "项目数量（升序）",
+      "projectsDesc": "项目数量（降序）"
+   },
+   "displayOptions": {
+      "ariaLabel": "显示选项",
+      "ordering": "排序",
+      "displayProperties": "显示属性"
+   }
+}

@@ -16,6 +16,7 @@ import { teams } from '@/mock-data/teams';
 import { useViewsDisplayStore, ViewsOrdering } from '@/store/views-display-store';
 import { ArrowDown, Plus, SlidersHorizontal } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useMemo } from 'react';
@@ -43,6 +44,7 @@ const formatDate = (iso: string): string => {
 
 function DisplayOptions() {
    const { ordering, displayProperties, setOrdering, toggleProperty } = useViewsDisplayStore();
+   const t = useTranslations('views');
 
    return (
       <Popover>
@@ -53,7 +55,7 @@ function DisplayOptions() {
          </PopoverTrigger>
          <PopoverContent align="end" className="w-72 p-3 flex flex-col gap-3">
             <div className="flex items-center justify-between">
-               <span className="text-xs text-muted-foreground">Ordering</span>
+               <span className="text-xs text-muted-foreground">{t('ordering')}</span>
                <Select
                   value={ordering}
                   onValueChange={(value) => setOrdering(value as ViewsOrdering)}
@@ -62,20 +64,20 @@ function DisplayOptions() {
                      <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                     <SelectItem value="name">Name</SelectItem>
-                     <SelectItem value="created">Created</SelectItem>
-                     <SelectItem value="updated">Updated</SelectItem>
+                     <SelectItem value="name">{t('name')}</SelectItem>
+                     <SelectItem value="created">{t('created')}</SelectItem>
+                     <SelectItem value="updated">{t('updated')}</SelectItem>
                   </SelectContent>
                </Select>
             </div>
             <div className="flex flex-col gap-2">
-               <span className="text-xs text-muted-foreground">Display properties</span>
+               <span className="text-xs text-muted-foreground">{t('displayProperties')}</span>
                <div className="flex flex-wrap gap-1.5">
                   {(
                      [
-                        ['created', 'Created'],
-                        ['updated', 'Updated'],
-                        ['owner', 'Owner'],
+                        ['created', t('created')],
+                        ['updated', t('updated')],
+                        ['owner', t('owner')],
                      ] as const
                   ).map(([key, label]) => (
                      <button
@@ -144,6 +146,7 @@ function ViewRow({ view, orgId }: { view: View; orgId: string }) {
  */
 export default function Views({ teamId }: { teamId?: string }) {
    const { orgId } = useParams<{ orgId: string }>();
+   const t = useTranslations('views');
    const [tab, setTab] = useQueryState('tab', parseAsStringLiteral(TABS).withDefault('issues'));
    const { ordering } = useViewsDisplayStore();
    const team = teamId ? teams.find((entry) => entry.id === teamId) : undefined;
@@ -173,7 +176,7 @@ export default function Views({ teamId }: { teamId?: string }) {
                            : 'text-muted-foreground hover:bg-accent/50'
                      )}
                   >
-                     {candidate}
+                     {t(`tab.${candidate}`)}
                   </button>
                ))}
             </div>
@@ -181,7 +184,7 @@ export default function Views({ teamId }: { teamId?: string }) {
          </div>
 
          <div className="flex items-center gap-1 px-6 py-1.5 text-xs text-muted-foreground border-b">
-            Name
+            {t('name')}
             <ArrowDown className="size-3" />
          </div>
 
@@ -198,7 +201,7 @@ export default function Views({ teamId }: { teamId?: string }) {
                )}
                <span className="font-medium">{team ? team.name : 'LNDev UI'}</span>
                <span className="text-muted-foreground text-xs">
-                  · {team ? 'Team' : 'Workspace'}
+                  · {team ? t('team') : t('workspace')}
                </span>
             </span>
             <Button size="xs" variant="ghost">
@@ -211,7 +214,7 @@ export default function Views({ teamId }: { teamId?: string }) {
          ))}
          {list.length === 0 && (
             <div className="flex items-center justify-center py-16 text-sm text-muted-foreground">
-               No views yet
+               {t('noViews')}
             </div>
          )}
       </div>

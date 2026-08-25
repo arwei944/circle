@@ -5,15 +5,15 @@ export interface LabelInterface {
 }
 
 export const labels: LabelInterface[] = [
-   { id: 'ui', name: 'UI Enhancement', color: 'purple' },
-   { id: 'bug', name: 'Bug', color: 'red' },
-   { id: 'feature', name: 'Feature', color: 'green' },
-   { id: 'documentation', name: 'Documentation', color: 'blue' },
-   { id: 'refactor', name: 'Refactor', color: 'yellow' },
-   { id: 'performance', name: 'Performance', color: 'orange' },
-   { id: 'design', name: 'Design', color: 'pink' },
-   { id: 'security', name: 'Security', color: 'gray' },
-   { id: 'accessibility', name: 'Accessibility', color: 'indigo' },
-   { id: 'testing', name: 'Testing', color: 'teal' },
-   { id: 'internationalization', name: 'Internationalization', color: 'cyan' },
+   { id: 'ui', name: 'UI 优化', color: 'purple' },
+   { id: 'bug', name: '缺陷', color: 'red' },
+   { id: 'feature', name: '功能', color: 'green' },
+   { id: 'documentation', name: '文档', color: 'blue' },
+   { id: 'refactor', name: '重构', color: 'yellow' },
+   { id: 'performance', name: '性能', color: 'orange' },
+   { id: 'design', name: '设计', color: 'pink' },
+   { id: 'security', name: '安全', color: 'gray' },
+   { id: 'accessibility', name: '无障碍', color: 'indigo' },
+   { id: 'testing', name: '测试', color: 'teal' },
+   { id: 'internationalization', name: '国际化', color: 'cyan' },
 ];

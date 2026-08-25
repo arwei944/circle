@@ -1,0 +1,76 @@
+{
+   "tabs": {
+      "overview": "Overview",
+      "documents": "Documents",
+      "members": "Members"
+   },
+   "teamsPage": {
+      "title": "Teams",
+      "addTeam": "Add team",
+      "display": "Display",
+      "count": "{count, plural, one{# team} other{# teams}}"
+   },
+   "columns": {
+      "name": "Name",
+      "membership": "Membership",
+      "owners": "Owners",
+      "members": "Members",
+      "cycle": "Cycle",
+      "projects": "Projects",
+      "created": "Created",
+      "updated": "Updated"
+   },
+   "nav": {
+      "projects": "Projects",
+      "views": "Views"
+   },
+   "membership": {
+      "joined": "Joined",
+      "notJoined": "Not-Joined"
+   },
+   "overview": {
+      "addDescription": "Add a description...",
+      "teamResources": "Team resources",
+      "noResourcesYet": "No resources yet.",
+      "members": "Members",
+      "goTo": "Go to",
+      "goToTeamSettings": "Team settings",
+      "goToIssues": "Issues",
+      "goToCycles": "Cycles",
+      "goToProjects": "Projects",
+      "goToViews": "Views"
+   },
+   "documents": {
+      "name": "Name ↓",
+      "newDocument": "New document",
+      "created": "Created",
+      "lastEdited": "Last edited"
+   },
+   "members": {
+      "name": "Name ↓",
+      "addMember": "Add a member",
+      "email": "Email",
+      "role": "Role"
+   },
+   "filter": {
+      "filter": "Filter",
+      "members": "Members",
+      "identifiers": "Identifiers",
+      "sortBy": "Sort by",
+      "clearAllFilters": "Clear all filters",
+      "status": "Status",
+      "name": "Name",
+      "sortAsc": "A → Z",
+      "sortDesc": "Z → A",
+      "membersAsc": "No. of Members (asc)",
+      "membersDesc": "No. of Members (desc)",
+      "projects": "Projects",
+      "projectsAsc": "No. of Projects (asc)",
+      "projectsDesc": "No. of Projects (desc)"
+   },
+   "displayOptions": {
+      "ariaLabel": "Display options",
+      "ordering": "Ordering",
+      "displayProperties": "Display properties"
+   }
+}

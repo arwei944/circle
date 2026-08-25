@@ -5,6 +5,7 @@ import { Team } from '@/mock-data/teams';
 import { getCyclesByTeam } from '@/mock-data/cycles';
 import { useTeamsDisplayStore } from '@/store/teams-display-store';
 import { Box, Check, Play } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface TeamLineProps {
    team: Team;
@@ -22,6 +23,7 @@ const UPDATED_DATES = ['Jul 12', 'Jul 20', 'Jul 27', 'Jul 30', 'Aug 1', 'Aug 3']
 
 export default function TeamLine({ team }: TeamLineProps) {
    const { displayProperties } = useTeamsDisplayStore();
+   const t = useTranslations('teams');
    const cycles = getCyclesByTeam(team.id);
    const uniqueProjects = new Set(team.projects.map((project) => project.id)).size;
    const owner = team.members[0];
@@ -45,7 +47,7 @@ export default function TeamLine({ team }: TeamLineProps) {
                {team.joined && (
                   <span className="inline-flex items-center gap-1 text-xs border rounded-md px-1.5 py-0.5 text-muted-foreground">
                      <Check className="size-3" />
-                     Joined
+                     {t('membership.joined')}
                   </span>
                )}
             </div>

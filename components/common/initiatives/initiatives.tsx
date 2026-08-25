@@ -30,10 +30,7 @@ import {
 import { priorities } from '@/mock-data/priorities';
 import { health as allHealth } from '@/mock-data/projects';
 import { users } from '@/mock-data/users';
-import {
-   InitiativesFilterType,
-   useInitiativesFilterStore,
-} from '@/store/initiatives-filter-store';
+import { InitiativesFilterType, useInitiativesFilterStore } from '@/store/initiatives-filter-store';
 import {
    InitiativesDisplayProperties,
    useInitiativesDisplayStore,
@@ -50,6 +47,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useMemo, useState } from 'react';
 import { InitiativeStatusIcon } from './initiative-status-icon';
@@ -57,10 +55,10 @@ import { InitiativesSidePanel } from './initiatives-side-panel';
 
 const TABS = ['active', 'planned', 'all'] as const;
 
-const TAB_ITEMS: { label: string; value: (typeof TABS)[number] }[] = [
-   { label: 'Active', value: 'active' },
-   { label: 'Planned', value: 'planned' },
-   { label: 'All initiatives', value: 'all' },
+const TAB_ITEMS: { labelKey: string; value: (typeof TABS)[number] }[] = [
+   { labelKey: 'active', value: 'active' },
+   { labelKey: 'planned', value: 'planned' },
+   { labelKey: 'all', value: 'all' },
 ];
 
 /* --------------------------------- filter --------------------------------- */
@@ -72,6 +70,7 @@ function InitiativesFilter() {
       useInitiativesFilterStore();
 
    const count = getActiveFiltersCount();
+   const t = useTranslations('initiatives');
 
    return (
       <Popover
@@ -93,33 +92,37 @@ function InitiativesFilter() {
          </PopoverTrigger>
          <PopoverContent align="end" className="w-60 p-0">
             <Command>
-               <CommandInput placeholder={active ? 'Filter...' : 'Add filter...'} />
+               <CommandInput
+                  placeholder={active ? t('filter.searchPlaceholder') : t('filter.addPlaceholder')}
+               />
                <CommandList>
-                  <CommandEmpty>No results.</CommandEmpty>
+                  <CommandEmpty>{t('filter.noResults')}</CommandEmpty>
                   {!active && (
                      <CommandGroup>
                         <CommandItem onSelect={() => setActive('status')}>
                            <BadgeCheck className="size-4 text-muted-foreground" />
-                           Status
+                           {t('filter.status')}
                            <ChevronRight className="ml-auto size-3.5 text-muted-foreground" />
                         </CommandItem>
                         <CommandItem onSelect={() => setActive('priority')}>
                            <SlidersHorizontal className="size-4 text-muted-foreground" />
-                           Priority
+                           {t('filter.priority')}
                            <ChevronRight className="ml-auto size-3.5 text-muted-foreground" />
                         </CommandItem>
                         <CommandItem onSelect={() => setActive('owner')}>
                            <UserRound className="size-4 text-muted-foreground" />
-                           Owner
+                           {t('filter.owner')}
                            <ChevronRight className="ml-auto size-3.5 text-muted-foreground" />
                         </CommandItem>
                         <CommandItem onSelect={() => setActive('health')}>
                            <HeartPulse className="size-4 text-muted-foreground" />
-                           Health
+                           {t('filter.health')}
                            <ChevronRight className="ml-auto size-3.5 text-muted-foreground" />
                         </CommandItem>
                         {count > 0 && (
-                           <CommandItem onSelect={() => clearFilters()}>Clear filters</CommandItem>
+                           <CommandItem onSelect={() => clearFilters()}>
+                              {t('filter.clearFilters')}
+                           </CommandItem>
                         )}
                      </CommandGroup>
                   )}
@@ -206,20 +209,21 @@ function InitiativesFilter() {
 
 /* ----------------------------- display options ---------------------------- */
 
-const PROPERTY_CHIPS: { key: keyof InitiativesDisplayProperties; label: string }[] = [
-   { key: 'description', label: 'Description' },
-   { key: 'status', label: 'Status' },
-   { key: 'priority', label: 'Priority' },
-   { key: 'owner', label: 'Owner' },
-   { key: 'target', label: 'Target date' },
-   { key: 'projects', label: 'Projects' },
-   { key: 'health', label: 'Health' },
-   { key: 'activeProjects', label: 'Active projects' },
+const PROPERTY_CHIPS: { key: keyof InitiativesDisplayProperties; labelKey: string }[] = [
+   { key: 'description', labelKey: 'description' },
+   { key: 'status', labelKey: 'status' },
+   { key: 'priority', labelKey: 'priority' },
+   { key: 'owner', labelKey: 'owner' },
+   { key: 'target', labelKey: 'targetDate' },
+   { key: 'projects', labelKey: 'projects' },
+   { key: 'health', labelKey: 'health' },
+   { key: 'activeProjects', labelKey: 'activeProjects' },
 ];
 
 function InitiativesDisplayOptions() {
    const { grouping, ordering, displayProperties, setGrouping, setOrdering, toggleProperty } =
       useInitiativesDisplayStore();
+   const t = useTranslations('initiatives');
 
    return (
       <Popover>
@@ -230,7 +234,7 @@ function InitiativesDisplayOptions() {
          </PopoverTrigger>
          <PopoverContent align="end" className="w-80 p-3 flex flex-col gap-3">
             <div className="flex items-center justify-between">
-               <span className="text-xs text-muted-foreground">Grouping</span>
+               <span className="text-xs text-muted-foreground">{t('display.grouping')}</span>
                <Select
                   value={grouping}
                   onValueChange={(value) => setGrouping(value as typeof grouping)}
@@ -239,13 +243,13 @@ function InitiativesDisplayOptions() {
                      <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                     <SelectItem value="none">No grouping</SelectItem>
-                     <SelectItem value="status">Status</SelectItem>
+                     <SelectItem value="none">{t('display.noGrouping')}</SelectItem>
+                     <SelectItem value="status">{t('filter.status')}</SelectItem>
                   </SelectContent>
                </Select>
             </div>
             <div className="flex items-center justify-between">
-               <span className="text-xs text-muted-foreground">Ordering</span>
+               <span className="text-xs text-muted-foreground">{t('display.ordering')}</span>
                <Select
                   value={ordering}
                   onValueChange={(value) => setOrdering(value as typeof ordering)}
@@ -254,16 +258,18 @@ function InitiativesDisplayOptions() {
                      <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                     <SelectItem value="manual">Manual</SelectItem>
-                     <SelectItem value="name">Name</SelectItem>
-                     <SelectItem value="target">Target date</SelectItem>
+                     <SelectItem value="manual">{t('display.manual')}</SelectItem>
+                     <SelectItem value="name">{t('display.name')}</SelectItem>
+                     <SelectItem value="target">{t('table.targetDate')}</SelectItem>
                   </SelectContent>
                </Select>
             </div>
             <div className="flex flex-col gap-2">
-               <span className="text-xs text-muted-foreground">Display properties</span>
+               <span className="text-xs text-muted-foreground">
+                  {t('display.displayProperties')}
+               </span>
                <div className="flex flex-wrap gap-1.5">
-                  {PROPERTY_CHIPS.map(({ key, label }) => (
+                  {PROPERTY_CHIPS.map(({ key, labelKey }) => (
                      <button
                         key={key}
                         onClick={() => toggleProperty(key)}
@@ -274,7 +280,7 @@ function InitiativesDisplayOptions() {
                               : 'text-muted-foreground hover:bg-accent/50'
                         )}
                      >
-                        {label}
+                        {t(`display.properties.${labelKey}`)}
                      </button>
                   ))}
                </div>
@@ -326,6 +332,7 @@ function InitiativeRow({
    showStatus: boolean;
 }) {
    const { displayProperties } = useInitiativesDisplayStore();
+   const t = useTranslations('initiatives');
    const projects = getInitiativeProjects(initiative);
    const completed = countCompletedProjects(initiative);
 
@@ -394,7 +401,9 @@ function InitiativeRow({
                         : undefined
                   }
                />
-               {initiative.health.id === 'no-update' ? 'No updates' : initiative.health.name}
+               {initiative.health.id === 'no-update'
+                  ? t('health.noUpdates')
+                  : initiative.health.name}
             </span>
          )}
          {displayProperties.activeProjects && (
@@ -410,6 +419,7 @@ function InitiativeRow({
 
 export default function Initiatives() {
    const { orgId } = useParams<{ orgId: string }>();
+   const t = useTranslations('initiatives');
    const [tab, setTab] = useQueryState('tab', parseAsStringLiteral(TABS).withDefault('active'));
    const { filters } = useInitiativesFilterStore();
    const { grouping, ordering, displayProperties } = useInitiativesDisplayStore();
@@ -466,7 +476,7 @@ export default function Initiatives() {
                               : 'text-muted-foreground hover:bg-accent/50'
                         )}
                      >
-                        {item.label}
+                        {t(`listTabs.${item.labelKey}`)}
                      </button>
                   ))}
                </div>
@@ -484,27 +494,27 @@ export default function Initiatives() {
             </div>
 
             <div className="flex items-center gap-2 px-6 py-1.5 text-xs text-muted-foreground border-b">
-               <span className="flex-1">Name</span>
+               <span className="flex-1">{t('table.name')}</span>
                {showStatus && displayProperties.status && (
-                  <span className="hidden md:block w-28 shrink-0">Status</span>
+                  <span className="hidden md:block w-28 shrink-0">{t('table.status')}</span>
                )}
                {displayProperties.priority && (
-                  <span className="hidden sm:block w-16 shrink-0">Priority</span>
+                  <span className="hidden sm:block w-16 shrink-0">{t('table.priority')}</span>
                )}
                {displayProperties.owner && (
-                  <span className="hidden sm:block w-14 shrink-0">Owner</span>
+                  <span className="hidden sm:block w-14 shrink-0">{t('table.owner')}</span>
                )}
                {displayProperties.target && (
-                  <span className="hidden md:block w-20 shrink-0">Target</span>
+                  <span className="hidden md:block w-20 shrink-0">{t('table.target')}</span>
                )}
                {displayProperties.projects && (
-                  <span className="hidden md:block w-16 shrink-0">Projects</span>
+                  <span className="hidden md:block w-16 shrink-0">{t('table.projects')}</span>
                )}
                {displayProperties.health && (
-                  <span className="hidden xl:block w-28 shrink-0">Health</span>
+                  <span className="hidden xl:block w-28 shrink-0">{t('table.health')}</span>
                )}
                {displayProperties.activeProjects && (
-                  <span className="hidden xl:block w-24 shrink-0">Active Projects</span>
+                  <span className="hidden xl:block w-24 shrink-0">{t('table.activeProjects')}</span>
                )}
             </div>
 

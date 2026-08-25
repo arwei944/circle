@@ -1,0 +1,24 @@
+{
+   "title": "我的问题",
+   "tabs": {
+      "assigned": "已分配",
+      "created": "已创建",
+      "subscribed": "已订阅",
+      "activity": "动态"
+   },
+   "search": {
+      "placeholder": "搜索问题...",
+      "label": "搜索"
+   },
+   "issueCount": "{count} 个问题",
+   "toggleInsights": "切换洞察面板",
+   "toggleBreakdown": "切换分解面板",
+   "breakdown": {
+      "labels": "标签",
+      "priority": "优先级",
+      "projects": "项目",
+      "teams": "团队",
+      "close": "关闭面板",
+      "noData": "暂无数据"
+   }
+}

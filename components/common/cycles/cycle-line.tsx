@@ -3,6 +3,7 @@
 import { Cycle, cycleStatusLabel } from '@/mock-data/cycles';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { CapacityRing } from './capacity-ring';
 
@@ -33,6 +34,7 @@ interface CycleLineProps {
  */
 export default function CycleLine({ cycle }: CycleLineProps) {
    const { orgId, teamId } = useParams<{ orgId: string; teamId: string }>();
+   const t = useTranslations('cycles');
 
    const href =
       cycle.status === 'current'
@@ -59,24 +61,26 @@ export default function CycleLine({ cycle }: CycleLineProps) {
                      <CapacityRing value={cycle.successRate ?? 0} color="#6771c5" />
                      <span className="text-sm">
                         {cycle.successRate ?? 0}%{' '}
-                        <span className="text-muted-foreground">success</span>
+                        <span className="text-muted-foreground">{t('line.success')}</span>
                      </span>
                   </div>
                   <span className="hidden md:inline-block text-sm w-28 text-right">
-                     {cycle.completed} <span className="text-muted-foreground">completed</span>
+                     {cycle.completed}{' '}
+                     <span className="text-muted-foreground">{t('line.completed')}</span>
                   </span>
                </>
             ) : (
                <div className="hidden sm:flex items-center gap-2 w-36 justify-end whitespace-nowrap">
                   <CapacityRing value={cycle.capacity} color="#6771c5" />
                   <span className="text-sm">
-                     {cycle.capacity}% <span className="text-muted-foreground">of capacity</span>
+                     {cycle.capacity}%{' '}
+                     <span className="text-muted-foreground">{t('line.ofCapacity')}</span>
                   </span>
                </div>
             )}
 
             <span className="text-sm w-14 sm:w-20 text-right whitespace-nowrap">
-               {cycle.scope} <span className="text-muted-foreground">scope</span>
+               {cycle.scope} <span className="text-muted-foreground">{t('line.scope')}</span>
             </span>
          </div>
       </div>

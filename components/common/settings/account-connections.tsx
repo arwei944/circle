@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { INTEGRATION_LOGOS } from './integration-logos';
 import { EnabledDot, SettingsCard, SettingsRow, SettingsSection, SettingsShell } from './shared';
 
@@ -10,28 +11,32 @@ const GoogleCalendarLogo = INTEGRATION_LOGOS['google-calendar'];
 const NotionLogo = INTEGRATION_LOGOS['notion'];
 const GithubLogo = INTEGRATION_LOGOS['github'];
 
-const ConnectedTrailing = () => (
-   <span className="inline-flex items-center gap-1.5 text-sm">
-      <EnabledDot>
-         <span className="text-foreground">Connected</span>
-      </EnabledDot>
-      <ChevronDown className="size-3.5 text-muted-foreground" />
-   </span>
-);
+function ConnectedTrailing() {
+   const t = useTranslations('settings');
+   return (
+      <span className="inline-flex items-center gap-1.5 text-sm">
+         <EnabledDot>
+            <span className="text-foreground">{t('common.connected')}</span>
+         </EnabledDot>
+         <ChevronDown className="size-3.5 text-muted-foreground" />
+      </span>
+   );
+}
 
 /** Personal "Connected accounts" settings. */
 export default function AccountConnections() {
+   const t = useTranslations('settings');
    return (
       <SettingsShell
-         title="Connected accounts"
-         description="Connect your user accounts to sync attribution of your actions between apps"
+         title={t('connectedAccounts.title')}
+         description={t('connectedAccounts.description')}
       >
          <SettingsSection>
             <SettingsCard>
                <SettingsRow
                   icon={<SlackLogo className="size-4" />}
                   title="Slack"
-                  description="Sync your message attribution, and receive notifications in Slack"
+                  description={t('connectedAccounts.slackDescription')}
                   trailing={<ConnectedTrailing />}
                />
             </SettingsCard>
@@ -39,7 +44,7 @@ export default function AccountConnections() {
                <SettingsRow
                   icon={<GoogleCalendarLogo className="size-4" />}
                   title="Google Calendar"
-                  description="Sync your calendar out-of-office status to LNDev UI"
+                  description={t('connectedAccounts.googleCalendarDescription')}
                   trailing={<ConnectedTrailing />}
                />
             </SettingsCard>
@@ -47,10 +52,10 @@ export default function AccountConnections() {
                <SettingsRow
                   icon={<NotionLogo className="size-4" />}
                   title="Notion"
-                  description="Preview issues, projects, and views within Notion"
+                  description={t('connectedAccounts.notionDescription')}
                   trailing={
                      <Button size="xs" variant="ghost">
-                        Connect
+                        {t('common.connect')}
                         <ArrowUpRight className="size-3.5" />
                      </Button>
                   }
@@ -70,7 +75,7 @@ export default function AccountConnections() {
                />
                <SettingsRow
                   title="octo-relay"
-                  description="Review code in LNDev UI and sync attribution of your git-related actions"
+                  description={t('connectedAccounts.octoRelayDescription')}
                   trailing={<ConnectedTrailing />}
                />
             </SettingsCard>

@@ -14,6 +14,7 @@ import { useNotificationsStore } from '@/store/notifications-store';
 import { ArrowUpRight, Check, Paperclip, Send } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { NotificationBox } from './icons/motification-box';
 
 interface IssuePreviewProps {
@@ -27,6 +28,7 @@ interface IssuePreviewProps {
  * from issue-details) plus the notification context.
  */
 export default function IssuePreview({ notification, onMarkAsRead }: IssuePreviewProps) {
+   const t = useTranslations('inbox');
    const { orgId } = useParams<{ orgId: string }>();
    const { getUnreadCount } = useNotificationsStore();
    const { issues } = useIssuesStore();
@@ -38,11 +40,9 @@ export default function IssuePreview({ notification, onMarkAsRead }: IssuePrevie
          <div className="flex flex-col items-center justify-center h-full p-8 text-center">
             <NotificationBox className="w-16 h-16 mb-4 text-muted-foreground/50" />
             <h3 className="text-lg font-semibold text-muted-foreground mb-2">
-               {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}
+               {t('empty.unreadNotifications', { count: unreadCount })}
             </h3>
-            <p className="text-sm text-muted-foreground max-w-sm">
-               Select a notification from the list to view its details and take action.
-            </p>
+            <p className="text-sm text-muted-foreground max-w-sm">{t('empty.hint')}</p>
          </div>
       );
    }
@@ -70,12 +70,12 @@ export default function IssuePreview({ notification, onMarkAsRead }: IssuePrevie
                      className="gap-1"
                   >
                      <Check className="size-4" />
-                     Mark as read
+                     {t('markAsRead')}
                   </Button>
                )}
                <Button variant="ghost" size="xs" asChild>
                   <Link href={`/${orgId ?? 'lndev-ui'}/issue/${displayIssue.identifier}`}>
-                     Open
+                     {t('open')}
                      <ArrowUpRight className="size-3.5 ml-0.5" />
                   </Link>
                </Button>
@@ -149,7 +149,7 @@ export default function IssuePreview({ notification, onMarkAsRead }: IssuePrevie
                   <div className="relative w-full flex flex-col mt-10">
                      <Textarea
                         className="w-full rounded-lg border px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent pb-14 resize-none"
-                        placeholder="Leave a comment..."
+                        placeholder={t('commentPlaceholder')}
                         rows={3}
                      />
                      <div className="absolute right-3 bottom-3 flex items-center gap-3">

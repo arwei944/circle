@@ -13,6 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { useIssuesStore } from '@/store/issues-store';
 import { status as allStatus, Status } from '@/mock-data/status';
 import { CheckIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useEffect, useId, useState } from 'react';
 import { renderStatusIcon } from '@/lib/status-utils';
 
@@ -25,6 +26,7 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps) {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(status.id);
+   const t = useTranslations('issues');
 
    const { updateIssueStatus, filterByStatus } = useIssuesStore();
 
@@ -64,9 +66,9 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps) {
                align="start"
             >
                <Command>
-                  <CommandInput placeholder="Set status..." />
+                  <CommandInput placeholder={t('selector.setStatus')} />
                   <CommandList>
-                     <CommandEmpty>No status found.</CommandEmpty>
+                     <CommandEmpty>{t('selector.noStatusFound')}</CommandEmpty>
                      <CommandGroup>
                         {allStatus.map((item) => (
                            <CommandItem

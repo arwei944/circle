@@ -1,0 +1,61 @@
+{
+   "title": "Members",
+   "invite": "Invite",
+   "display": "Display",
+   "table": {
+      "name": "Name",
+      "status": "Status",
+      "joined": "Joined",
+      "teams": "Teams",
+      "lastSeen": "Last seen"
+   },
+   "line": {
+      "application": "Application",
+      "online": "Online"
+   },
+   "filter": {
+      "button": "Filter",
+      "status": "Status",
+      "sortBy": "Sort by",
+      "clearAll": "Clear all filters",
+      "name": "Name",
+      "az": "A → Z",
+      "za": "Z → A",
+      "joined": "Joined",
+      "oldestToNewest": "Oldest to Newest",
+      "newestToOldest": "Newest to Oldest",
+      "teams": "Teams",
+      "lowestToHighest": "Lowest to Highest",
+      "highestToLowest": "Highest to Lowest"
+   },
+   "profile": {
+      "email": "Email",
+      "localTime": "Local time",
+      "joined": "Joined",
+      "role": "Role",
+      "teams": "Teams",
+      "projects": "Projects",
+      "labels": "Labels",
+      "priority": "Priority",
+      "nothingToShow": "Nothing to show yet.",
+      "more": "+{count} more",
+      "status": {
+         "online": "Online now",
+         "away": "Away as of 11 minutes ago",
+         "offline": "Offline"
+      }
+   },
+   "tabs": {
+      "assigned": "Assigned",
+      "created": "Created"
+   },
+   "issueCount": "{count, plural, one {# issue} other {# issues}}",
+   "search": {
+      "placeholder": "Search issues...",
+      "label": "Search"
+   },
+   "panel": {
+      "toggleInsights": "Toggle insights panel",
+      "toggleProfile": "Toggle profile panel"
+   }
+}

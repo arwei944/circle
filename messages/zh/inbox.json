@@ -1,0 +1,26 @@
+{
+   "title": "收件箱",
+   "menu": {
+      "deleteAll": "删除所有通知",
+      "deleteRead": "删除所有已读通知",
+      "deleteCompleted": "删除已完成问题的通知"
+   },
+   "ordering": {
+      "title": "排序",
+      "newest": "最新优先",
+      "oldest": "最旧优先"
+   },
+   "showSnoozed": "显示稍后处理",
+   "showRead": "显示已读",
+   "showUnreadFirst": "未读优先",
+   "displayProperties": "显示属性",
+   "displayId": "ID",
+   "displayStatusAndIcon": "状态与图标",
+   "empty": {
+      "unreadNotifications": "{count, plural, other {# 条未读通知}}",
+      "hint": "从列表中选择一条通知，查看详情并采取操作。"
+   },
+   "markAsRead": "标为已读",
+   "open": "打开",
+   "commentPlaceholder": "发表评论..."
+}

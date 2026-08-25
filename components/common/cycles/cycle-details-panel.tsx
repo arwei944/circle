@@ -1,9 +1,6 @@
 'use client';
 
-import {
-   PanelFilterTarget,
-   usePanelFilter,
-} from '@/components/common/issues/use-panel-filter';
+import { PanelFilterTarget, usePanelFilter } from '@/components/common/issues/use-panel-filter';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -12,6 +9,7 @@ import { Cycle, cycleStatusLabel, formatCycleDateRange } from '@/mock-data/cycle
 import { Issue } from '@/mock-data/issues';
 import { useRightPanelStore } from '@/store/right-panel-store';
 import { Plus, User, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { CapacityRing } from './capacity-ring';
 import { CycleBurnupChart } from './cycle-burnup-chart';
@@ -64,8 +62,12 @@ interface BreakdownListProps {
 }
 
 function BreakdownList({ rows, isActive, toggle }: BreakdownListProps) {
+   const t = useTranslations('cycles');
+
    if (rows.length === 0) {
-      return <p className="text-xs text-muted-foreground px-1 py-3">Nothing to show yet.</p>;
+      return (
+         <p className="text-xs text-muted-foreground px-1 py-3">{t('details.nothingToShow')}</p>
+      );
    }
 
    return (
@@ -90,12 +92,15 @@ function BreakdownList({ rows, isActive, toggle }: BreakdownListProps) {
                   <div className="flex items-center gap-2 shrink-0 text-sm text-muted-foreground">
                      {row.filter && (
                         <span className="text-xs px-1.5 py-0.5 rounded bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                           {active ? 'Clear filter' : 'Filter'}
+                           {active ? t('details.clearFilter') : t('details.filter')}
                         </span>
                      )}
                      <CapacityRing value={row.completedPercent} color="#6771c5" />
                      <span className="whitespace-nowrap">
-                        {row.completedPercent}% of {row.total}
+                        {t('details.percentOf', {
+                           percent: row.completedPercent,
+                           total: row.total,
+                        })}
                      </span>
                   </div>
                </button>
@@ -112,6 +117,7 @@ function BreakdownList({ rows, isActive, toggle }: BreakdownListProps) {
 export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
    const { closePanel } = useRightPanelStore();
    const { isActive, toggle } = usePanelFilter();
+   const t = useTranslations('cycles');
 
    const completedPercent = cycle.scope > 0 ? Math.round((cycle.completed / cycle.scope) * 100) : 0;
    const startedPercent = cycle.scope > 0 ? Math.round((cycle.started / cycle.scope) * 100) : 0;
@@ -126,7 +132,7 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
                if (!assignee) {
                   return {
                      key: 'no-assignee',
-                     label: 'No assignee',
+                     label: t('details.noAssignee'),
                      leading: (
                         <div className="size-5 rounded-full border border-dashed flex items-center justify-center shrink-0">
                            <User className="size-3 text-muted-foreground" />
@@ -148,7 +154,7 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
                };
             }
          ),
-      [issues]
+      [issues, t]
    );
 
    const labelRows = useMemo(
@@ -162,7 +168,7 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
                   .find((candidate) => candidate.id === key);
                return {
                   key: String(key),
-                  label: label?.name ?? 'Unlabeled',
+                  label: label?.name ?? t('details.unlabeled'),
                   leading: (
                      <span
                         className="size-2.5 rounded-full shrink-0"
@@ -173,7 +179,7 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
                };
             }
          ),
-      [issues]
+      [issues, t]
    );
 
    const priorityRows = useMemo(
@@ -186,7 +192,7 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
                const Icon = priority?.icon;
                return {
                   key: String(key),
-                  label: priority?.name ?? 'No priority',
+                  label: priority?.name ?? t('details.noPriority'),
                   leading: Icon ? (
                      <Icon className="size-3.5 text-muted-foreground shrink-0" />
                   ) : null,
@@ -194,7 +200,7 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
                };
             }
          ),
-      [issues]
+      [issues, t]
    );
 
    const projectRows = useMemo(
@@ -207,7 +213,7 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
                const Icon = project?.icon;
                return {
                   key: String(key),
-                  label: project?.name ?? 'No project',
+                  label: project?.name ?? t('details.noProject'),
                   leading: Icon ? (
                      <Icon className="size-3.5 text-muted-foreground shrink-0" />
                   ) : null,
@@ -215,7 +221,7 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
                };
             }
          ),
-      [issues]
+      [issues, t]
    );
 
    return (
@@ -243,18 +249,18 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
 
             <button className="flex items-center gap-1.5 mt-3 text-sm text-muted-foreground hover:text-foreground transition-colors">
                <Plus className="size-4" />
-               Add document or link...
+               {t('details.addDocumentOrLink')}
             </button>
          </div>
 
          {/* Progress */}
          <div className="px-4 mt-6 shrink-0">
-            <h3 className="text-sm font-medium mb-3">Progress</h3>
+            <h3 className="text-sm font-medium mb-3">{t('details.progress')}</h3>
             <div className="grid grid-cols-3 gap-2 mb-3">
                <div className="flex flex-col gap-0.5">
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                      <span className="size-2 rounded-[2px] bg-[#8f9299]" />
-                     Scope
+                     {t('details.scope')}
                   </div>
                   <div className="text-sm">
                      <span className="font-medium">{cycle.scope}</span>{' '}
@@ -266,7 +272,7 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
                <div className="flex flex-col gap-0.5">
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                      <span className="size-2 rounded-[2px] bg-[#facc15]" />
-                     Started
+                     {t('details.started')}
                   </div>
                   <div className="text-sm">
                      <span className="font-medium">{cycle.started}</span>{' '}
@@ -276,7 +282,7 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
                <div className="flex flex-col gap-0.5">
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                      <span className="size-2 rounded-[2px] bg-[#6771c5]" />
-                     Completed
+                     {t('details.completed')}
                   </div>
                   <div className="text-sm">
                      <span className="font-medium">{cycle.completed}</span>{' '}
@@ -292,16 +298,16 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
             <Tabs defaultValue="assignees">
                <TabsList className="h-8 bg-transparent gap-1 p-0">
                   <TabsTrigger value="assignees" className="text-xs px-2.5 rounded-full">
-                     Assignees
+                     {t('details.tabs.assignees')}
                   </TabsTrigger>
                   <TabsTrigger value="labels" className="text-xs px-2.5 rounded-full">
-                     Labels
+                     {t('details.tabs.labels')}
                   </TabsTrigger>
                   <TabsTrigger value="priority" className="text-xs px-2.5 rounded-full">
-                     Priority
+                     {t('details.tabs.priority')}
                   </TabsTrigger>
                   <TabsTrigger value="projects" className="text-xs px-2.5 rounded-full">
-                     Projects
+                     {t('details.tabs.projects')}
                   </TabsTrigger>
                </TabsList>
                <TabsContent value="assignees">

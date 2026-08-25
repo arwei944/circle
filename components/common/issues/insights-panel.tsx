@@ -14,6 +14,7 @@ import { priorities } from '@/mock-data/priorities';
 import { Status, workflowOrderedStatus } from '@/mock-data/status';
 import { useRightPanelStore } from '@/store/right-panel-store';
 import { X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { usePanelFilter } from './use-panel-filter';
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
@@ -57,6 +58,7 @@ function StatusTick(props: { x?: number; y?: number; payload?: { value: string }
 export function InsightsPanel({ issues }: InsightsPanelProps) {
    const { closePanel } = useRightPanelStore();
    const { isActive, toggle } = usePanelFilter();
+   const t = useTranslations('issues');
 
    const rows = useMemo<InsightsRow[]>(() => {
       return workflowOrderedStatus
@@ -89,7 +91,7 @@ export function InsightsPanel({ issues }: InsightsPanelProps) {
          <div className="flex items-center justify-between px-4 pt-4 pb-2 shrink-0">
             <div className="flex items-baseline gap-1.5">
                <span className="text-xl font-semibold">{issues.length}</span>
-               <span className="text-sm text-muted-foreground">issues</span>
+               <span className="text-sm text-muted-foreground">{t('insights.issues')}</span>
             </div>
             <Button variant="ghost" size="icon" className="size-7" onClick={closePanel}>
                <X className="size-4" />
@@ -99,35 +101,35 @@ export function InsightsPanel({ issues }: InsightsPanelProps) {
          {/* Measure / Slice / Segment */}
          <div className="grid grid-cols-3 gap-2 px-4 pb-4 shrink-0">
             <div className="flex flex-col gap-1">
-               <span className="text-xs text-muted-foreground">Measure</span>
+               <span className="text-xs text-muted-foreground">{t('insights.measure')}</span>
                <Select defaultValue="issue-count">
                   <SelectTrigger className="h-8 text-xs w-full">
                      <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                     <SelectItem value="issue-count">Issue count</SelectItem>
+                     <SelectItem value="issue-count">{t('insights.issueCount')}</SelectItem>
                   </SelectContent>
                </Select>
             </div>
             <div className="flex flex-col gap-1">
-               <span className="text-xs text-muted-foreground">Slice</span>
+               <span className="text-xs text-muted-foreground">{t('insights.slice')}</span>
                <Select defaultValue="status">
                   <SelectTrigger className="h-8 text-xs w-full">
                      <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                     <SelectItem value="status">Status</SelectItem>
+                     <SelectItem value="status">{t('insights.status')}</SelectItem>
                   </SelectContent>
                </Select>
             </div>
             <div className="flex flex-col gap-1">
-               <span className="text-xs text-muted-foreground">Segment</span>
+               <span className="text-xs text-muted-foreground">{t('insights.segment')}</span>
                <Select defaultValue="priority">
                   <SelectTrigger className="h-8 text-xs w-full">
                      <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                     <SelectItem value="priority">Priority</SelectItem>
+                     <SelectItem value="priority">{t('insights.priority')}</SelectItem>
                   </SelectContent>
                </Select>
             </div>
@@ -181,8 +183,10 @@ export function InsightsPanel({ issues }: InsightsPanelProps) {
             <table className="w-full text-sm">
                <thead className="sticky top-0 bg-container z-10">
                   <tr className="text-left text-muted-foreground">
-                     <th className="font-medium px-4 py-2">Status</th>
-                     <th className="font-medium px-3 py-2 text-right">Issue count</th>
+                     <th className="font-medium px-4 py-2">{t('insights.status')}</th>
+                     <th className="font-medium px-3 py-2 text-right">
+                        {t('insights.issueCount')}
+                     </th>
                      {priorities.map((priority) => {
                         const Icon = priority.icon;
                         return (
@@ -215,7 +219,7 @@ export function InsightsPanel({ issues }: InsightsPanelProps) {
                                  <Icon />
                                  <span className="truncate max-w-28">{row.status.name}</span>
                                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-background/80 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                    {active ? 'Clear filter' : 'Filter'}
+                                    {active ? t('insights.clearFilter') : t('insights.filter')}
                                  </span>
                               </div>
                            </td>
@@ -237,7 +241,7 @@ export function InsightsPanel({ issues }: InsightsPanelProps) {
 
          <div className="shrink-0 border-t px-4 py-3">
             <button className="text-xs text-indigo-500 dark:text-indigo-400 hover:underline">
-               Set default for everyone
+               {t('insights.setDefault')}
             </button>
          </div>
       </div>

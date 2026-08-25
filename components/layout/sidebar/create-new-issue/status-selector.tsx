@@ -14,6 +14,7 @@ import { useIssuesStore } from '@/store/issues-store';
 import { status as allStatus, Status } from '@/mock-data/status';
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface StatusSelectorProps {
    status: Status;
@@ -22,6 +23,7 @@ interface StatusSelectorProps {
 
 export function StatusSelector({ status, onChange }: StatusSelectorProps) {
    const id = useId();
+   const t = useTranslations('common');
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(status.id);
 
@@ -61,7 +63,9 @@ export function StatusSelector({ status, onChange }: StatusSelectorProps) {
                      }
                      return null;
                   })()}
-                  <span>{value ? allStatus.find((s) => s.id === value)?.name : 'To do'}</span>
+                  <span>
+                     {value ? allStatus.find((s) => s.id === value)?.name : t('createIssue.toDo')}
+                  </span>
                </Button>
             </PopoverTrigger>
             <PopoverContent
@@ -69,9 +73,9 @@ export function StatusSelector({ status, onChange }: StatusSelectorProps) {
                align="start"
             >
                <Command>
-                  <CommandInput placeholder="Set status..." />
+                  <CommandInput placeholder={t('createIssue.setStatus')} />
                   <CommandList>
-                     <CommandEmpty>No status found.</CommandEmpty>
+                     <CommandEmpty>{t('createIssue.noStatusFound')}</CommandEmpty>
                      <CommandGroup>
                         {allStatus.map((item) => (
                            <CommandItem

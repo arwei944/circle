@@ -27,9 +27,11 @@ import NotificationPreview from './issue-preview';
 import IssueLine from './issue-line';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useTranslations } from 'next-intl';
 import { ChevronLeft } from 'lucide-react';
 
 export default function Inbox() {
+   const t = useTranslations('inbox');
    const {
       notifications,
       selectedNotification,
@@ -82,7 +84,7 @@ export default function Inbox() {
          <div className="flex items-center justify-between px-4 h-10 border-b border-border">
             <div className="flex items-center gap-2">
                <SidebarTrigger className="inline-flex lg:hidden" />
-               <h2 className="text-lg font-semibold">Inbox</h2>
+               <h2 className="text-lg font-semibold">{t('title')}</h2>
                <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                      <Button variant="ghost" size="xs">
@@ -92,15 +94,15 @@ export default function Inbox() {
                   <DropdownMenuContent align="start">
                      <DropdownMenuItem onClick={handleDeleteAllNotifications}>
                         <Trash2 className="w-4 h-4 mr-2" />
-                        Delete all notifications
+                        {t('menu.deleteAll')}
                      </DropdownMenuItem>
                      <DropdownMenuItem onClick={handleDeleteReadNotifications}>
                         <CheckCheck className="w-4 h-4 mr-2" />
-                        Delete all read notifications
+                        {t('menu.deleteRead')}
                      </DropdownMenuItem>
                      <DropdownMenuItem onClick={handleDeleteCompletedIssues}>
                         <Archive className="w-4 h-4 mr-2" />
-                        Delete notifications for completed issues
+                        {t('menu.deleteCompleted')}
                      </DropdownMenuItem>
                   </DropdownMenuContent>
                </DropdownMenu>
@@ -124,19 +126,19 @@ export default function Inbox() {
                   <DropdownMenuContent align="end" className="w-64">
                      <DropdownMenuLabel className="flex items-center gap-2">
                         <ArrowUpDown className="w-4 h-4" />
-                        Ordering
+                        {t('ordering.title')}
                      </DropdownMenuLabel>
                      <DropdownMenuCheckboxItem
                         checked={ordering === 'newest'}
                         onCheckedChange={() => setOrdering('newest')}
                      >
-                        Newest
+                        {t('ordering.newest')}
                      </DropdownMenuCheckboxItem>
                      <DropdownMenuCheckboxItem
                         checked={ordering === 'oldest'}
                         onCheckedChange={() => setOrdering('oldest')}
                      >
-                        Oldest
+                        {t('ordering.oldest')}
                      </DropdownMenuCheckboxItem>
 
                      <DropdownMenuSeparator />
@@ -144,7 +146,7 @@ export default function Inbox() {
                      <div className="p-2 space-y-3">
                         <div className="flex items-center justify-between">
                            <Label htmlFor="show-snoozed" className="text-sm">
-                              Show snoozed
+                              {t('showSnoozed')}
                            </Label>
                            <Switch
                               id="show-snoozed"
@@ -154,7 +156,7 @@ export default function Inbox() {
                         </div>
                         <div className="flex items-center justify-between">
                            <Label htmlFor="show-read" className="text-sm">
-                              Show read
+                              {t('showRead')}
                            </Label>
                            <Switch
                               id="show-read"
@@ -164,7 +166,7 @@ export default function Inbox() {
                         </div>
                         <div className="flex items-center justify-between">
                            <Label htmlFor="show-unread-first" className="text-sm">
-                              Show unread first
+                              {t('showUnreadFirst')}
                            </Label>
                            <Switch
                               id="show-unread-first"
@@ -176,17 +178,17 @@ export default function Inbox() {
 
                      <DropdownMenuSeparator />
 
-                     <DropdownMenuLabel>Display properties</DropdownMenuLabel>
+                     <DropdownMenuLabel>{t('displayProperties')}</DropdownMenuLabel>
                      <div className="p-2 space-y-3">
                         <div className="flex items-center justify-between">
                            <Label htmlFor="show-id" className="text-sm">
-                              ID
+                              {t('displayId')}
                            </Label>
                            <Switch id="show-id" checked={showId} onCheckedChange={setShowId} />
                         </div>
                         <div className="flex items-center justify-between">
                            <Label htmlFor="show-status-icon" className="text-sm">
-                              Status and icon
+                              {t('displayStatusAndIcon')}
                            </Label>
                            <Switch
                               id="show-status-icon"
@@ -222,7 +224,7 @@ export default function Inbox() {
                className="flex items-center gap-1 px-4 h-10 border-b border-border text-sm text-muted-foreground hover:text-foreground shrink-0"
             >
                <ChevronLeft className="size-4" />
-               Inbox
+               {t('title')}
             </button>
             <div className="flex-1 min-h-0">
                <NotificationPreview notification={selectedNotification} onMarkAsRead={markAsRead} />

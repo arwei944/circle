@@ -1,0 +1,42 @@
+{
+   "cycles": "周期",
+   "issueCount": "{count, plural, one {# 个问题} other {# 个问题}}",
+   "line": {
+      "success": "成功率",
+      "completed": "已完成",
+      "ofCapacity": "的容量",
+      "scope": "范围"
+   },
+   "chart": {
+      "noProgressData": "暂无进度数据",
+      "ideal": "理想",
+      "scope": "范围",
+      "started": "已开始",
+      "completed": "已完成"
+   },
+   "details": {
+      "nothingToShow": "暂无内容。",
+      "clearFilter": "清除筛选",
+      "filter": "筛选",
+      "percentOf": "共 {total} 个，已完成 {percent}%",
+      "noAssignee": "未分配负责人",
+      "unlabeled": "未标记",
+      "noPriority": "无优先级",
+      "noProject": "无项目",
+      "addDocumentOrLink": "添加文档或链接...",
+      "progress": "进度",
+      "scope": "范围",
+      "started": "已开始",
+      "completed": "已完成",
+      "tabs": {
+         "assignees": "负责人",
+         "labels": "标签",
+         "priority": "优先级",
+         "projects": "项目"
+      }
+   },
+   "cycleHeader": {
+      "toggleInsights": "切换洞察面板",
+      "toggleCycleDetails": "切换周期详情面板"
+   }
+}

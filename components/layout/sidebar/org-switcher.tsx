@@ -21,8 +21,10 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui
 import { CreateNewIssue } from './create-new-issue';
 import { ThemeToggle } from '../theme-toggle';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export function OrgSwitcher() {
+   const t = useTranslations('common');
    return (
       <SidebarMenu>
          <SidebarMenuItem>
@@ -56,19 +58,21 @@ export function OrgSwitcher() {
                   <DropdownMenuGroup>
                      <DropdownMenuItem asChild>
                         <Link href="/lndev-ui/settings">
-                           Settings
-                           <DropdownMenuShortcut>G then S</DropdownMenuShortcut>
+                           {t('sidebar.settings')}
+                           <DropdownMenuShortcut>
+                              {t('sidebar.shortcutGThenS')}
+                           </DropdownMenuShortcut>
                         </Link>
                      </DropdownMenuItem>
-                     <DropdownMenuItem>Invite and manage members</DropdownMenuItem>
+                     <DropdownMenuItem>{t('sidebar.inviteAndManageMembers')}</DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                     <DropdownMenuItem>Download desktop app</DropdownMenuItem>
+                     <DropdownMenuItem>{t('sidebar.downloadDesktopApp')}</DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuSub>
-                     <DropdownMenuSubTrigger>Switch Workspace</DropdownMenuSubTrigger>
+                     <DropdownMenuSubTrigger>{t('sidebar.switchWorkspace')}</DropdownMenuSubTrigger>
                      <DropdownMenuPortal>
                         <DropdownMenuSubContent>
                            <DropdownMenuLabel>leonelngoya@gmail.com</DropdownMenuLabel>
@@ -80,13 +84,13 @@ export function OrgSwitcher() {
                               lndev-ui
                            </DropdownMenuItem>
                            <DropdownMenuSeparator />
-                           <DropdownMenuItem>Create or join workspace</DropdownMenuItem>
-                           <DropdownMenuItem>Add an account</DropdownMenuItem>
+                           <DropdownMenuItem>{t('sidebar.createOrJoinWorkspace')}</DropdownMenuItem>
+                           <DropdownMenuItem>{t('sidebar.addAnAccount')}</DropdownMenuItem>
                         </DropdownMenuSubContent>
                      </DropdownMenuPortal>
                   </DropdownMenuSub>
                   <DropdownMenuItem>
-                     Log out
+                     {t('sidebar.logOut')}
                      <DropdownMenuShortcut>⌥⇧Q</DropdownMenuShortcut>
                   </DropdownMenuItem>
                </DropdownMenuContent>

@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { FileText, Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { SettingsCard, SettingsRow, SettingsSection, SettingsShell } from './shared';
 
 /** Invented workspace issue templates. */
@@ -13,15 +14,16 @@ const TEMPLATES = [
 
 /** Workspace "Issue templates" settings. */
 export default function IssueTemplatesSettings() {
+   const t = useTranslations('settings');
    return (
       <SettingsShell
-         title="Issue templates"
-         description="These templates are available when creating issues for any team in the workspace. To create templates that only apply to specific teams, add them as team templates."
+         title={t('issueTemplates.title')}
+         description={t('issueTemplates.description')}
       >
          <SettingsSection>
             <SettingsCard>
                <SettingsRow
-                  title={`${TEMPLATES.length} issue templates`}
+                  title={t('issueTemplates.count', { count: TEMPLATES.length })}
                   trailing={
                      <Button size="icon" variant="ghost" className="size-7">
                         <Plus className="size-4" />

@@ -1,0 +1,61 @@
+{
+   "title": "成员",
+   "invite": "邀请",
+   "display": "显示",
+   "table": {
+      "name": "名字",
+      "status": "状态",
+      "joined": "加入于",
+      "teams": "团队",
+      "lastSeen": "最后上线"
+   },
+   "line": {
+      "application": "申请",
+      "online": "在线"
+   },
+   "filter": {
+      "button": "筛选",
+      "status": "状态",
+      "sortBy": "排序方式",
+      "clearAll": "清除所有筛选",
+      "name": "名字",
+      "az": "A → Z",
+      "za": "Z → A",
+      "joined": "加入于",
+      "oldestToNewest": "从早到晚",
+      "newestToOldest": "从晚到早",
+      "teams": "团队",
+      "lowestToHighest": "从低到高",
+      "highestToLowest": "从高到低"
+   },
+   "profile": {
+      "email": "邮箱",
+      "localTime": "当地时间",
+      "joined": "加入于",
+      "role": "角色",
+      "teams": "团队",
+      "projects": "项目",
+      "labels": "标签",
+      "priority": "优先级",
+      "nothingToShow": "暂无内容",
+      "more": "+{count} 更多",
+      "status": {
+         "online": "当前在线",
+         "away": "11 分钟前离开",
+         "offline": "离线"
+      }
+   },
+   "tabs": {
+      "assigned": "已分配",
+      "created": "已创建"
+   },
+   "issueCount": "{count} 个问题",
+   "search": {
+      "placeholder": "搜索问题...",
+      "label": "搜索"
+   },
+   "panel": {
+      "toggleInsights": "切换洞察面板",
+      "toggleProfile": "切换个人资料面板"
+   }
+}

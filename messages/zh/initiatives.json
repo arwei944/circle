@@ -1,0 +1,112 @@
+{
+   "title": "计划",
+   "newInitiative": "新建计划",
+   "someone": "有人",
+   "notFound": "未找到计划",
+   "tabs": {
+      "overview": "概览",
+      "activity": "动态",
+      "projects": "项目"
+   },
+   "listTabs": {
+      "active": "进行中",
+      "planned": "已规划",
+      "all": "全部计划"
+   },
+   "table": {
+      "name": "名称",
+      "status": "状态",
+      "priority": "优先级",
+      "owner": "负责人",
+      "target": "目标",
+      "targetDate": "目标日期",
+      "projects": "项目",
+      "health": "健康度",
+      "lead": "负责人",
+      "activeProjects": "进行中项目"
+   },
+   "group": {
+      "inProgress": "进行中",
+      "planned": "已规划",
+      "backlog": "待办",
+      "completed": "已完成"
+   },
+   "filter": {
+      "addPlaceholder": "添加筛选...",
+      "searchPlaceholder": "筛选...",
+      "noResults": "无结果。",
+      "status": "状态",
+      "priority": "优先级",
+      "owner": "负责人",
+      "health": "健康度",
+      "clearFilters": "清除筛选"
+   },
+   "display": {
+      "grouping": "分组",
+      "noGrouping": "不分组",
+      "ordering": "排序",
+      "manual": "手动",
+      "name": "名称",
+      "displayProperties": "显示属性",
+      "properties": {
+         "description": "描述",
+         "status": "状态",
+         "priority": "优先级",
+         "owner": "负责人",
+         "targetDate": "目标日期",
+         "projects": "项目",
+         "health": "健康度",
+         "activeProjects": "进行中项目"
+      }
+   },
+   "health": {
+      "noUpdates": "暂无更新"
+   },
+   "overview": {
+      "description": "描述",
+      "addSummary": "添加简短摘要…",
+      "addDescription": "添加描述…",
+      "addOwner": "添加负责人",
+      "addTargetDate": "添加目标日期",
+      "addLabel": "添加标签",
+      "writeFirstUpdate": "写下首条计划动态",
+      "addDocumentOrLink": "添加文档或链接…",
+      "resources": "资源"
+   },
+   "properties": {
+      "title": "属性",
+      "status": "状态",
+      "priority": "优先级",
+      "owner": "负责人",
+      "targetDate": "目标日期",
+      "labels": "标签",
+      "projects": "项目"
+   },
+   "activity": {
+      "title": "动态",
+      "seeAll": "查看全部",
+      "renamed": "{name} 重命名了计划 · {date}",
+      "created": "{name} 创建了计划 · {date}",
+      "statusChanged": "{name} 将状态更改为 {status}",
+      "projectsAdded": "{count} 个项目已添加到计划"
+   },
+   "projects": {
+      "completed": "{completed} / {total} 已完成"
+   },
+   "sidePanel": {
+      "owner": "负责人",
+      "team": "团队",
+      "health": "健康度",
+      "noOwner": "无负责人"
+   },
+   "progress": {
+      "title": "进度",
+      "status": "状态",
+      "health": "健康度",
+      "teams": "团队",
+      "leads": "负责人",
+      "completed": "已完成",
+      "started": "进行中",
+      "scope": "范围"
+   }
+}

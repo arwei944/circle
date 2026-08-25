@@ -12,6 +12,7 @@ import {
 import { ListFilter, SlidersHorizontal } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { ReactNode, useState } from 'react';
 import { ReviewDetail, ReviewSection } from './review-detail';
 import { PrIcon } from './review-shared';
@@ -33,9 +34,9 @@ function EmptySketch() {
 }
 
 const GROUP_LABELS: Record<ReviewStatus, string> = {
-   open: 'Open',
-   merged: 'Merged',
-   closed: 'Closed',
+   open: 'common.open',
+   merged: 'common.merged',
+   closed: 'common.closed',
 };
 
 function ReviewRow({
@@ -123,11 +124,15 @@ export default function Reviews({
    section = 'overview',
 }: ReviewsProps) {
    const { orgId } = useParams<{ orgId: string }>();
+   const t = useTranslations('reviews');
    const source = listTab === 'for-you' ? forYouReviews : createdReviews;
 
    const groups = (['open', 'merged', 'closed'] as ReviewStatus[])
       .map((status) => ({
-         label: status === 'merged' && listTab === 'for-you' ? 'Completed' : GROUP_LABELS[status],
+         label:
+            status === 'merged' && listTab === 'for-you'
+               ? t('list.completed')
+               : t(GROUP_LABELS[status]),
          items: source.filter((review) => review.status === status),
       }))
       .filter((group) => group.items.length > 0);
@@ -138,7 +143,7 @@ export default function Reviews({
             <div className="flex items-center justify-between px-4 py-1.5 h-10 border-b shrink-0">
                <div className="flex items-center gap-2">
                   <SidebarTrigger />
-                  <span className="text-sm font-medium">Reviews</span>
+                  <span className="text-sm font-medium">{t('list.title')}</span>
                </div>
                <div className="flex items-center gap-2 text-muted-foreground">
                   <ListFilter className="size-4" />
@@ -155,7 +160,7 @@ export default function Reviews({
                         : 'text-muted-foreground hover:bg-accent/50'
                   )}
                >
-                  For you
+                  {t('list.forYou')}
                </Link>
                <Link
                   href={`/${orgId}/reviews/created`}
@@ -166,7 +171,7 @@ export default function Reviews({
                         : 'text-muted-foreground hover:bg-accent/50'
                   )}
                >
-                  Created
+                  {t('list.created')}
                </Link>
             </div>
             <div className="flex-1 overflow-y-auto">
@@ -191,7 +196,7 @@ export default function Reviews({
             ) : (
                <div className="h-full flex flex-col items-center justify-center gap-4 text-muted-foreground">
                   <EmptySketch />
-                  <span className="text-sm">{source.length} reviews</span>
+                  <span className="text-sm">{t('list.reviewCount', { count: source.length })}</span>
                </div>
             )}
          </div>

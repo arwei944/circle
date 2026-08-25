@@ -15,8 +15,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { RiBox3Fill, RiLinkedinFill, RiThreadsFill, RiTwitterXFill } from '@remixicon/react';
+import { useTranslations } from 'next-intl';
 
 export function HelpButton() {
+   const t = useTranslations('common');
    return (
       <DropdownMenu>
          <DropdownMenuTrigger asChild>
@@ -28,36 +30,36 @@ export function HelpButton() {
             <div className="p-2">
                <div className="relative">
                   <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input type="search" placeholder="Search for help..." className="pl-8" />
+                  <Input type="search" placeholder={t('sidebar.searchForHelp')} className="pl-8" />
                </div>
             </div>
             <DropdownMenuSeparator />
-            <DropdownMenuLabel>Shortcuts</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('sidebar.shortcuts')}</DropdownMenuLabel>
             <DropdownMenuItem>
                <Keyboard className="mr-2 h-4 w-4" />
-               <span>Keyboard shortcuts</span>
+               <span>{t('sidebar.keyboardShortcuts')}</span>
                <span className="ml-auto text-xs text-muted-foreground">⌘/</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuLabel>Follow me</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('sidebar.followMe')}</DropdownMenuLabel>
             <DropdownMenuItem asChild>
                <Link href="https://x.com/ln_dev7" target="_blank">
                   <RiTwitterXFill className="mr-2 h-4 w-4" />
-                  <span>X - Twitter</span>
+                  <span>{t('sidebar.xTwitter')}</span>
                   <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />
                </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
                <Link href="https://threads.net/@ln_dev7" target="_blank">
                   <RiThreadsFill className="mr-2 h-4 w-4" />
-                  <span>Threads</span>
+                  <span>{t('sidebar.threads')}</span>
                   <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />
                </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
                <Link href="https://linkedin.com/in/lndev" target="_blank">
                   <RiLinkedinFill className="mr-2 h-4 w-4" />
-                  <span>LinkedIn</span>
+                  <span>{t('sidebar.linkedin')}</span>
                   <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />
                </Link>
             </DropdownMenuItem>
@@ -65,17 +67,17 @@ export function HelpButton() {
             <DropdownMenuItem asChild>
                <Link href="https://lndev.mychariow.shop/prd_3cu1s0" target="_blank">
                   <RiBox3Fill className="mr-2 h-4 w-4" />
-                  <span>Support project</span>
+                  <span>{t('sidebar.supportProject')}</span>
                </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuLabel>What&apos;s new</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('sidebar.whatsNew')}</DropdownMenuLabel>
             <DropdownMenuItem asChild>
                <Link href="https://ui.lndev.me" target="_blank" className="flex items-center">
                   <div className="mr-2 flex h-4 w-4 items-center justify-center">
                      <div className="h-1.5 w-1.5 rounded-full bg-blue-500"></div>
                   </div>
-                  <span>Launch lndev-ui</span>
+                  <span>{t('sidebar.launchLndevUi')}</span>
                </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
@@ -83,7 +85,7 @@ export function HelpButton() {
                   <div className="mr-2 flex h-4 w-4 items-center justify-center">
                      <div className="h-1.5 w-1.5 rounded-full bg-blue-500"></div>
                   </div>
-                  <span>New portfolio</span>
+                  <span>{t('sidebar.newPortfolio')}</span>
                </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
@@ -95,7 +97,7 @@ export function HelpButton() {
                   <div className="mr-2 flex h-4 w-4 items-center justify-center">
                      <div className="h-1.5 w-1.5 rounded-full bg-transparent"></div>
                   </div>
-                  <span>GitHub</span>
+                  <span>{t('sidebar.github')}</span>
                   <ExternalLink className="ml-2 h-3 w-3 text-muted-foreground" />
                </Link>
             </DropdownMenuItem>

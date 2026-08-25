@@ -1,0 +1,42 @@
+{
+   "cycles": "Cycles",
+   "issueCount": "{count, plural, one {# issue} other {# issues}}",
+   "line": {
+      "success": "success",
+      "completed": "completed",
+      "ofCapacity": "of capacity",
+      "scope": "scope"
+   },
+   "chart": {
+      "noProgressData": "No progress data yet",
+      "ideal": "Ideal",
+      "scope": "Scope",
+      "started": "Started",
+      "completed": "Completed"
+   },
+   "details": {
+      "nothingToShow": "Nothing to show yet.",
+      "clearFilter": "Clear filter",
+      "filter": "Filter",
+      "percentOf": "{percent}% of {total}",
+      "noAssignee": "No assignee",
+      "unlabeled": "Unlabeled",
+      "noPriority": "No priority",
+      "noProject": "No project",
+      "addDocumentOrLink": "Add document or link...",
+      "progress": "Progress",
+      "scope": "Scope",
+      "started": "Started",
+      "completed": "Completed",
+      "tabs": {
+         "assignees": "Assignees",
+         "labels": "Labels",
+         "priority": "Priority",
+         "projects": "Projects"
+      }
+   },
+   "cycleHeader": {
+      "toggleInsights": "Toggle insights panel",
+      "toggleCycleDetails": "Toggle cycle details panel"
+   }
+}

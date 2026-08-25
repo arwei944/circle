@@ -16,6 +16,7 @@ import {
    Tag,
    Unlock,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { ReactNode, useState } from 'react';
 import { ContentBlocks } from './content-blocks';
 
@@ -84,6 +85,7 @@ export function ActivityFeed({ activity }: { activity: ActivityItem[] }) {
    const [items, setItems] = useState<ActivityItem[]>(activity);
    const [draft, setDraft] = useState('');
    const currentUser = users[0];
+   const t = useTranslations('issues');
 
    const submitComment = () => {
       const text = draft.trim();
@@ -94,7 +96,7 @@ export function ActivityFeed({ activity }: { activity: ActivityItem[] }) {
             kind: 'comment',
             id: `local-${previous.length}`,
             actor: currentUser,
-            timeAgo: 'just now',
+            timeAgo: t('activity.justNow'),
             body: [{ type: 'paragraph', text }],
          },
       ]);
@@ -104,9 +106,9 @@ export function ActivityFeed({ activity }: { activity: ActivityItem[] }) {
    return (
       <div className="mt-10">
          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-base font-semibold">Activity</h2>
+            <h2 className="text-base font-semibold">{t('activity.title')}</h2>
             <button className="text-xs text-muted-foreground hover:text-foreground">
-               Subscribe
+               {t('activity.subscribe')}
             </button>
          </div>
 
@@ -130,14 +132,14 @@ export function ActivityFeed({ activity }: { activity: ActivityItem[] }) {
                      submitComment();
                   }
                }}
-               placeholder="Leave a comment..."
+               placeholder={t('activity.leaveComment')}
                rows={2}
                className="w-full resize-none bg-transparent outline-none text-sm placeholder:text-muted-foreground"
             />
             <div className="flex items-center justify-between">
                <Plus className="size-4 text-muted-foreground" />
                <Button size="xs" onClick={submitComment} disabled={!draft.trim()}>
-                  Comment
+                  {t('activity.comment')}
                </Button>
             </div>
          </div>

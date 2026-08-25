@@ -20,22 +20,22 @@ import {
 
 export const inboxItems = [
    {
-      name: 'Inbox',
+      name: '收件箱',
       url: '/lndev-ui/inbox',
       icon: Inbox,
    },
    {
-      name: 'Reviews',
+      name: '评审',
       url: '/lndev-ui/reviews',
       icon: GitPullRequestArrow,
    },
    {
-      name: 'My issues',
+      name: '我的问题',
       url: '/lndev-ui/my-issues',
       icon: FolderKanban,
    },
    {
-      name: 'Agent',
+      name: '智能助手',
       url: '/lndev-ui/agent',
       icon: Bot,
    },
@@ -43,17 +43,17 @@ export const inboxItems = [
 
 export const workspaceItems = [
    {
-      name: 'Teams',
+      name: '团队',
       url: '/lndev-ui/teams',
       icon: ContactRound,
    },
    {
-      name: 'Projects',
+      name: '项目',
       url: '/lndev-ui/projects',
       icon: Box,
    },
    {
-      name: 'Members',
+      name: '成员',
       url: '/lndev-ui/members',
       icon: UserRound,
    },
@@ -61,32 +61,32 @@ export const workspaceItems = [
 
 export const accountItems = [
    {
-      name: 'Account',
+      name: '账户',
       url: '/settings/account',
       icon: UserRound,
    },
    {
-      name: 'Preferences',
+      name: '偏好设置',
       url: '/settings/preferences',
       icon: Settings,
    },
    {
-      name: 'Profile',
+      name: '个人资料',
       url: '/settings/profile',
       icon: UserRound,
    },
    {
-      name: 'Notifications',
+      name: '通知',
       url: '/settings/notifications',
       icon: Bell,
    },
    {
-      name: 'Security & access',
+      name: '安全与访问',
       url: '/settings/security',
       icon: KeyRound,
    },
    {
-      name: 'Connected accounts',
+      name: '关联账户',
       url: '/settings/connected-accounts',
       icon: Users,
    },
@@ -94,47 +94,47 @@ export const accountItems = [
 
 export const featuresItems = [
    {
-      name: 'Labels',
+      name: '标签',
       url: '/settings/labels',
       icon: Tag,
    },
    {
-      name: 'Projects',
+      name: '项目',
       url: '/settings/projects',
       icon: Box,
    },
    {
-      name: 'Initiatives',
+      name: '计划',
       url: '/settings/initiatives',
       icon: Layers,
    },
    {
-      name: 'Customer requests',
+      name: '客户请求',
       url: '/settings/customer-requests',
       icon: Inbox,
    },
    {
-      name: 'Templates',
+      name: '模板',
       url: '/settings/templates',
       icon: FileText,
    },
    {
-      name: 'Asks',
+      name: '提问',
       url: '/settings/asks',
       icon: MessageSquare,
    },
    {
-      name: 'SLAs',
+      name: '服务水平协议',
       url: '/settings/slas',
       icon: Clock,
    },
    {
-      name: 'Emojis',
+      name: '表情',
       url: '/settings/emojis',
       icon: MessageSquare,
    },
    {
-      name: 'Integrations',
+      name: '集成',
       url: '/settings/integrations',
       icon: Zap,
    },

@@ -6,6 +6,7 @@ import { getReviewById } from '@/mock-data/reviews';
 import { Eye, Link2, MoreHorizontal, Play, Star } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { ReviewDiff } from './review-diff';
 import { ReviewGuide } from './review-guide';
 import { ReviewOverview } from './review-overview';
@@ -13,27 +14,22 @@ import { DiffStat, IssueCheckIcon, PrIcon } from './review-shared';
 
 export type ReviewSection = 'overview' | 'guide' | 'diff';
 
-const SECTION_TABS: { key: ReviewSection; label: string; path: string }[] = [
-   { key: 'overview', label: 'Overview', path: '' },
-   { key: 'guide', label: 'Guide', path: '/review' },
-   { key: 'diff', label: 'Diff', path: '/changes' },
+const SECTION_TABS: { key: ReviewSection; labelKey: string; path: string }[] = [
+   { key: 'overview', labelKey: 'detail.overview', path: '' },
+   { key: 'guide', labelKey: 'detail.guide', path: '/review' },
+   { key: 'diff', labelKey: 'detail.diff', path: '/changes' },
 ];
 
 /** Right pane of the Reviews split view: breadcrumb, tabs and section body. */
-export function ReviewDetail({
-   reviewId,
-   section,
-}: {
-   reviewId: string;
-   section: ReviewSection;
-}) {
+export function ReviewDetail({ reviewId, section }: { reviewId: string; section: ReviewSection }) {
    const { orgId } = useParams<{ orgId: string }>();
+   const t = useTranslations('reviews');
    const review = getReviewById(reviewId);
 
    if (!review) {
       return (
          <div className="h-full flex items-center justify-center text-sm text-muted-foreground">
-            Review not found
+            {t('detail.reviewNotFound')}
          </div>
       );
    }
@@ -70,14 +66,14 @@ export function ReviewDetail({
                            : 'text-muted-foreground hover:bg-accent/50'
                      )}
                   >
-                     {tab.label}
+                     {t(tab.labelKey)}
                   </Link>
                ))}
             </div>
             <div className="flex items-center gap-1">
                <Button size="xs" variant="ghost">
                   <Eye className="size-3.5" />
-                  Preview
+                  {t('detail.preview')}
                </Button>
                <Play className="size-3.5 text-muted-foreground" />
             </div>

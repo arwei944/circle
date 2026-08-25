@@ -10,11 +10,13 @@ import {
    SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { accountItems } from '@/mock-data/side-bar-nav';
+import { useTranslations } from 'next-intl';
 
 export function NavAccount() {
+   const t = useTranslations('common');
    return (
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-         <SidebarGroupLabel>Account</SidebarGroupLabel>
+         <SidebarGroupLabel>{t('sidebar.account')}</SidebarGroupLabel>
          <SidebarMenu>
             {accountItems.map((item) => (
                <SidebarMenuItem key={item.name}>

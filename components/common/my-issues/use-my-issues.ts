@@ -7,11 +7,11 @@ import { parseAsStringLiteral, useQueryState } from 'nuqs';
 export const MY_ISSUES_TABS = ['assigned', 'created', 'subscribed', 'activity'] as const;
 export type MyIssuesTab = (typeof MY_ISSUES_TABS)[number];
 
-export const MY_ISSUES_TAB_ITEMS: { label: string; value: MyIssuesTab }[] = [
-   { label: 'Assigned', value: 'assigned' },
-   { label: 'Created', value: 'created' },
-   { label: 'Subscribed', value: 'subscribed' },
-   { label: 'Activity', value: 'activity' },
+export const MY_ISSUES_TAB_ITEMS: { value: MyIssuesTab }[] = [
+   { value: 'assigned' },
+   { value: 'created' },
+   { value: 'subscribed' },
+   { value: 'activity' },
 ];
 
 /** The "current" user of the mock workspace. */

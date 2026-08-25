@@ -5,17 +5,19 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 import { getProjectById } from '@/mock-data/projects';
 import { useRightPanelStore } from '@/store/right-panel-store';
+import { useTranslations } from 'next-intl';
 import { BarChart3, ChevronRight, Link2, MoreHorizontal, PanelRight, Star } from 'lucide-react';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 
 const PROJECT_TABS = [
-   { label: 'Overview', segment: 'overview' },
-   { label: 'Activity', segment: 'activity' },
-   { label: 'Issues', segment: 'issues' },
+   { labelKey: 'projectHeader.tabs.overview', segment: 'overview' },
+   { labelKey: 'projectHeader.tabs.activity', segment: 'activity' },
+   { labelKey: 'projectHeader.tabs.issues', segment: 'issues' },
 ];
 
 function ProjectTabs({ projectId }: { projectId: string }) {
+   const t = useTranslations('projects');
    const { orgId } = useParams<{ orgId: string }>();
    const pathname = usePathname();
 
@@ -36,7 +38,7 @@ function ProjectTabs({ projectId }: { projectId: string }) {
                         : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-accent/50'
                   )}
                >
-                  {tab.label}
+                  {t(tab.labelKey)}
                </Link>
             );
          })}
@@ -45,6 +47,7 @@ function ProjectTabs({ projectId }: { projectId: string }) {
 }
 
 function PanelToggles() {
+   const t = useTranslations('projects');
    const { openPanel, togglePanel } = useRightPanelStore();
 
    return (
@@ -53,7 +56,7 @@ function PanelToggles() {
             size="xs"
             variant={openPanel === 'insights' ? 'secondary' : 'ghost'}
             onClick={() => togglePanel('insights')}
-            aria-label="Toggle insights panel"
+            aria-label={t('projectHeader.toggleInsights')}
          >
             <BarChart3 className="size-4" />
          </Button>
@@ -61,7 +64,7 @@ function PanelToggles() {
             size="xs"
             variant={openPanel === 'hidden' ? 'ghost' : 'secondary'}
             onClick={() => togglePanel('hidden')}
-            aria-label="Toggle side panel"
+            aria-label={t('projectHeader.toggleSidePanel')}
          >
             <PanelRight className="size-4" />
          </Button>
@@ -70,6 +73,7 @@ function PanelToggles() {
 }
 
 export default function Header({ projectId }: { projectId: string }) {
+   const t = useTranslations('projects');
    const { orgId } = useParams<{ orgId: string }>();
    const project = getProjectById(projectId);
    if (!project) return null;
@@ -84,7 +88,7 @@ export default function Header({ projectId }: { projectId: string }) {
                      href={`/${orgId}/projects`}
                      className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                     Projects
+                     {t('projectHeader.breadcrumb')}
                   </Link>
                   <ChevronRight className="size-3.5 text-muted-foreground shrink-0" />
                   <span className="inline-flex size-5 bg-muted/50 items-center justify-center rounded shrink-0">

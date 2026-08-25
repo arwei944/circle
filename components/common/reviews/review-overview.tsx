@@ -15,14 +15,16 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { DiffStat, InlineText, IssueCheckIcon, PrIcon } from './review-shared';
 
 const CATEGORY_LABELS: Record<ReviewFileCategory, string> = {
-   implementation: 'Implementation',
-   tests: 'Tests',
+   implementation: 'overview.implementation',
+   tests: 'overview.tests',
 };
 
 function FilesPanel({ review }: { review: Review }) {
+   const t = useTranslations('reviews');
    const categories = (['implementation', 'tests'] as ReviewFileCategory[])
       .map((category) => ({
          category,
@@ -32,7 +34,9 @@ function FilesPanel({ review }: { review: Review }) {
 
    return (
       <div className="flex flex-col gap-2">
-         <span className="text-sm font-medium">{review.files.length} files changed</span>
+         <span className="text-sm font-medium">
+            {t('common.filesChanged', { count: review.files.length })}
+         </span>
          {categories.map((group) => {
             const additions = group.files.reduce((acc, file) => acc + file.additions, 0);
             const deletions = group.files.reduce((acc, file) => acc + file.deletions, 0);
@@ -40,7 +44,7 @@ function FilesPanel({ review }: { review: Review }) {
                <div key={group.category} className="flex flex-col gap-1">
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                      <span className="font-medium text-foreground">
-                        {CATEGORY_LABELS[group.category]}
+                        {t(CATEGORY_LABELS[group.category])}
                      </span>
                      {group.files.length}
                      <ChevronDown className="size-3" />
@@ -70,6 +74,7 @@ function FilesPanel({ review }: { review: Review }) {
 /** Overview tab: description + timeline on the left, properties on the right. */
 export function ReviewOverview({ review }: { review: Review }) {
    const { orgId } = useParams<{ orgId: string }>();
+   const t = useTranslations('reviews');
 
    return (
       <div className="h-full flex overflow-hidden">
@@ -91,10 +96,10 @@ export function ReviewOverview({ review }: { review: Review }) {
 
                <div className="flex flex-col gap-3">
                   <div className="flex items-center gap-1 text-sm font-medium">
-                     Description
+                     {t('overview.description')}
                      <ChevronDown className="size-3.5 text-muted-foreground" />
                   </div>
-                  <h2 className="text-lg font-semibold">Summary</h2>
+                  <h2 className="text-lg font-semibold">{t('overview.summary')}</h2>
                   <ul className="flex flex-col gap-2 list-disc pl-5 text-sm leading-relaxed">
                      {review.summary.map((bullet, index) => (
                         <li key={index}>
@@ -105,7 +110,7 @@ export function ReviewOverview({ review }: { review: Review }) {
                </div>
 
                <div className="flex flex-col gap-2">
-                  <h2 className="text-lg font-semibold">Ticket</h2>
+                  <h2 className="text-lg font-semibold">{t('overview.ticket')}</h2>
                   <Link
                      href={`/${orgId}/issue/${review.resolves.identifier}`}
                      className="inline-flex items-center gap-2 rounded-md bg-muted/60 border border-border/60 px-2 py-1.5 text-sm hover:bg-muted transition-colors self-start"
@@ -117,7 +122,7 @@ export function ReviewOverview({ review }: { review: Review }) {
                </div>
 
                <div className="flex flex-col gap-2">
-                  <h2 className="text-lg font-semibold">Test plan</h2>
+                  <h2 className="text-lg font-semibold">{t('overview.testPlan')}</h2>
                   <div className="flex flex-col gap-1.5">
                      {review.testPlan.map((item, index) => (
                         <label key={index} className="flex items-start gap-2 text-sm">
@@ -133,9 +138,9 @@ export function ReviewOverview({ review }: { review: Review }) {
                {review.deployment && (
                   <div className="rounded-lg border overflow-hidden text-sm">
                      <div className="grid grid-cols-3 gap-2 px-3 py-2 border-b bg-sidebar/50 text-xs text-muted-foreground">
-                        <span>Project</span>
-                        <span>Deployment</span>
-                        <span>Actions</span>
+                        <span>{t('overview.project')}</span>
+                        <span>{t('overview.deployment')}</span>
+                        <span>{t('overview.actions')}</span>
                      </div>
                      <div className="grid grid-cols-3 gap-2 px-3 py-2 items-center">
                         <span className="font-medium">{review.deployment.project}</span>
@@ -159,7 +164,7 @@ export function ReviewOverview({ review }: { review: Review }) {
 
                <div className="flex items-center gap-2 rounded-lg border px-3 py-2.5 text-sm text-muted-foreground">
                   <span className="size-5 rounded-full bg-muted inline-block shrink-0" />
-                  <span className="flex-1">Leave a reply...</span>
+                  <span className="flex-1">{t('overview.leaveReply')}</span>
                   <Paperclip className="size-4" />
                   <Send className="size-4" />
                </div>
@@ -167,7 +172,7 @@ export function ReviewOverview({ review }: { review: Review }) {
                <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <GitCommitHorizontal className="size-3.5 shrink-0" />
                   <span className="truncate">
-                     Atlas committed via LNDev Agent{' '}
+                     {t('overview.committedViaAgent')}{' '}
                      <span className="font-mono">{review.commits.at(-1)?.sha}</span>{' '}
                      {review.commits.at(-1)?.message} ({review.resolves.identifier}) ·{' '}
                      {review.commits.at(-1)?.timeAgo}
@@ -183,7 +188,7 @@ export function ReviewOverview({ review }: { review: Review }) {
                         </span>
                         {review.reviewNote.timeAgo}
                      </div>
-                     <h3 className="text-base font-semibold">Review results</h3>
+                     <h3 className="text-base font-semibold">{t('overview.reviewResults')}</h3>
                      <blockquote className="border-l-2 border-emerald-500 pl-3 text-sm leading-relaxed">
                         {review.reviewNote.verdictLine}
                      </blockquote>
@@ -192,11 +197,11 @@ export function ReviewOverview({ review }: { review: Review }) {
                      </p>
                      <div className="rounded-md border overflow-hidden text-sm">
                         <div className="grid grid-cols-5 gap-2 px-3 py-1.5 border-b bg-sidebar/50 text-xs text-muted-foreground">
-                           <span>Review</span>
-                           <span>Verdict</span>
-                           <span>Critical</span>
-                           <span>High</span>
-                           <span>Medium</span>
+                           <span>{t('overview.review')}</span>
+                           <span>{t('overview.verdict')}</span>
+                           <span>{t('overview.critical')}</span>
+                           <span>{t('overview.high')}</span>
+                           <span>{t('overview.medium')}</span>
                         </div>
                         {review.reviewNote.rows.map((row) => (
                            <div
@@ -223,19 +228,19 @@ export function ReviewOverview({ review }: { review: Review }) {
 
          <aside className="hidden lg:flex flex-col w-72 shrink-0 border-l h-full overflow-y-auto p-5 gap-6">
             <div className="flex flex-col gap-2">
-               <span className="text-sm font-medium">Status</span>
+               <span className="text-sm font-medium">{t('overview.status')}</span>
                <span className="inline-flex items-center gap-1.5 text-sm">
                   <PrIcon status={review.status} />
                   {review.status === 'merged'
-                     ? 'Merged'
+                     ? t('common.merged')
                      : review.status === 'closed'
-                       ? 'Closed'
-                       : 'Open'}
+                       ? t('common.closed')
+                       : t('common.open')}
                </span>
             </div>
             <div className="flex flex-col gap-2">
                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Resolves</span>
+                  <span className="text-sm font-medium">{t('overview.resolves')}</span>
                   <Plus className="size-3.5 text-muted-foreground" />
                </div>
                <Link
@@ -247,21 +252,24 @@ export function ReviewOverview({ review }: { review: Review }) {
                </Link>
             </div>
             <div className="flex flex-col gap-2">
-               <span className="text-sm font-medium">Reviewers</span>
+               <span className="text-sm font-medium">{t('overview.reviewers')}</span>
                <button className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors self-start">
                   <UserPlus className="size-4" />
-                  Add reviewers
+                  {t('overview.addReviewers')}
                </button>
             </div>
             <div className="flex flex-col gap-2">
-               <span className="text-sm font-medium">Checks</span>
+               <span className="text-sm font-medium">{t('overview.checks')}</span>
                <span className="inline-flex items-center gap-1.5 text-sm">
                   <ChevronRight className="size-3.5 text-muted-foreground" />
-                  {review.checksPassed} / {review.checksTotal} passed
+                  {t('overview.checksPassed', {
+                     passed: review.checksPassed,
+                     total: review.checksTotal,
+                  })}
                </span>
                <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
                   <span className="size-3.5 rounded-full border-2 border-muted-foreground/50 inline-block" />
-                  gate
+                  {t('overview.gate')}
                </span>
             </div>
             <FilesPanel review={review} />

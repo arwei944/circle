@@ -1,0 +1,57 @@
+{
+   "common": {
+      "filesChanged": "{count} 个文件变更",
+      "reviewed": "已评审",
+      "open": "已打开",
+      "merged": "已合并",
+      "closed": "已关闭"
+   },
+   "overview": {
+      "implementation": "实现",
+      "tests": "测试",
+      "description": "描述",
+      "summary": "摘要",
+      "ticket": "工单",
+      "testPlan": "测试计划",
+      "project": "项目",
+      "deployment": "部署",
+      "actions": "操作",
+      "leaveReply": "留下回复...",
+      "committedViaAgent": "Atlas 通过 LNDev Agent 提交",
+      "reviewResults": "评审结果",
+      "review": "评审",
+      "verdict": "判定",
+      "critical": "严重",
+      "high": "高",
+      "medium": "中",
+      "status": "状态",
+      "resolves": "解决",
+      "reviewers": "评审人",
+      "addReviewers": "添加评审人",
+      "checks": "检查",
+      "checksPassed": "{passed} / {total} 通过",
+      "gate": "门禁"
+   },
+   "diff": {
+      "files": "文件",
+      "commits": "提交",
+      "allCommits": "全部提交",
+      "commitCount": "{count} 条提交",
+      "filterFiles": "筛选文件...",
+      "unchangedLines": "{count} 行未变更"
+   },
+   "detail": {
+      "overview": "概览",
+      "guide": "指南",
+      "diff": "差异",
+      "reviewNotFound": "未找到评审",
+      "preview": "预览"
+   },
+   "list": {
+      "title": "评审",
+      "forYou": "为你推荐",
+      "created": "已创建",
+      "completed": "已完成",
+      "reviewCount": "{count} 条评审"
+   }
+}

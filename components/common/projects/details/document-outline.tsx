@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils';
 import { ContentBlock } from '@/mock-data/issue-details';
 import { AlignLeft } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { RefObject, useEffect, useMemo, useState } from 'react';
 
 export interface OutlineItem {
@@ -35,6 +36,7 @@ export function DocumentOutline({
    items: OutlineItem[];
    scrollRef: RefObject<HTMLDivElement | null>;
 }) {
+   const t = useTranslations('projects');
    const [activeId, setActiveId] = useState<string | null>(null);
 
    const ids = useMemo(() => items.map((item) => item.id), [items]);
@@ -73,7 +75,7 @@ export function DocumentOutline({
          <div className="absolute right-full mr-2 w-72 max-h-[65vh] overflow-y-auto rounded-lg border bg-container shadow-lg p-2 opacity-0 translate-x-1 pointer-events-none transition-all duration-150 group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto">
             <div className="flex items-center gap-2 px-2 py-1.5 text-sm font-medium">
                <AlignLeft className="size-4 text-muted-foreground" />
-               Description
+               {t('outline.description')}
             </div>
             {items.map((item) => (
                <button
@@ -82,9 +84,7 @@ export function DocumentOutline({
                   className={cn(
                      'w-full text-left px-2 py-1 rounded-md text-sm truncate transition-colors hover:bg-accent/50',
                      item.level > 1 && 'pl-6',
-                     activeId === item.id
-                        ? 'text-foreground font-medium'
-                        : 'text-muted-foreground'
+                     activeId === item.id ? 'text-foreground font-medium' : 'text-muted-foreground'
                   )}
                >
                   {item.text}

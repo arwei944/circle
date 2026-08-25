@@ -6,6 +6,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { documentFolders } from '@/mock-data/documents';
 import { formatDistanceToNowStrict, parseISO } from 'date-fns';
 import { ChevronRight, Pin, Plus, SlidersHorizontal } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const timeAgo = (date: string) =>
    formatDistanceToNowStrict(parseISO(date), { addSuffix: true })
@@ -21,19 +22,21 @@ const timeAgo = (date: string) =>
  * with created / last edited metadata.
  */
 export default function TeamDocuments() {
+   const t = useTranslations('teams');
+
    return (
       <div className="w-full">
          <div className="flex items-center justify-between px-6 py-3 gap-2">
             <div className="grid grid-cols-[1fr_40px] md:grid-cols-[1fr_90px_90px_40px] w-full items-center text-sm text-muted-foreground">
-               <span className="flex items-center gap-1 font-medium">Name ↓</span>
-               <span className="hidden md:block">Created</span>
-               <span className="hidden md:block">Last edited</span>
+               <span className="flex items-center gap-1 font-medium">{t('documents.name')}</span>
+               <span className="hidden md:block">{t('documents.created')}</span>
+               <span className="hidden md:block">{t('documents.lastEdited')}</span>
                <span />
             </div>
             <div className="flex items-center gap-2 shrink-0">
                <Button size="xs" variant="secondary">
                   <Plus className="size-4 md:mr-1" />
-                  <span className="hidden md:inline">New document</span>
+                  <span className="hidden md:inline">{t('documents.newDocument')}</span>
                </Button>
                <Button size="xs" variant="ghost">
                   <SlidersHorizontal className="size-4" />

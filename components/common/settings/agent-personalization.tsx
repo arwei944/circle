@@ -2,32 +2,34 @@
 
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { SettingsCard, SettingsRow, SettingsSection, SettingsShell } from './shared';
 
 /** Personal settings for the workspace agent. */
 export default function AgentPersonalization() {
+   const t = useTranslations('settings');
    return (
       <SettingsShell
-         title="Agent personalization"
-         description="Your personal settings for the LNDev Agent"
+         title={t('agentPersonalization.title')}
+         description={t('agentPersonalization.description')}
       >
          <SettingsSection
-            title="Guidance"
-            description="Provide personal instructions and context for the agent when responding to conversations"
+            title={t('agentPersonalization.guidance.title')}
+            description={t('agentPersonalization.guidance.description')}
          >
             <textarea
-               placeholder="Enter personal guidance for the agent (optional)..."
+               placeholder={t('agentPersonalization.guidance.placeholder')}
                className="w-full min-h-36 rounded-lg border bg-container p-4 text-sm outline-none resize-y placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring/40"
             />
          </SettingsSection>
 
          <SettingsSection
-            title="Skills"
-            description="Reusable prompts auto-selected by the agent or invoked via slash commands"
+            title={t('agentPersonalization.skills.title')}
+            description={t('agentPersonalization.skills.description')}
          >
             <SettingsCard>
                <SettingsRow
-                  title="No skills created"
+                  title={t('agentPersonalization.skills.none')}
                   trailing={
                      <Button size="icon" variant="ghost" className="size-7">
                         <Plus className="size-4" />
@@ -38,16 +40,16 @@ export default function AgentPersonalization() {
          </SettingsSection>
 
          <SettingsSection
-            title="MCP connectors"
-            description="Add MCP connectors for use with the agent. Workspace admins can manage available connectors in security settings."
+            title={t('agentPersonalization.mcp.title')}
+            description={t('agentPersonalization.mcp.description')}
          >
             <SettingsCard>
                <SettingsRow
-                  title="Agent MCP access disabled in this workspace"
+                  title={t('agentPersonalization.mcp.disabled')}
                   muted
                   trailing={
                      <Button size="xs" variant="ghost">
-                        Configure
+                        {t('agentPersonalization.mcp.configure')}
                      </Button>
                   }
                />

@@ -14,6 +14,7 @@ import { agentExamples, agentSkills } from '@/mock-data/agent';
 import { users } from '@/mock-data/users';
 import { useAgentChatStore } from '@/store/agent-chat-store';
 import { ArrowUp, Blocks, Bot, ChevronDown, Paperclip, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 
 /** Streams the canned reply into the assistant message, word by word. */
@@ -90,6 +91,7 @@ function ChatComposer({
    autoFocus?: boolean;
    large?: boolean;
 }) {
+   const t = useTranslations('agent');
    const [value, setValue] = useState('');
 
    const submit = () => {
@@ -110,7 +112,7 @@ function ChatComposer({
                   submit();
                }
             }}
-            placeholder="Ask the agent…"
+            placeholder={t('composer.placeholder')}
             className={cn(
                'w-full resize-none bg-transparent px-4 pt-3.5 text-sm outline-none placeholder:text-muted-foreground',
                large ? 'min-h-16' : 'min-h-12'
@@ -120,7 +122,7 @@ function ChatComposer({
             <DropdownMenu>
                <DropdownMenuTrigger className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground px-1.5 py-1 rounded-md outline-none transition-colors">
                   <Blocks className="size-3.5" />
-                  Skills
+                  {t('composer.skills')}
                   <ChevronDown className="size-3" />
                </DropdownMenuTrigger>
                <DropdownMenuContent align="start" className="w-48">
@@ -138,7 +140,7 @@ function ChatComposer({
                   className="size-7 rounded-full"
                   onClick={submit}
                   disabled={value.trim() === ''}
-                  aria-label="Send"
+                  aria-label={t('composer.send')}
                >
                   <ArrowUp className="size-4" />
                </Button>
@@ -159,6 +161,7 @@ export default function AgentChat() {
    const [bannerDismissed, setBannerDismissed] = useState(false);
    const [examplesDismissed, setExamplesDismissed] = useState(false);
    const scrollRef = useRef<HTMLDivElement>(null);
+   const t = useTranslations('agent');
 
    const activeChat = chats.find((chat) => chat.id === activeChatId);
 
@@ -177,15 +180,15 @@ export default function AgentChat() {
          <div className="w-full h-full flex flex-col items-center overflow-y-auto">
             {!bannerDismissed && (
                <div className="mt-4 flex items-center gap-3 rounded-full border bg-container shadow-xs px-4 py-1.5 text-sm">
-                  <span>Agent is now your default view</span>
+                  <span>{t('banner.text')}</span>
                   <button className="text-muted-foreground hover:text-foreground transition-colors">
-                     Change
+                     {t('banner.change')}
                   </button>
                   <button
                      onClick={() => setBannerDismissed(true)}
                      className="font-medium rounded-full border px-2.5 py-0.5 hover:bg-accent transition-colors"
                   >
-                     Keep
+                     {t('banner.keep')}
                   </button>
                </div>
             )}
@@ -199,13 +202,11 @@ export default function AgentChat() {
                {!examplesDismissed && (
                   <div className="mt-6">
                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-sm text-muted-foreground">
-                           Get started with some examples
-                        </span>
+                        <span className="text-sm text-muted-foreground">{t('hero.examples')}</span>
                         <button
                            onClick={() => setExamplesDismissed(true)}
                            className="text-muted-foreground hover:text-foreground transition-colors"
-                           aria-label="Dismiss examples"
+                           aria-label={t('hero.dismissExamples')}
                         >
                            <X className="size-4" />
                         </button>

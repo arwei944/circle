@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { users, User } from '@/mock-data/users';
+import { useTranslations } from 'next-intl';
 import { CheckIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useId, useState } from 'react';
@@ -21,6 +22,7 @@ interface LeadSelectorProps {
 }
 
 export function LeadSelector({ lead, onLeadChange }: LeadSelectorProps) {
+   const t = useTranslations('projects');
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(lead.id);
@@ -68,9 +70,9 @@ export function LeadSelector({ lead, onLeadChange }: LeadSelectorProps) {
             </PopoverTrigger>
             <PopoverContent className="border-input w-48 p-0" align="start">
                <Command>
-                  <CommandInput placeholder="Set lead..." />
+                  <CommandInput placeholder={t('selectors.setLead')} />
                   <CommandList>
-                     <CommandEmpty>No user found.</CommandEmpty>
+                     <CommandEmpty>{t('selectors.noUserFound')}</CommandEmpty>
                      <CommandGroup>
                         {users.map((user) => (
                            <CommandItem

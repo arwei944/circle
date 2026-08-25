@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -21,11 +23,13 @@ import { ProjectSelector } from './project-selector';
 import { LabelSelector } from './label-selector';
 import { ranks } from '@/mock-data/issues';
 import { DialogTitle } from '@radix-ui/react-dialog';
+import { useTranslations } from 'next-intl';
 
 export function CreateNewIssue() {
    const [createMore, setCreateMore] = useState<boolean>(false);
    const { isOpen, defaultStatus, openModal, closeModal } = useCreateIssueStore();
    const { addIssue, getAllIssues } = useIssuesStore();
+   const t = useTranslations('common');
 
    const generateUniqueIdentifier = useCallback(() => {
       const identifiers = getAllIssues().map((issue) => issue.identifier);
@@ -67,10 +71,10 @@ export function CreateNewIssue() {
 
    const createIssue = () => {
       if (!addIssueForm.title) {
-         toast.error('Title is required');
+         toast.error(t('createIssue.titleIsRequired'));
          return;
       }
-      toast.success('Issue created');
+      toast.success(t('createIssue.issueCreated'));
       addIssue(addIssueForm);
       if (!createMore) {
          closeModal();
@@ -100,14 +104,14 @@ export function CreateNewIssue() {
             <div className="px-4 pb-0 space-y-3 w-full">
                <Input
                   className="border-none w-full shadow-none outline-none text-2xl font-medium px-0 h-auto focus-visible:ring-0 overflow-hidden text-ellipsis whitespace-normal break-words"
-                  placeholder="Issue title"
+                  placeholder={t('createIssue.issueTitle')}
                   value={addIssueForm.title}
                   onChange={(e) => setAddIssueForm({ ...addIssueForm, title: e.target.value })}
                />
 
                <Textarea
                   className="border-none w-full shadow-none outline-none resize-none px-0 min-h-16 focus-visible:ring-0 break-words whitespace-normal overflow-wrap"
-                  placeholder="Add description..."
+                  placeholder={t('createIssue.addDescription')}
                   value={addIssueForm.description}
                   onChange={(e) =>
                      setAddIssueForm({ ...addIssueForm, description: e.target.value })
@@ -155,7 +159,7 @@ export function CreateNewIssue() {
                         checked={createMore}
                         onCheckedChange={setCreateMore}
                      />
-                     <Label htmlFor="create-more">Create more</Label>
+                     <Label htmlFor="create-more">{t('createIssue.createMore')}</Label>
                   </div>
                </div>
                <Button
@@ -164,7 +168,7 @@ export function CreateNewIssue() {
                      createIssue();
                   }}
                >
-                  Create issue
+                  {t('createIssue.createNewIssue')}
                </Button>
             </div>
          </DialogContent>

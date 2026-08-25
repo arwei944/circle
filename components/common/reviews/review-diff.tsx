@@ -13,11 +13,13 @@ import {
    SlidersHorizontal,
 } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { DiffView } from './diff-view';
 
 /** Diff tab: Files / Commits toolbar, file list and stacked unified diffs. */
 export function ReviewDiff({ review }: { review: Review }) {
    const [query, setQuery] = useState('');
+   const t = useTranslations('reviews');
 
    const files = useMemo(
       () =>
@@ -33,23 +35,23 @@ export function ReviewDiff({ review }: { review: Review }) {
             <div className="flex items-center gap-1.5 text-xs">
                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border bg-accent font-medium">
                   <ListFilter className="size-3.5" />
-                  Files
+                  {t('diff.files')}
                   <span className="text-muted-foreground">{review.files.length}</span>
                </span>
                <Popover>
                   <PopoverTrigger asChild>
                      <button className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border text-muted-foreground hover:bg-accent/50 transition-colors">
                         <GitCommitHorizontal className="size-3.5" />
-                        Commits
+                        {t('diff.commits')}
                         <span>{review.commits.length}</span>
                      </button>
                   </PopoverTrigger>
                   <PopoverContent align="start" className="w-96 p-0 text-sm">
                      <div className="flex items-center justify-between px-3 py-2 border-b">
-                        <span className="font-medium">All commits</span>
+                        <span className="font-medium">{t('diff.allCommits')}</span>
                         <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                            <Check className="size-3.5" />
-                           {review.commits.length} commits
+                           {t('diff.commitCount', { count: review.commits.length })}
                         </span>
                      </div>
                      {review.commits.map((commit) => (
@@ -73,7 +75,7 @@ export function ReviewDiff({ review }: { review: Review }) {
                <div className="relative shrink-0">
                   <Search className="size-3.5 text-muted-foreground absolute left-2 top-1/2 -translate-y-1/2" />
                   <Input
-                     placeholder="Filter files..."
+                     placeholder={t('diff.filterFiles')}
                      value={query}
                      onChange={(event) => setQuery(event.target.value)}
                      className="pl-7 h-8 text-xs"

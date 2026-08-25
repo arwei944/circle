@@ -15,6 +15,7 @@ import { LabelInterface, labels } from '@/mock-data/labels';
 import { CheckIcon, TagIcon } from 'lucide-react';
 import { useId, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 interface LabelSelectorProps {
    selectedLabels: LabelInterface[];
@@ -23,6 +24,7 @@ interface LabelSelectorProps {
 
 export function LabelSelector({ selectedLabels, onChange }: LabelSelectorProps) {
    const id = useId();
+   const t = useTranslations('common');
    const [open, setOpen] = useState<boolean>(false);
 
    const { filterByLabel } = useIssuesStore();
@@ -74,9 +76,9 @@ export function LabelSelector({ selectedLabels, onChange }: LabelSelectorProps) 
                align="start"
             >
                <Command>
-                  <CommandInput placeholder="Search labels..." />
+                  <CommandInput placeholder={t('createIssue.searchLabels')} />
                   <CommandList>
-                     <CommandEmpty>No labels found.</CommandEmpty>
+                     <CommandEmpty>{t('createIssue.noLabelsFound')}</CommandEmpty>
                      <CommandGroup>
                         {labels.map((label) => {
                            const isSelected = selectedLabels.some((l) => l.id === label.id);

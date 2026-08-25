@@ -2,6 +2,7 @@
 
 import { Input } from '@/components/ui/input';
 import { ChevronRight, Search } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { INTEGRATION_LOGOS } from './integration-logos';
 import {
@@ -52,9 +53,12 @@ function IntegrationIcon({ integration, size = 36 }: { integration: Integration;
 }
 
 function StatusBadge({ status }: { status: NonNullable<Integration['status']> }) {
+   const t = useTranslations('settings');
    return (
       <span className="text-[11px] text-muted-foreground border rounded px-1 py-px leading-none shrink-0">
-         {status === 'enabled' ? 'Enabled' : 'Pre-installed'}
+         {status === 'enabled'
+            ? t('integrations.status.enabled')
+            : t('integrations.status.preInstalled')}
       </span>
    );
 }
@@ -76,14 +80,9 @@ function IntegrationCard({ integration }: { integration: Integration }) {
    );
 }
 
-function CategorySection({
-   label,
-   items,
-}: {
-   label: string;
-   items: Integration[];
-}) {
+function CategorySection({ label, items }: { label: string; items: Integration[] }) {
    const [expanded, setExpanded] = useState(false);
+   const t = useTranslations('settings');
    const visible = expanded ? items : items.slice(0, VISIBLE_PER_CATEGORY);
    return (
       <section className="flex flex-col gap-3">
@@ -98,7 +97,7 @@ function CategorySection({
                onClick={() => setExpanded(true)}
                className="self-start text-xs text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
             >
-               Show all
+               {t('common.showAll')}
                <ChevronRight className="size-3" />
             </button>
          )}
@@ -112,6 +111,7 @@ function CategorySection({
  */
 export default function Integrations() {
    const [query, setQuery] = useState('');
+   const t = useTranslations('settings');
 
    const searchResults = useMemo(() => {
       const needle = query.trim().toLowerCase();
@@ -127,16 +127,14 @@ export default function Integrations() {
       <div className="w-full overflow-y-auto h-full">
          <div className="max-w-2xl mx-auto px-6 py-10 flex flex-col gap-8">
             <div className="flex flex-col gap-1">
-               <h1 className="text-2xl font-medium">Integrations</h1>
-               <p className="text-sm text-muted-foreground">
-                  Enhance your workspace with a wide variety of add-ons and integrations
-               </p>
+               <h1 className="text-2xl font-medium">{t('integrations.title')}</h1>
+               <p className="text-sm text-muted-foreground">{t('integrations.description')}</p>
             </div>
 
             <div className="relative">
                <Search className="size-4 text-muted-foreground absolute left-2.5 top-1/2 -translate-y-1/2" />
                <Input
-                  placeholder="Search integrations"
+                  placeholder={t('integrations.searchPlaceholder')}
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
                   className="pl-8 h-9"
@@ -146,7 +144,7 @@ export default function Integrations() {
             {searchResults ? (
                <section className="flex flex-col gap-3">
                   <h2 className="text-base font-medium">
-                     {searchResults.length} result{searchResults.length === 1 ? '' : 's'}
+                     {t('integrations.searchResultsCount', { count: searchResults.length })}
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                      {searchResults.map((integration) => (
@@ -158,9 +156,11 @@ export default function Integrations() {
                <>
                   <section className="flex flex-col gap-3">
                      <div className="flex items-center justify-between">
-                        <h2 className="text-base font-medium">Enabled</h2>
+                        <h2 className="text-base font-medium">
+                           {t('integrations.enabledSection')}
+                        </h2>
                         <button className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                           View all
+                           {t('integrations.viewAll')}
                         </button>
                      </div>
                      <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
@@ -174,7 +174,9 @@ export default function Integrations() {
                                  <span className="text-xs font-medium truncate max-w-full">
                                     {integration.name}
                                  </span>
-                                 <span className="text-[11px] text-muted-foreground">Enabled</span>
+                                 <span className="text-[11px] text-muted-foreground">
+                                    {t('common.enabled')}
+                                 </span>
                               </span>
                            </button>
                         ))}

@@ -13,6 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { useIssuesStore } from '@/store/issues-store';
 import { priorities, Priority } from '@/mock-data/priorities';
 import { CheckIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useEffect, useId, useState } from 'react';
 
 interface PrioritySelectorProps {
@@ -24,6 +25,7 @@ export function PrioritySelector({ priority, issueId }: PrioritySelectorProps) {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(priority.id);
+   const t = useTranslations('issues');
 
    const { filterByPriority, updateIssuePriority } = useIssuesStore();
 
@@ -70,9 +72,9 @@ export function PrioritySelector({ priority, issueId }: PrioritySelectorProps) {
                align="start"
             >
                <Command>
-                  <CommandInput placeholder="Set priority..." />
+                  <CommandInput placeholder={t('selector.setPriority')} />
                   <CommandList>
-                     <CommandEmpty>No priority found.</CommandEmpty>
+                     <CommandEmpty>{t('selector.noPriorityFound')}</CommandEmpty>
                      <CommandGroup>
                         {priorities.map((item) => (
                            <CommandItem

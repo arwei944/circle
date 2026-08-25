@@ -5,6 +5,7 @@ import { getCycleById } from '@/mock-data/cycles';
 import { useDisplaySettingsStore } from '@/store/display-settings-store';
 import { format } from 'date-fns';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { AssigneeUser } from './assignee-user';
 import { LabelBadge } from './label-badge';
@@ -18,6 +19,7 @@ import { IssueContextMenu } from './issue-context-menu';
 
 export function IssueLine({ issue, layoutId = false }: { issue: Issue; layoutId?: boolean }) {
    const { orgId } = useParams<{ orgId: string }>();
+   const t = useTranslations('issues');
    const { displayProperties } = useDisplaySettingsStore();
    const cycle = displayProperties.cycle && issue.cycleId ? getCycleById(issue.cycleId) : undefined;
 
@@ -64,7 +66,7 @@ export function IssueLine({ issue, layoutId = false }: { issue: Issue; layoutId?
                   )}
                   {displayProperties.dueDate && issue.dueDate && (
                      <span className="text-xs text-orange-400 shrink-0 hidden sm:inline-block">
-                        Due {format(new Date(issue.dueDate), 'MMM dd')}
+                        {t('line.dueDate', { date: format(new Date(issue.dueDate), 'MMM dd') })}
                      </span>
                   )}
                   {displayProperties.created && (

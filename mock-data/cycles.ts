@@ -83,7 +83,7 @@ export const cycles: Cycle[] = [
    {
       id: '23',
       number: 23,
-      name: 'Cycle 23',
+      name: '周期 ',
       teamId: 'CORE',
       status: 'planned',
       startDate: '2026-08-17',
@@ -97,7 +97,7 @@ export const cycles: Cycle[] = [
    {
       id: '22',
       number: 22,
-      name: 'Cycle 22',
+      name: '周期 ',
       teamId: 'CORE',
       status: 'upcoming',
       startDate: '2026-08-03',
@@ -112,7 +112,7 @@ export const cycles: Cycle[] = [
    {
       id: '21',
       number: 21,
-      name: 'Cycle 21',
+      name: '周期 ',
       teamId: 'CORE',
       status: 'current',
       startDate: '2026-07-20',
@@ -127,7 +127,7 @@ export const cycles: Cycle[] = [
    {
       id: '20',
       number: 20,
-      name: 'Cycle 20',
+      name: '周期 ',
       teamId: 'CORE',
       status: 'completed',
       startDate: '2026-07-06',
@@ -143,7 +143,7 @@ export const cycles: Cycle[] = [
    {
       id: '19',
       number: 19,
-      name: 'Cycle 19',
+      name: '周期 ',
       teamId: 'CORE',
       status: 'completed',
       startDate: '2026-06-22',
@@ -159,7 +159,7 @@ export const cycles: Cycle[] = [
    {
       id: '18',
       number: 18,
-      name: 'Cycle 18',
+      name: '周期 ',
       teamId: 'CORE',
       status: 'completed',
       startDate: '2026-06-08',
@@ -175,7 +175,7 @@ export const cycles: Cycle[] = [
    {
       id: '17',
       number: 17,
-      name: 'Cycle 17',
+      name: '周期 ',
       teamId: 'CORE',
       status: 'completed',
       startDate: '2026-05-25',
@@ -191,7 +191,7 @@ export const cycles: Cycle[] = [
    {
       id: '16',
       number: 16,
-      name: 'Cycle 16',
+      name: '周期 ',
       teamId: 'CORE',
       status: 'completed',
       startDate: '2026-05-11',
@@ -231,8 +231,8 @@ export function formatCycleDateRange(cycle: Cycle): string {
 }
 
 export const cycleStatusLabel: Record<CycleStatus, string> = {
-   planned: 'Planned',
-   upcoming: 'Upcoming',
-   current: 'Current',
-   completed: 'Completed',
+   planned: '计划中',
+   upcoming: '即将开始',
+   current: '进行中',
+   completed: '已完成',
 };

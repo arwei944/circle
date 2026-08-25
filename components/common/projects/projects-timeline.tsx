@@ -11,6 +11,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Project } from '@/mock-data/projects';
 import { useProjectsDisplayStore } from '@/store/projects-display-store';
+import { useTranslations } from 'next-intl';
 import { format, parseISO } from 'date-fns';
 import { ArrowLeft, ArrowRight, Check, ChevronDown, Plus } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -29,10 +30,10 @@ const LIST_WIDTH = 224;
 
 /** Zoom levels for the scale dropdown (month column width in px). */
 const ZOOM_LEVELS = [
-   { id: 'year', label: 'Year', shortcut: 'Y', monthWidth: 120 },
-   { id: 'quarter', label: 'Quarter', shortcut: 'Q', monthWidth: 240 },
-   { id: 'month', label: 'Month', shortcut: 'M', monthWidth: 480 },
-   { id: 'week', label: 'Week', shortcut: 'W', monthWidth: 960 },
+   { id: 'year', labelKey: 'timeline.zoom.year', shortcut: 'Y', monthWidth: 120 },
+   { id: 'quarter', labelKey: 'timeline.zoom.quarter', shortcut: 'Q', monthWidth: 240 },
+   { id: 'month', labelKey: 'timeline.zoom.month', shortcut: 'M', monthWidth: 480 },
+   { id: 'week', labelKey: 'timeline.zoom.week', shortcut: 'W', monthWidth: 960 },
 ] as const;
 type TimelineZoom = (typeof ZOOM_LEVELS)[number]['id'];
 
@@ -218,6 +219,7 @@ function TimelineBar({
  * (Year / Quarter / Month / Week, with Y/Q/M/W shortcuts) changes the zoom.
  */
 export default function ProjectsTimeline({ groups }: ProjectsTimelineProps) {
+   const t = useTranslations('projects');
    const { showProjectList, showWeekNumbers, displayProperties } = useProjectsDisplayStore();
    const [todayIso, setTodayIso] = useState<string | null>(null);
    const [viewport, setViewport] = useState<Viewport | null>(null);
@@ -344,11 +346,11 @@ export default function ProjectsTimeline({ groups }: ProjectsTimelineProps) {
                onClick={scrollToToday}
                className="h-7 px-2.5 rounded-md border bg-container text-xs font-medium hover:bg-accent transition-colors shadow-xs"
             >
-               Today
+               {t('timeline.today')}
             </button>
             <DropdownMenu>
                <DropdownMenuTrigger className="h-7 px-2.5 rounded-md border bg-container text-xs font-medium hover:bg-accent transition-colors shadow-xs inline-flex items-center gap-1 outline-none">
-                  {ZOOM_LEVELS.find((level) => level.id === zoom)!.label}
+                  {t(ZOOM_LEVELS.find((level) => level.id === zoom)!.labelKey)}
                   <ChevronDown className="size-3 text-muted-foreground" />
                </DropdownMenuTrigger>
                <DropdownMenuContent align="end" className="w-40">
@@ -358,7 +360,7 @@ export default function ProjectsTimeline({ groups }: ProjectsTimelineProps) {
                         onClick={() => setZoomLevel(level.id)}
                         className="flex items-center gap-2 text-sm"
                      >
-                        <span className="flex-1">{level.label}</span>
+                        <span className="flex-1">{t(level.labelKey)}</span>
                         {zoom === level.id && <Check className="size-3.5" />}
                         <span className="text-xs text-muted-foreground">{level.shortcut}</span>
                      </DropdownMenuItem>

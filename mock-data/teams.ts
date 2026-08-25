@@ -23,7 +23,7 @@ export const teams: Team[] = [
    },
    {
       id: 'DESIGN',
-      name: 'Design System',
+      name: '设计系统',
       icon: '🎨',
       joined: true,
       color: '#00FF00',
@@ -32,7 +32,7 @@ export const teams: Team[] = [
    },
    {
       id: 'PERF',
-      name: 'Performance Lab',
+      name: '性能实验室',
       icon: '☀️',
       joined: false,
       color: '#0000FF',
@@ -41,7 +41,7 @@ export const teams: Team[] = [
    },
    {
       id: 'UX',
-      name: 'UX Team',
+      name: 'UX 团队',
       icon: '👨🏼‍🎨',
       joined: false,
       color: '#FF00FF',
@@ -50,7 +50,7 @@ export const teams: Team[] = [
    },
    {
       id: 'DATA',
-      name: 'Data Science',
+      name: '数据科学',
       icon: '📊',
       joined: false,
       color: '#0000FF',
@@ -59,7 +59,7 @@ export const teams: Team[] = [
    },
    {
       id: 'MOBILE',
-      name: 'Mobile Development',
+      name: '移动开发',
       icon: '📱',
       joined: false,
       color: '#0000FF',
@@ -68,7 +68,7 @@ export const teams: Team[] = [
    },
    {
       id: 'WEB',
-      name: 'Web Development',
+      name: 'Web 开发',
       icon: '🌐',
       joined: true,
       color: '#0000FF',
@@ -77,7 +77,7 @@ export const teams: Team[] = [
    },
    {
       id: 'UI',
-      name: 'UI Team',
+      name: 'UI 团队',
       icon: '👨🏼‍🎨',
       joined: false,
       color: '#FF00FF',
@@ -86,7 +86,7 @@ export const teams: Team[] = [
    },
    {
       id: 'CLOUD',
-      name: 'Cloud Infrastructure',
+      name: '云基础设施',
       icon: '☁️',
       joined: false,
       color: '#4A90E2',
@@ -95,7 +95,7 @@ export const teams: Team[] = [
    },
    {
       id: 'SECURITY',
-      name: 'Security Team',
+      name: '安全团队',
       icon: '🔒',
       joined: false,
       color: '#2E2E2E',
@@ -104,7 +104,7 @@ export const teams: Team[] = [
    },
    {
       id: 'AI',
-      name: 'AI Research',
+      name: 'AI 研究',
       icon: '🧠',
       joined: true,
       color: '#9B59B6',
@@ -113,7 +113,7 @@ export const teams: Team[] = [
    },
    {
       id: 'QA',
-      name: 'Quality Assurance',
+      name: '质量保障',
       icon: '✅',
       joined: false,
       color: '#F1C40F',
@@ -131,7 +131,7 @@ export const teams: Team[] = [
    },
    {
       id: 'FRONTEND',
-      name: 'Frontend Experts',
+      name: '前端专家',
       icon: '🖥️',
       joined: false,
       color: '#1ABC9C',
@@ -140,7 +140,7 @@ export const teams: Team[] = [
    },
    {
       id: 'BACKEND',
-      name: 'Backend Engineers',
+      name: '后端工程师',
       icon: '🗄️',
       joined: false,
       color: '#34495E',
@@ -149,7 +149,7 @@ export const teams: Team[] = [
    },
    {
       id: 'PRODUCT',
-      name: 'Product',
+      name: '产品',
       icon: '📋',
       joined: false,
       color: '#C0392B',
@@ -158,7 +158,7 @@ export const teams: Team[] = [
    },
    {
       id: 'ANALYTICS',
-      name: 'Analytics Team',
+      name: '数据分析团队',
       icon: '📈',
       joined: false,
       color: '#7F8C8D',
@@ -167,7 +167,7 @@ export const teams: Team[] = [
    },
    {
       id: 'INNO',
-      name: 'Innovation Lab',
+      name: '创新实验室',
       icon: '💡',
       joined: false,
       color: '#F39C12',
@@ -176,7 +176,7 @@ export const teams: Team[] = [
    },
    {
       id: 'API',
-      name: 'API Development',
+      name: 'API 开发',
       icon: '🔌',
       joined: false,
       color: '#16A085',
@@ -185,7 +185,7 @@ export const teams: Team[] = [
    },
    {
       id: 'UXR',
-      name: 'UX Research',
+      name: 'UX 研究',
       icon: '🔍',
       joined: false,
       color: '#8E44AD',

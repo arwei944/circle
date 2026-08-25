@@ -1,0 +1,24 @@
+{
+   "title": "My issues",
+   "tabs": {
+      "assigned": "Assigned",
+      "created": "Created",
+      "subscribed": "Subscribed",
+      "activity": "Activity"
+   },
+   "search": {
+      "placeholder": "Search issues...",
+      "label": "Search"
+   },
+   "issueCount": "{count, plural, one {# issue} other {# issues}}",
+   "toggleInsights": "Toggle insights panel",
+   "toggleBreakdown": "Toggle breakdown panel",
+   "breakdown": {
+      "labels": "Labels",
+      "priority": "Priority",
+      "projects": "Projects",
+      "teams": "Teams",
+      "close": "Close panel",
+      "noData": "No data"
+   }
+}

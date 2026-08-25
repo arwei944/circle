@@ -1,0 +1,19 @@
+{
+   "title": "Views",
+   "notFound": "View not found",
+   "tab": {
+      "issues": "Issues",
+      "projects": "Projects"
+   },
+   "ordering": "Ordering",
+   "displayProperties": "Display properties",
+   "name": "Name",
+   "created": "Created",
+   "updated": "Updated",
+   "owner": "Owner",
+   "team": "Team",
+   "workspace": "Workspace",
+   "noViews": "No views yet",
+   "issueCount": "{count, plural, one {# issue} other {# issues}}",
+   "projectCount": "{count, plural, one {# project} other {# projects}}"
+}

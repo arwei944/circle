@@ -71,15 +71,15 @@ const details: IssueDetail[] = [
    {
       identifier: 'LNUI-703',
       description: [
-         { type: 'heading', text: 'Context' },
+         { type: 'heading', text: '背景' },
          {
             type: 'paragraph',
-            text: 'The current focus trap in `Dialog` relies on a hand-rolled `focusin` listener. It breaks as soon as a nested portal (Select, Combobox, DatePicker) renders its content outside the dialog subtree: focus is yanked back to the dialog and the nested widget closes.',
+            text: '当前 `Dialog` 的焦点陷阱依赖手写的 `focusin` 监听器。一旦嵌套 portal（Select、Combobox、DatePicker）把内容渲染到对话框子树之外，它就会失效：焦点被强行拉回对话框，嵌套组件随之关闭。',
          },
-         { type: 'heading', text: 'Proposed approach' },
+         { type: 'heading', text: '建议方案' },
          {
             type: 'paragraph',
-            text: 'Track an **allowlist of portal roots** registered through context. Any element inside a registered root is treated as part of the dialog for focus containment purposes.',
+            text: '通过 context 维护一个 **portal 根节点白名单**。位于已注册根节点内的任何元素，在焦点限制上都视为对话框的一部分。',
          },
          {
             type: 'code',
@@ -95,21 +95,21 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
    }, [node, roots]);
 }`,
          },
-         { type: 'heading', text: 'Acceptance criteria' },
+         { type: 'heading', text: '验收标准' },
          {
             type: 'checklist',
             items: [
-               { text: 'Select opened inside a Dialog keeps focus on its listbox', checked: true },
-               { text: 'Nested Dialog (2 levels) traps focus on the topmost layer', checked: true },
-               { text: 'Escape closes only the topmost layer', checked: false },
-               { text: 'VoiceOver / NVDA announce the dialog correctly', checked: false },
+               { text: '在 Dialog 内打开的 Select 保持焦点在其列表框中', checked: true },
+               { text: '嵌套 Dialog（2 层）在最顶层限制焦点', checked: true },
+               { text: 'Escape 只关闭最顶层', checked: false },
+               { text: 'VoiceOver / NVDA 正确播报对话框', checked: false },
             ],
          },
          { type: 'divider' },
          {
             type: 'issue-ref',
             identifier: 'LNUI-643',
-            note: 'previous scrollbar layout-shift fix touches the same overlay code',
+            note: '之前修复滚动条布局偏移的改动涉及同一套浮层代码',
          },
       ],
       activity: [
@@ -118,34 +118,34 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             id: 'a1',
             actor: users[1],
             event: 'created',
-            text: 'created the issue',
-            timeAgo: '12d ago',
+            text: '创建了此问题',
+            timeAgo: '12天前',
          },
          {
             kind: 'event',
             id: 'a2',
             actor: users[1],
             event: 'label',
-            text: 'added label Bug',
-            timeAgo: '12d ago',
+            text: '添加了缺陷标签',
+            timeAgo: '12天前',
          },
          {
             kind: 'event',
             id: 'a3',
             actor: users[2],
             event: 'status',
-            text: 'moved from Todo to In Progress',
-            timeAgo: '9d ago',
+            text: '将状态从「待办」改为「进行中」',
+            timeAgo: '9天前',
          },
          {
             kind: 'comment',
             id: 'a4',
             actor: users[1],
-            timeAgo: '8d ago',
+            timeAgo: '8天前',
             body: [
                {
                   type: 'paragraph',
-                  text: 'Heads up: Radix solves this with a `DismissableLayer` tree. Worth reading their implementation before we reinvent it — the branch pruning logic is subtle.',
+                  text: '提醒一下：Radix 通过 `DismissableLayer` 树解决了这个问题。在重新实现之前值得读一下他们的实现 — 分支修剪逻辑很微妙。',
                },
             ],
             reactions: [{ emoji: '👍', count: 3 }],
@@ -154,52 +154,50 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             kind: 'comment',
             id: 'a5',
             actor: users[2],
-            timeAgo: '6d ago',
+            timeAgo: '6天前',
             body: [
                {
                   type: 'paragraph',
-                  text: 'Agreed. I kept the context registry approach but mirrored their layer ordering. Draft PR is up, the two remaining checkboxes need the screen-reader pass.',
+                  text: '同意。我保留了 context 注册表方案，但镜像了他们的层序。草稿 PR 已就绪，剩余两个勾选项需要屏幕阅读器过一遍。',
                },
             ],
          },
       ],
       relatedIds: ['LNUI-643', 'LNUI-744'],
-      prLinks: [
-         { id: '#212', title: 'fix(dialog): portal-aware focus containment', status: 'open' },
-      ],
+      prLinks: [{ id: '#212', title: 'fix(dialog): portal 感知的焦点限制', status: 'open' }],
    },
    {
       identifier: 'LNUI-704',
       description: [
          {
             type: 'paragraph',
-            text: 'Rendering 10k+ rows makes the `DataTable` unusable: initial render takes **4.2s** and scrolling drops to ~11fps on a mid-range laptop.',
+            text: '渲染 10k+ 行会让 `DataTable` 不可用：初始渲染耗时 **4.2 秒**，在中端笔记本上滚动掉到约 11fps。',
          },
          {
             type: 'image',
-            alt: 'React Profiler flamegraph of a 10k-row render',
-            caption: 'Profiler capture — 92% of the time is spent mounting row cells',
+            alt: 'React Profiler 10k 行渲染的火焰图',
+            caption: 'Profiler 截图 — 92% 的时间花在挂载行单元格上',
             aspect: 'wide',
          },
-         { type: 'heading', text: 'Plan' },
+         { type: 'heading', text: '计划' },
          {
             type: 'numbered-list',
             items: [
-               'Windowing with a fixed overscan of 12 rows (no external dep, ~120 LOC)',
-               'Row measurement cache keyed by row id for variable heights',
-               'Sticky header stays outside the scroll container',
-               'Keyboard navigation jumps must scroll the virtual window',
+               '使用固定 12 行的 overscan 做窗口化（无外部依赖，约 120 行代码）',
+               '以行 id 为 key 的行高测量缓存，支持可变高度',
+               '粘性表头保持在滚动容器之外',
+               '键盘导航跳转时必须滚动虚拟窗口',
             ],
          },
          {
             type: 'video',
-            title: 'Scroll capture — prototype at 120fps',
+            title: '滚动录屏 — 120fps 原型',
             duration: '0:42',
          },
          {
             type: 'quote',
-            text: 'Budget: first paint of the table under 300ms with 10k rows, scroll at 60fps minimum.',
-            author: 'perf budget, Q3 notes',
+            text: '预算：10k 行下表首帧在 300ms 以内，滚动至少 60fps。',
+            author: '性能预算，Q3 笔记',
          },
       ],
       activity: [
@@ -208,34 +206,34 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             id: 'b1',
             actor: users[4],
             event: 'created',
-            text: 'created the issue',
-            timeAgo: '11d ago',
+            text: '创建了此问题',
+            timeAgo: '11天前',
          },
          {
             kind: 'event',
             id: 'b2',
             actor: users[4],
             event: 'cycle',
-            text: 'added issue to Cycle 21',
-            timeAgo: '11d ago',
+            text: '将此问题加入周期 21',
+            timeAgo: '11天前',
          },
          {
             kind: 'event',
             id: 'b3',
             actor: users[0],
             event: 'priority',
-            text: 'set priority to High',
-            timeAgo: '10d ago',
+            text: '将优先级设为高',
+            timeAgo: '10天前',
          },
          {
             kind: 'comment',
             id: 'b4',
             actor: users[0],
-            timeAgo: '4d ago',
+            timeAgo: '4天前',
             body: [
                {
                   type: 'paragraph',
-                  text: 'Prototype numbers on the reference dataset: first paint **278ms**, steady scroll at 60fps, 74MB heap (was 410MB). Ship it.',
+                  text: '参考数据集上的原型数据：首帧 **278ms**，稳定 60fps 滚动，堆内存 74MB（原来 410MB）。可以发布。',
                },
             ],
             reactions: [
@@ -246,35 +244,35 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
       ],
       subIssueIds: ['LNUI-726'],
       relatedIds: ['LNUI-685'],
-      prLinks: [{ id: '#198', title: 'perf(table): windowed row rendering', status: 'merged' }],
+      prLinks: [{ id: '#198', title: 'perf(table): 窗口化行渲染', status: 'merged' }],
    },
    {
       identifier: 'LNUI-701',
       description: [
-         { type: 'heading', text: 'Steps to reproduce' },
+         { type: 'heading', text: '复现步骤' },
          {
             type: 'numbered-list',
             items: [
-               'Open the Combobox demo with a list containing disabled options',
-               'Focus the input and press `ArrowDown` repeatedly',
-               'Reach a disabled option surrounded by two enabled ones',
+               '打开包含禁用选项列表的 Combobox 演示',
+               '聚焦输入框并反复按 `ArrowDown`',
+               '到达被两个可用选项夹住的禁用选项',
             ],
          },
-         { type: 'heading', text: 'Expected' },
+         { type: 'heading', text: '预期行为' },
          {
             type: 'paragraph',
-            text: 'Focus skips the disabled option and lands on the next enabled one, in both directions.',
+            text: '两个方向都应该跳过禁用选项，落到下一个可用选项上。',
          },
-         { type: 'heading', text: 'Actual' },
+         { type: 'heading', text: '实际行为' },
          {
             type: 'paragraph',
-            text: 'Going **down** skips correctly, going **up** stops on the disabled option and the `aria-activedescendant` points to a non-interactive element.',
+            text: '**向下**跳过正确，**向上**会停在禁用选项上，且 `aria-activedescendant` 指向了不可交互的元素。',
          },
-         { type: 'video', title: 'Screen recording — keyboard navigation bug', duration: '0:18' },
+         { type: 'video', title: '屏幕录制 — 键盘导航 bug', duration: '0:18' },
          { type: 'divider' },
          {
             type: 'paragraph',
-            text: 'Likely an off-by-one in `findNextEnabledIndex` when iterating backwards.',
+            text: '很可能是 `findNextEnabledIndex` 向后迭代时的差一（off-by-one）错误。',
          },
       ],
       activity: [
@@ -283,26 +281,26 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             id: 'c1',
             actor: users[0],
             event: 'created',
-            text: 'created the issue',
-            timeAgo: '10d ago',
+            text: '创建了此问题',
+            timeAgo: '10天前',
          },
          {
             kind: 'event',
             id: 'c2',
             actor: users[0],
             event: 'status',
-            text: 'moved from Triage to Product Feedback',
-            timeAgo: '9d ago',
+            text: '将状态从「待归类」改为「产品反馈」',
+            timeAgo: '9天前',
          },
          {
             kind: 'comment',
             id: 'c3',
             actor: users[7],
-            timeAgo: '7d ago',
+            timeAgo: '7天前',
             body: [
                {
                   type: 'paragraph',
-                  text: 'Confirmed on Firefox and Safari as well — not browser specific. The backwards iterator starts at `index` instead of `index - 1`.',
+                  text: '在 Firefox 和 Safari 上同样复现 — 并非浏览器特有。反向迭代器从 `index` 而不是 `index - 1` 开始。',
                },
             ],
             reactions: [{ emoji: '👀', count: 2 }],
@@ -315,26 +313,26 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
       description: [
          {
             type: 'quote',
-            text: 'Navigating between months on my old Android phone takes almost a second, the animation stutters badly.',
-            author: 'user feedback, support ticket #482',
+            text: '在我旧安卓手机上切换月份几乎要一秒，动画卡顿非常严重。',
+            author: '用户反馈，支持工单 #482',
          },
          {
             type: 'paragraph',
-            text: 'Reproduced on a throttled 4x CPU profile. Each month navigation re-renders **42 day cells** plus the header, and every cell recomputes its formatter.',
+            text: '在 4x CPU 降速下复现。每次切换月份都要重渲染 **42 个日期单元格**加上表头，每个单元格还会重新计算其 formatter。',
          },
-         { type: 'heading', text: 'Hypotheses' },
+         { type: 'heading', text: '假设' },
          {
             type: 'bullet-list',
             items: [
-               'The `Intl.DateTimeFormat` instance is created per cell per render — hoist and reuse',
-               'Month transition animates `box-shadow` (paint-heavy), switch to `transform`/`opacity`',
-               'Day cells can be memoized: only selection and today change between renders',
+               '`Intl.DateTimeFormat` 实例每次渲染每个单元格都会创建 — 应提升并复用',
+               '月份过渡动画使用 `box-shadow`（绘制开销大），改为 `transform`/`opacity`',
+               '日期单元格可以记忆化：渲染之间只有选中状态和今天会变化',
             ],
          },
          {
             type: 'image',
-            alt: 'Chrome performance trace of a month navigation',
-            caption: 'Trace — 610ms scripting, 220ms rendering on 4x throttle',
+            alt: 'Chrome 一次月份切换的性能轨迹',
+            caption: '轨迹 — 4x 降速下脚本 610ms、渲染 220ms',
             aspect: 'wide',
          },
       ],
@@ -344,18 +342,18 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             id: 'd1',
             actor: users[6],
             event: 'created',
-            text: 'created the issue',
-            timeAgo: '10d ago',
+            text: '创建了此问题',
+            timeAgo: '10天前',
          },
          {
             kind: 'comment',
             id: 'd2',
             actor: users[6],
-            timeAgo: '5d ago',
+            timeAgo: '5天前',
             body: [
                {
                   type: 'paragraph',
-                  text: 'Hoisting the formatter alone cuts scripting from 610ms to 180ms. The rest is the shadow animation.',
+                  text: '仅提升 formatter 就把脚本耗时从 610ms 降到 180ms。其余部分是阴影动画。',
                },
             ],
          },
@@ -363,11 +361,11 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             kind: 'comment',
             id: 'd3',
             actor: users[13],
-            timeAgo: '4d ago',
+            timeAgo: '4天前',
             body: [
                {
                   type: 'paragraph',
-                  text: 'Design is fine with a simple opacity crossfade on low-end devices — we can key it on `prefers-reduced-motion` too.',
+                  text: '设计上同意在低端设备上用简单的透明度交叉淡入淡出 — 我们也可以把它与 `prefers-reduced-motion` 关联。',
                },
             ],
             reactions: [{ emoji: '✅', count: 1 }],
@@ -377,24 +375,24 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
    {
       identifier: 'LNUI-706',
       description: [
-         { type: 'heading', text: 'Goals' },
+         { type: 'heading', text: '目标' },
          {
             type: 'bullet-list',
             items: [
-               'Move every color token from HSL to **OKLCH** for perceptual uniformity',
-               'Keep HSL fallbacks for browsers without `oklch()` support',
-               'No visual regression above a deltaE of 1.5 on existing themes',
+               '将所有颜色令牌从 HSL 迁移到 **OKLCH** 以获得感知均匀性',
+               '为不支持 `oklch()` 的浏览器保留 HSL 降级',
+               '现有主题上视觉回归不超过 deltaE 1.5',
             ],
          },
-         { type: 'heading', text: 'Token mapping' },
+         { type: 'heading', text: '令牌映射' },
          {
             type: 'code',
             language: 'css',
             code: `:root {
-   /* before */
+   /* 之前 */
    --primary: hsl(243 75% 59%);
 
-   /* after — fallback first, then OKLCH override */
+   /* 之后 — 先回退，再以 OKLCH 覆盖 */
    --primary: hsl(243 75% 59%);
 }
 
@@ -404,21 +402,21 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
    }
 }`,
          },
-         { type: 'heading', text: 'Migration steps' },
+         { type: 'heading', text: '迁移步骤' },
          {
             type: 'checklist',
             items: [
                {
-                  text: 'Script converting the HSL palette to OKLCH (round-trip checked)',
+                  text: '将 HSL 调色板转换为 OKLCH 的脚本（往返校验通过）',
                   checked: true,
                },
-               { text: 'Regenerate `globals.css` tokens for light + dark', checked: true },
-               { text: 'Visual diff on the 12 template pages', checked: false },
-               { text: 'Update theming docs and the theme generator', checked: false },
+               { text: '为亮色 + 暗色重新生成 `globals.css` 令牌', checked: true },
+               { text: '在 12 个模板页面上做视觉对比', checked: false },
+               { text: '更新主题文档与主题生成器', checked: false },
             ],
          },
          { type: 'divider' },
-         { type: 'issue-ref', identifier: 'LNUI-729', note: 'theme switcher must re-read tokens' },
+         { type: 'issue-ref', identifier: 'LNUI-729', note: '主题切换器必须重新读取令牌' },
       ],
       activity: [
          {
@@ -426,40 +424,40 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             id: 'e1',
             actor: users[12],
             event: 'created',
-            text: 'created the issue',
-            timeAgo: '8d ago',
+            text: '创建了此问题',
+            timeAgo: '8天前',
          },
          {
             kind: 'event',
             id: 'e2',
             actor: users[12],
             event: 'status',
-            text: 'moved from Backlog to In Progress',
-            timeAgo: '7d ago',
+            text: '将状态从「待办」改为「进行中」',
+            timeAgo: '7天前',
          },
          {
             kind: 'comment',
             id: 'e3',
             actor: users[19],
-            timeAgo: '2d ago',
+            timeAgo: '2天前',
             body: [
                {
                   type: 'paragraph',
-                  text: 'The converted dark palette looks noticeably smoother on gradients. Two tokens (`--warning`, `--chart-3`) drifted above deltaE 1.5, adjusting chroma manually.',
+                  text: '转换后的暗色调色板在渐变上明显更平滑。两个令牌（`--warning`、`--chart-3`）漂移超过了 deltaE 1.5，正在手动调整色度。',
                },
             ],
             reactions: [{ emoji: '🎨', count: 2 }],
          },
       ],
       subIssueIds: ['LNUI-729', 'LNUI-734'],
-      milestone: 'Design Tokens v2',
+      milestone: '设计令牌 v2',
    },
    {
       identifier: 'LNUI-710',
       description: [
          {
             type: 'paragraph',
-            text: 'When an async source passed to the command palette **throws** (network error, bad JSON), the loading spinner never resolves and the whole palette becomes unresponsive — even for local commands.',
+            text: '当传给命令面板的异步源**抛错**时（网络错误、JSON 损坏），加载 spinner 永远不结束，整个面板都会失去响应 — 即使本地命令也是。',
          },
          {
             type: 'code',
@@ -470,7 +468,7 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
          },
          {
             type: 'paragraph',
-            text: 'Fix direction: isolate each source with `Promise.allSettled`, render per-source error rows, and keep local commands interactive while remote sources are pending.',
+            text: '修复方向：用 `Promise.allSettled` 隔离每个异步源，按源渲染错误行，并在远程源挂起时保持本地命令可交互。',
          },
       ],
       activity: [
@@ -479,26 +477,26 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             id: 'f1',
             actor: users[3],
             event: 'created',
-            text: 'created the issue',
-            timeAgo: '7d ago',
+            text: '创建了此问题',
+            timeAgo: '7天前',
          },
          {
             kind: 'event',
             id: 'f2',
             actor: users[3],
             event: 'blocked',
-            text: 'marked this issue as blocked by LNUI-707',
-            timeAgo: '6d ago',
+            text: '将此问题标记为被 LNUI-707 阻塞',
+            timeAgo: '6天前',
          },
          {
             kind: 'comment',
             id: 'f3',
             actor: users[3],
-            timeAgo: '3d ago',
+            timeAgo: '3天前',
             body: [
                {
                   type: 'paragraph',
-                  text: 'Blocked on the positioning refactor because the error rows change the palette height and the old positioning code jumps.',
+                  text: '被定位重构阻塞，因为错误行会改变调色板高度，而旧定位代码会跳动。',
                },
             ],
          },
@@ -511,20 +509,20 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
       description: [
          {
             type: 'paragraph',
-            text: 'Card and Table need first-class skeleton variants so loading states stop being hand-rolled in every app.',
+            text: 'Card 和 Table 需要一流的骨架屏变体，这样加载状态就不必在每个应用里手写了。',
          },
          {
             type: 'checklist',
             items: [
-               { text: '`CardSkeleton` — header, media slot, two text lines', checked: false },
-               { text: '`TableSkeleton` — configurable rows × columns', checked: false },
-               { text: 'Shimmer respects `prefers-reduced-motion`', checked: false },
+               { text: '`CardSkeleton` — 表头、媒体插槽、两行文本', checked: false },
+               { text: '`TableSkeleton` — 可配置的行 × 列', checked: false },
+               { text: '微光效果遵循 `prefers-reduced-motion`', checked: false },
             ],
          },
          {
             type: 'image',
-            alt: 'Skeleton variants design mock',
-            caption: 'Design mock — card and table skeletons, light & dark',
+            alt: '骨架屏变体设计稿',
+            caption: '设计稿 — 亮色与暗色的卡片与表格骨架屏',
             aspect: 'video',
          },
       ],
@@ -534,16 +532,16 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             id: 'g1',
             actor: users[5],
             event: 'created',
-            text: 'created the issue',
-            timeAgo: '12d ago',
+            text: '创建了此问题',
+            timeAgo: '12天前',
          },
          {
             kind: 'event',
             id: 'g2',
             actor: users[5],
             event: 'cycle',
-            text: 'added issue to Cycle 21',
-            timeAgo: '12d ago',
+            text: '将此问题加入周期 21',
+            timeAgo: '12天前',
          },
       ],
    },
@@ -552,26 +550,26 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
       description: [
          {
             type: 'paragraph',
-            text: 'The Badge docs page should embed an **interactive playground**: variant, size, and color pickers with live code output users can copy.',
+            text: 'Badge 文档页应嵌入**交互式演练场**：变体、尺寸与颜色选择器，并实时输出可复制的代码。',
          },
          {
             type: 'image',
-            alt: 'Playground layout wireframe',
-            caption: 'Wireframe — controls on the left, live preview + code on the right',
+            alt: '演练场布局线框图',
+            caption: '线框图 — 左侧为控件，右侧为实时预览与代码',
             aspect: 'wide',
          },
          {
             type: 'image',
-            alt: 'Mobile layout of the playground',
-            caption: 'On mobile the controls collapse into a bottom sheet',
+            alt: '演练场的移动端布局',
+            caption: '移动端控件收进底部弹层',
             aspect: 'square',
          },
          {
             type: 'bullet-list',
             items: [
-               'Controls are generated from the component prop table (single source of truth)',
-               'Code output stays in sync and is copy-pastable',
-               'Playground state is encoded in the URL for sharing',
+               '控件从组件属性表生成（单一事实来源）',
+               '代码输出保持同步且可直接复制',
+               '演练场状态编码进 URL 以便分享',
             ],
          },
       ],
@@ -581,18 +579,18 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             id: 'h1',
             actor: users[15],
             event: 'created',
-            text: 'created the issue',
-            timeAgo: '7d ago',
+            text: '创建了此问题',
+            timeAgo: '7天前',
          },
          {
             kind: 'comment',
             id: 'h2',
             actor: users[9],
-            timeAgo: '5d ago',
+            timeAgo: '5天前',
             body: [
                {
                   type: 'paragraph',
-                  text: 'URL-encoded state pairs nicely with the docs search indexing work — shared playground links become deep links into the docs.',
+                  text: 'URL 编码的状态与文档搜索索引工作配合得很好 — 共享的演练场链接会变成文档内的深链。',
                },
             ],
          },
@@ -604,27 +602,27 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
       description: [
          {
             type: 'paragraph',
-            text: 'Our categorical chart palette fails for deuteranopia: series 2 and 4 are indistinguishable. We need a colorblind-safe scale that still matches the brand.',
+            text: '我们的分类图调色板在红色弱视下失效：系列 2 和系列 4 无法区分。我们需要一个既色盲友好又与品牌匹配的色阶。',
          },
          {
             type: 'image',
-            alt: 'Current vs proposed palette under CVD simulation',
-            caption: 'Simulation — top: current palette, bottom: proposal under deuteranopia',
+            alt: 'CVD 模拟下当前与提案调色板对比',
+            caption: '模拟 — 上图：当前调色板，下图：红色弱视下的提案',
             aspect: 'wide',
          },
-         { type: 'heading', text: 'Constraints' },
+         { type: 'heading', text: '约束条件' },
          {
             type: 'bullet-list',
             items: [
-               'Minimum 8 distinguishable categorical steps',
-               'Each step readable against both `--background` values (light/dark)',
-               'Sequential and diverging ramps derived from the same anchors',
+               '至少 8 个可区分的分类色阶',
+               '每个色阶在亮/暗两种 `--background` 值下都清晰可读',
+               '顺序与发散色带由同一组锚点派生',
             ],
          },
          {
             type: 'quote',
-            text: 'Color should never be the only channel encoding a data series.',
-            author: 'a11y guidelines, charts section',
+            text: '颜色永远不应是编码数据系列的唯一通道。',
+            author: '无障碍指南，图表章节',
          },
       ],
       activity: [
@@ -633,16 +631,16 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             id: 'i1',
             actor: users[19],
             event: 'created',
-            text: 'created the issue',
-            timeAgo: '3d ago',
+            text: '创建了此问题',
+            timeAgo: '3天前',
          },
          {
             kind: 'event',
             id: 'i2',
             actor: users[19],
             event: 'label',
-            text: 'added labels Accessibility, Design',
-            timeAgo: '3d ago',
+            text: '添加了「无障碍」「设计」标签',
+            timeAgo: '3天前',
          },
       ],
       relatedIds: ['LNUI-727'],
@@ -652,7 +650,7 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
       description: [
          {
             type: 'paragraph',
-            text: 'Every keystroke in the table filter re-rendered **all** visible rows. Wrapping the row renderer in `memo` with a custom comparator cut re-renders by ~60%.',
+            text: '表格筛选中的每次按键都会重渲染**所有**可见行。用带自定义比较器的 `memo` 包裹行渲染器后，重渲染减少了约 60%。',
          },
          {
             type: 'code',
@@ -665,7 +663,7 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
          },
          {
             type: 'paragraph',
-            text: 'Measured on the 1k-row demo: keystroke latency went from 96ms to **34ms** (p95).',
+            text: '在 1k 行演示上测得：按键延迟从 96ms 降到 **34ms**（p95）。',
          },
       ],
       activity: [
@@ -674,61 +672,61 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             id: 'j1',
             actor: users[4],
             event: 'created',
-            text: 'created the issue',
-            timeAgo: '11d ago',
+            text: '创建了此问题',
+            timeAgo: '11天前',
          },
          {
             kind: 'event',
             id: 'j2',
             actor: users[4],
             event: 'pr',
-            text: 'linked pull request #196',
-            timeAgo: '10d ago',
+            text: '关联了拉取请求 #196',
+            timeAgo: '10天前',
          },
          {
             kind: 'event',
             id: 'j3',
             actor: users[4],
             event: 'status',
-            text: 'moved from In Progress to Done',
-            timeAgo: '9d ago',
+            text: '将状态从「进行中」改为「已完成」',
+            timeAgo: '9天前',
          },
          {
             kind: 'comment',
             id: 'j4',
             actor: users[8],
-            timeAgo: '9d ago',
-            body: [{ type: 'paragraph', text: 'Nice one — the filter feels instant now. 🎉' }],
+            timeAgo: '9天前',
+            body: [{ type: 'paragraph', text: '干得漂亮 — 筛选现在立刻就有响应了。🎉' }],
             reactions: [{ emoji: '🎉', count: 5 }],
          },
       ],
-      prLinks: [{ id: '#196', title: 'perf(table): memoize row renderer', status: 'merged' }],
+      prLinks: [{ id: '#196', title: 'perf(table): 记忆化行渲染', status: 'merged' }],
    },
    {
       identifier: 'LNUI-735',
       description: [
          {
             type: 'paragraph',
-            text: 'The **Empty State** component ships with three illustration slots (no-data, error, first-use) and composable actions.',
+            text: '**Empty State** 组件自带三个插画插槽（无数据、错误、首次使用）以及可组合的操作。',
          },
          {
             type: 'image',
-            alt: 'Empty state component preview',
-            caption: 'Preview — no-data variant with primary + secondary actions',
+            alt: '空状态组件预览',
+            caption: '预览 — 无数据变体，含主要 + 次要操作',
             aspect: 'video',
          },
-         { type: 'heading', text: 'Release notes' },
+         { type: 'heading', text: '发布说明' },
          {
             type: 'bullet-list',
             items: [
-               '`<EmptyState />` with `illustration`, `title`, `description`, `actions` slots',
-               'Ships with 3 neutral SVG illustrations, tree-shaken when unused',
-               'Docs page with usage guidelines and do/don’t examples',
+               '`<EmptyState />` 带 `illustration`、`title`、`description`、`actions` 插槽',
+               '随组件提供 3 幅中性 SVG 插画，未使用时被摇树优化掉',
+               '文档页包含使用指南与正面/反面示例',
             ],
          },
          {
             type: 'quote',
-            text: 'An empty state is the first screen most users see — treat it as a landing page, not an afterthought.',
+            text: '空状态是大多数用户看到的第一个界面 — 应把它当作落地页，而不是事后补丁。',
          },
       ],
       activity: [
@@ -737,39 +735,35 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             id: 'k1',
             actor: users[3],
             event: 'created',
-            text: 'created the issue',
-            timeAgo: '9d ago',
+            text: '创建了此问题',
+            timeAgo: '9天前',
          },
          {
             kind: 'event',
             id: 'k2',
             actor: users[3],
             event: 'pr',
-            text: 'linked pull request #205',
-            timeAgo: '5d ago',
+            text: '关联了拉取请求 #205',
+            timeAgo: '5天前',
          },
          {
             kind: 'event',
             id: 'k3',
             actor: users[3],
             event: 'status',
-            text: 'moved from Technical Review to Shipped',
-            timeAgo: '2d ago',
+            text: '将状态从「技术评审」改为「已发布」',
+            timeAgo: '2天前',
          },
       ],
-      prLinks: [{ id: '#205', title: 'feat(empty-state): new component + docs', status: 'merged' }],
+      prLinks: [{ id: '#205', title: 'feat(empty-state): 新组件 + 文档', status: 'merged' }],
    },
    {
       identifier: 'LNUI-819',
       description: [
-         { type: 'heading', text: 'Repro' },
+         { type: 'heading', text: '复现' },
          {
             type: 'numbered-list',
-            items: [
-               'Pass an option group with an empty `options` array',
-               'Open the Combobox',
-               'Crash on first keystroke',
-            ],
+            items: ['传入一个 `options` 数组为空的选项分组', '打开 Combobox', '第一次按键即崩溃'],
          },
          {
             type: 'code',
@@ -780,7 +774,7 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
          },
          {
             type: 'paragraph',
-            text: 'Reported through the docs feedback widget. Needs triage: either skip empty groups at render time or guard `getFirstOption`.',
+            text: '通过文档反馈组件报告。需要待归类处理：要么在渲染时跳过空分组，要么为 `getFirstOption` 加保护。',
          },
       ],
       activity: [
@@ -789,8 +783,8 @@ export function useDialogPortalRoot(node: HTMLElement | null) {
             id: 'l1',
             actor: users[16],
             event: 'created',
-            text: 'created the issue from docs feedback',
-            timeAgo: '2d ago',
+            text: '根据文档反馈创建了此问题',
+            timeAgo: '2天前',
          },
       ],
       relatedIds: ['LNUI-701'],
@@ -820,7 +814,7 @@ const buildFallbackDetail = (issue: Issue): IssueDetail => {
 
    const intro: ContentBlock = {
       type: 'paragraph',
-      text: `${issue.title}. Scoped for the ${issue.project ? `**${issue.project.name}**` : 'component library'} work — implementation notes below.`,
+      text: `${issue.title}。此工作归属于 ${issue.project ? `**${issue.project.name}**` : '组件库'} — 具体实现说明见下文。`,
    };
 
    const variants: ContentBlock[][] = [
@@ -829,9 +823,9 @@ const buildFallbackDetail = (issue: Issue): IssueDetail => {
          {
             type: 'checklist',
             items: [
-               { text: 'Align on the API surface in the team channel', checked: seed % 2 === 0 },
-               { text: 'Implementation + unit tests', checked: false },
-               { text: 'Docs page updated with an example', checked: false },
+               { text: '在团队频道中对齐 API 形态', checked: seed % 2 === 0 },
+               { text: '实现并补充单元测试', checked: false },
+               { text: '更新文档页并附带示例', checked: false },
             ],
          },
       ],
@@ -839,40 +833,32 @@ const buildFallbackDetail = (issue: Issue): IssueDetail => {
          intro,
          {
             type: 'bullet-list',
-            items: [
-               'Keep the public API backward compatible',
-               'No new runtime dependency',
-               'Follow the existing Tailwind token conventions',
-            ],
+            items: ['保持公共 API 向后兼容', '不新增运行时依赖', '遵循现有 Tailwind 令牌约定'],
          },
          {
             type: 'paragraph',
-            text: 'Edge cases and browser quirks should be captured as test cases before closing.',
+            text: '关闭前应将边界情况和浏览器怪癖固化为测试用例。',
          },
       ],
       [
-         { type: 'heading', text: 'Context' },
+         { type: 'heading', text: '背景' },
          intro,
-         { type: 'heading', text: 'Plan' },
+         { type: 'heading', text: '计划' },
          {
             type: 'numbered-list',
-            items: [
-               'Spike and validate the approach on the docs demo',
-               'Implement behind the existing component API',
-               'Review with design before merging',
-            ],
+            items: ['在文档演示中标定并验证方案', '在现有组件 API 背后实现', '合并前与设计端评审'],
          },
       ],
       [
          intro,
          {
             type: 'quote',
-            text: 'Small, composable primitives beat configurable monoliths.',
-            author: 'library design principles',
+            text: '小而可组合的原子组件优于可配置的巨石组件。',
+            author: '组件库设计原则',
          },
          {
             type: 'paragraph',
-            text: 'Ping the maintainers before changing anything exported from the package root.',
+            text: '在修改包根目录导出的任何内容之前，先联系维护者。',
          },
       ],
    ];
@@ -883,8 +869,8 @@ const buildFallbackDetail = (issue: Issue): IssueDetail => {
          id: `${issue.id}-created`,
          actor: reporter,
          event: 'created',
-         text: 'created the issue',
-         timeAgo: `${(seed % 12) + 2}d ago`,
+         text: '创建了此问题',
+         timeAgo: `${(seed % 12) + 2}天前`,
       },
    ];
 
@@ -894,8 +880,8 @@ const buildFallbackDetail = (issue: Issue): IssueDetail => {
          id: `${issue.id}-cycle`,
          actor: reporter,
          event: 'cycle',
-         text: `added issue to Cycle ${issue.cycleId}`,
-         timeAgo: `${(seed % 10) + 1}d ago`,
+         text: `将此问题加入周期 ${issue.cycleId}`,
+         timeAgo: `${(seed % 10) + 1}天前`,
       });
    }
 
@@ -905,8 +891,8 @@ const buildFallbackDetail = (issue: Issue): IssueDetail => {
          id: `${issue.id}-status`,
          actor: author,
          event: 'status',
-         text: `moved from Todo to ${issue.status.name}`,
-         timeAgo: `${(seed % 6) + 1}d ago`,
+         text: `将状态从「待办」改为「${issue.status.name}」`,
+         timeAgo: `${(seed % 6) + 1}天前`,
       });
    }
 
@@ -915,11 +901,11 @@ const buildFallbackDetail = (issue: Issue): IssueDetail => {
          kind: 'comment',
          id: `${issue.id}-comment`,
          actor: users[(seed + 3) % users.length],
-         timeAgo: `${(seed % 4) + 1}d ago`,
+         timeAgo: `${(seed % 4) + 1}天前`,
          body: [
             {
                type: 'paragraph',
-               text: 'Taking a look this week — will post findings here before opening a PR.',
+               text: '本周会看一下 — 开 PR 之前会先把结论发在这里。',
             },
          ],
       });

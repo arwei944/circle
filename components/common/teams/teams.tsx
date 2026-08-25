@@ -4,6 +4,7 @@ import { teams as allTeams } from '@/mock-data/teams';
 import { useTeamsFilterStore } from '@/store/team-filter-store';
 import { useTeamsDisplayStore } from '@/store/teams-display-store';
 import { useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import { Filter } from '@/components/layout/headers/teams/filter';
 import TeamLine from './team-line';
 import { TeamsDisplayOptions } from './teams-display-options';
@@ -11,6 +12,7 @@ import { TeamsDisplayOptions } from './teams-display-options';
 export default function Teams() {
    const { filters } = useTeamsFilterStore();
    const { ordering, displayProperties } = useTeamsDisplayStore();
+   const t = useTranslations('teams');
 
    const displayed = useMemo(() => {
       let list = allTeams.slice();
@@ -45,7 +47,7 @@ export default function Teams() {
          {/* Count + view controls (Linear-style) */}
          <div className="w-full flex justify-between items-center border-b py-1.5 px-6 h-10 sticky top-0 bg-container z-20">
             <span className="text-sm text-muted-foreground">
-               {displayed.length} {displayed.length === 1 ? 'team' : 'teams'}
+               {t('teamsPage.count', { count: displayed.length })}
             </span>
             <div className="flex items-center gap-1">
                <Filter />
@@ -55,25 +57,27 @@ export default function Teams() {
 
          {/* Column headers */}
          <div className="bg-container px-6 py-1.5 text-sm flex items-center text-muted-foreground border-b sticky top-10 z-10">
-            <div className="flex-1 min-w-0">Name</div>
+            <div className="flex-1 min-w-0">{t('columns.name')}</div>
             {displayProperties.membership && (
-               <div className="hidden sm:block w-[110px] shrink-0">Membership</div>
+               <div className="hidden sm:block w-[110px] shrink-0">{t('columns.membership')}</div>
             )}
             {displayProperties.owners && (
-               <div className="hidden lg:block w-[70px] shrink-0">Owners</div>
+               <div className="hidden lg:block w-[70px] shrink-0">{t('columns.owners')}</div>
             )}
-            {displayProperties.members && <div className="w-[150px] shrink-0">Members</div>}
+            {displayProperties.members && (
+               <div className="w-[150px] shrink-0">{t('columns.members')}</div>
+            )}
             {displayProperties.cycle && (
-               <div className="hidden md:block w-[80px] shrink-0">Cycle</div>
+               <div className="hidden md:block w-[80px] shrink-0">{t('columns.cycle')}</div>
             )}
             {displayProperties.projects && (
-               <div className="hidden sm:block w-[80px] shrink-0">Projects</div>
+               <div className="hidden sm:block w-[80px] shrink-0">{t('columns.projects')}</div>
             )}
             {displayProperties.created && (
-               <div className="hidden xl:block w-[90px] shrink-0">Created</div>
+               <div className="hidden xl:block w-[90px] shrink-0">{t('columns.created')}</div>
             )}
             {displayProperties.updated && (
-               <div className="hidden xl:block w-[90px] shrink-0">Updated</div>
+               <div className="hidden xl:block w-[90px] shrink-0">{t('columns.updated')}</div>
             )}
          </div>
 

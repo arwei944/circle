@@ -1,0 +1,522 @@
+{
+   "nav": {
+      "settings": "Settings"
+   },
+   "common": {
+      "enabled": "Enabled",
+      "off": "Off",
+      "none": "None",
+      "connected": "Connected",
+      "connect": "Connect",
+      "showAll": "Show all",
+      "filterByName": "Filter by name..."
+   },
+   "placeholder": {
+      "slas": {
+         "title": "SLAs",
+         "description": "Automatically apply deadlines to issues based on their properties",
+         "actionLabel": "New SLA",
+         "emptyLabel": "No SLAs"
+      },
+      "project-labels": {
+         "title": "Project labels",
+         "actionLabel": "New label",
+         "emptyLabel": "No project labels"
+      },
+      "project-templates": {
+         "title": "Project templates",
+         "actionLabel": "New template",
+         "emptyLabel": "No project templates"
+      },
+      "project-updates": {
+         "title": "Project updates",
+         "description": "Configure how project updates are collected across the workspace",
+         "emptyLabel": "No updates"
+      },
+      "initiatives": {
+         "title": "Initiatives",
+         "description": "Group projects into larger bodies of work",
+         "actionLabel": "New initiative",
+         "emptyLabel": "No initiatives"
+      },
+      "documents": {
+         "title": "Documents",
+         "actionLabel": "New document",
+         "emptyLabel": "No documents"
+      },
+      "customer-requests": {
+         "title": "Customer requests",
+         "description": "Track and manage customer requests alongside your team’s work",
+         "actionLabel": "New request",
+         "emptyLabel": "No customer requests"
+      },
+      "releases": {
+         "title": "Releases",
+         "actionLabel": "New release",
+         "emptyLabel": "No releases"
+      },
+      "pulse": {
+         "title": "Pulse",
+         "description": "A feed of important updates across your workspace",
+         "emptyLabel": "No updates"
+      },
+      "asks": {
+         "title": "Asks",
+         "description": "Turn requests into actionable issues",
+         "actionLabel": "New Ask",
+         "emptyLabel": "No asks"
+      },
+      "emojis": {
+         "title": "Emojis",
+         "actionLabel": "Upload",
+         "emptyLabel": "No emojis"
+      }
+   },
+   "notifications": {
+      "title": "Notifications",
+      "pushNotifications": {
+         "title": "Push notifications",
+         "description": "Choose which notifications are pushed to your devices. All notifications will still appear in your inbox."
+      },
+      "channels": {
+         "desktop": "Desktop",
+         "mobile": "Mobile",
+         "email": "Email",
+         "slack": "Slack",
+         "status": {
+            "enabledWithOthers": "Enabled for assignments, status changes, {count, plural, one{# other} other{# others}}",
+            "all": "Enabled for all notifications"
+         }
+      },
+      "updates": {
+         "title": "Updates from LNDev UI",
+         "description": "Subscribe to product announcements and important changes from the LNDev UI team",
+         "changelog": "Changelog",
+         "showInSidebar": "Show updates in sidebar",
+         "showInSidebarDesc": "Highlight new features and improvements in the app sidebar",
+         "newsletter": "Changelog newsletter",
+         "newsletterDesc": "Receive an email twice a month highlighting new features and improvements",
+         "marketing": "Marketing",
+         "marketingOnboarding": "Marketing and onboarding",
+         "marketingOnboardingDesc": "Occasional updates to help you get the most out of LNDev UI",
+         "otherUpdates": "Other updates",
+         "inviteAccepted": "Invite accepted",
+         "inviteAcceptedDesc": "Receive an email when an invite you sent is accepted",
+         "privacyLegal": "Privacy and legal updates",
+         "privacyLegalDesc": "Important updates about terms of service or privacy policy changes"
+      }
+   },
+   "codeReviews": {
+      "title": "Code & reviews",
+      "description": "Review GitHub pull requests and agent code diffs in LNDev UI",
+      "enableCodeReviews": "Enable code reviews",
+      "enableCodeReviewsDesc": "Review GitHub pull requests, accessible from the sidebar",
+      "autoConvertDrafts": "Auto-convert draft pull requests",
+      "autoConvertDraftsDesc": "Automatically mark your drafts as ready upon approval or requesting a review",
+      "mergeStrategy": "Merge strategy",
+      "mergeStrategyDesc": "Choose the default merge strategy for pull requests. Repository configuration can affect available strategies",
+      "mergeStrategyOptions": {
+         "squash": "Squash and merge",
+         "mergeCommit": "Merge commit",
+         "rebaseMerge": "Rebase and merge"
+      },
+      "codeTheme": "Code theme",
+      "codeThemeDesc": "Select the syntax highlighting theme used in code diffs and viewers",
+      "codeThemeOptions": {
+         "light": "LNDev Light",
+         "dark": "LNDev Dark",
+         "contrast": "Contrast"
+      },
+      "font": "Font",
+      "fontOptions": {
+         "regular": "12px, Regular, Default",
+         "medium": "13px, Medium"
+      },
+      "diffLanguages": {
+         "typescript": "TypeScript",
+         "javascript": "JavaScript",
+         "python": "Python"
+      },
+      "notifications": {
+         "title": "Notifications",
+         "description": "Choose which review activity appears in your inbox and push notifications",
+         "commentsReviews": "Comments & reviews",
+         "commentsReviewsDesc": "Comments, mentions, and submitted reviews",
+         "commentsReviewsOptions": {
+            "excludeBots": "Exclude Bots",
+            "everyone": "Everyone",
+            "none": "None"
+         },
+         "reviewRequests": "Review requests",
+         "reviewRequestsDesc": "Requests for your personal review",
+         "githubTeamReviewRequests": "GitHub team review requests",
+         "githubTeamReviewRequestsDesc": "Requests for review from your GitHub teams with 10 or fewer members",
+         "checksMergeQueue": "Checks & merge queue",
+         "checksMergeQueueDesc": "Check failures and merge queue updates"
+      },
+      "signedCommits": {
+         "title": "Signed commits",
+         "requireSigned": "Require signed commits",
+         "requireSignedDesc": "Users must upload a signing key before starting a coding session",
+         "noSigningKey": "No signing key added",
+         "addKey": "Add key"
+      },
+      "externalTools": {
+         "title": "External tools",
+         "configureTools": "Configure coding tools",
+         "configureToolsDesc": "Configure the external coding tools you can open issues in",
+         "gitAttachmentFormat": "Git attachment format",
+         "gitAttachmentFormatDesc": "The format of GitHub/GitLab attachments on issues",
+         "gitAttachmentFormatOptions": {
+            "title": "Title",
+            "url": "URL",
+            "compact": "Compact"
+         },
+         "branchCopyStatus": "On git branch copy, move issue to started status",
+         "branchCopyStatusDesc": "After copying the git branch name, issue status is moved to the team's first started workflow status. Hold ⌥ to disable.",
+         "openInToolStatus": "On open in coding tool, move issue to started status",
+         "openInToolStatusDesc": "After opening an issue in a coding tool or copying as prompt, issue status is moved to the team's first started workflow status. Hold ⌥ to disable."
+      }
+   },
+   "security": {
+      "title": "Security & access",
+      "sessions": {
+         "title": "Sessions",
+         "description": "Devices logged into your account",
+         "currentDevice": "Chrome on macOS",
+         "currentSession": "Current session",
+         "otherSessions": "{count, plural, one{# other session} other{# other sessions}}",
+         "revokeAll": "Revoke all",
+         "iosDevice": "LNDev UI iOS",
+         "lastSeen": "Paris, FR · Last seen about 3 hours ago"
+      },
+      "passkeys": {
+         "title": "Passkeys",
+         "description": "Passkeys are a secure way to sign in to your account",
+         "none": "No passkeys registered",
+         "new": "New passkey"
+      },
+      "apiKeys": {
+         "title": "Personal API keys",
+         "description": "Use the GraphQL API to build your own integrations",
+         "count": "{count, plural, one{# API key} other{# API keys}}",
+         "new": "New API key",
+         "accessDetails": "· full access · public & private teams",
+         "createdInfo": "Created 2 months ago · last used on Jul 16, 2026"
+      },
+      "signingKey": {
+         "title": "Commit signing key",
+         "description": "Coding sessions use this key to sign your commits",
+         "none": "No signing key added",
+         "addKey": "Add key"
+      }
+   },
+   "connectedAccounts": {
+      "title": "Connected accounts",
+      "description": "Connect your user accounts to sync attribution of your actions between apps",
+      "slackDescription": "Sync your message attribution, and receive notifications in Slack",
+      "googleCalendarDescription": "Sync your calendar out-of-office status to LNDev UI",
+      "notionDescription": "Preview issues, projects, and views within Notion",
+      "octoRelayDescription": "Review code in LNDev UI and sync attribution of your git-related actions"
+   },
+   "agentPersonalization": {
+      "title": "Agent personalization",
+      "description": "Your personal settings for the LNDev Agent",
+      "guidance": {
+         "title": "Guidance",
+         "description": "Provide personal instructions and context for the agent when responding to conversations",
+         "placeholder": "Enter personal guidance for the agent (optional)..."
+      },
+      "skills": {
+         "title": "Skills",
+         "description": "Reusable prompts auto-selected by the agent or invoked via slash commands",
+         "none": "No skills created"
+      },
+      "mcp": {
+         "title": "MCP connectors",
+         "description": "Add MCP connectors for use with the agent. Workspace admins can manage available connectors in security settings.",
+         "disabled": "Agent MCP access disabled in this workspace",
+         "configure": "Configure"
+      }
+   },
+   "ai": {
+      "title": "AI & Agents",
+      "description": "Automate your product development processes and operations with AI",
+      "usageFeedback": "Enable usage feedback",
+      "usageFeedbackDesc": "Improve AI functionality by sharing usage feedback. Never used to train models",
+      "agentSection": {
+         "title": "LNDev Agent",
+         "description": "Create issues and answer questions about your workspace",
+         "features": {
+            "agent": "LNDev Agent",
+            "agentDesc": "Configure for your workspace",
+            "codingSessions": "Coding sessions",
+            "codingSessionsDesc": "Assign or ask the agent to make code changes",
+            "loops": "Loops",
+            "loopsDesc": "Automated agent workflows that run on a schedule or when an issue is updated",
+            "codeIntelligence": "Code Intelligence",
+            "codeIntelligenceDesc": "Allow the agent to analyze and answer questions about your repositories",
+            "triageIntelligence": "Triage Intelligence",
+            "triageIntelligenceDesc": "Find related issues and infer properties like team, project, labels, and assignee"
+         }
+      },
+      "beta": "Beta",
+      "integrations": {
+         "title": "Agent integrations",
+         "description": "Integrations available to the agent",
+         "browse": "Browse integrations",
+         "slackDescription": "Settings and additional guidance for creating issues from Slack messages",
+         "asksForSlackDescription": "Settings and issue templates for creating issues from Asks for Slack"
+      }
+   },
+   "integrations": {
+      "title": "Integrations",
+      "description": "Enhance your workspace with a wide variety of add-ons and integrations",
+      "searchPlaceholder": "Search integrations",
+      "searchResultsCount": "{count, plural, one{# result} other{# results}}",
+      "enabledSection": "Enabled",
+      "viewAll": "View all",
+      "status": {
+         "enabled": "Enabled",
+         "preInstalled": "Pre-installed"
+      }
+   },
+   "issueLabels": {
+      "title": "Issue labels",
+      "workspace": "Workspace",
+      "allTeams": "All teams",
+      "newGroup": "New group",
+      "newLabel": "New label",
+      "columns": {
+         "name": "Name ↓",
+         "description": "Description",
+         "issues": "Issues",
+         "lastApplied": "Last applied",
+         "created": "Created"
+      },
+      "noResults": "No labels match your filter."
+   },
+   "issueTemplates": {
+      "title": "Issue templates",
+      "description": "These templates are available when creating issues for any team in the workspace. To create templates that only apply to specific teams, add them as team templates.",
+      "count": "{count, plural, one{# issue template} other{# issue templates}}"
+   },
+   "projectStatuses": {
+      "title": "Project statuses",
+      "description": "Project statuses define the workflow that projects go through from start to completion",
+      "categories": {
+         "backlog": "Backlog",
+         "planned": "Planned",
+         "inProgress": "In Progress",
+         "completed": "Completed",
+         "canceled": "Canceled"
+      },
+      "noStatuses": "No statuses",
+      "projectsCount": "{count, plural, one{# project} other{# projects}}"
+   },
+   "preferences": {
+      "title": "Preferences",
+      "general": {
+         "title": "General",
+         "defaultHomeView": "Default home view",
+         "defaultHomeViewDesc": "Select which view to display when launching the app",
+         "defaultHomeViewOptions": {
+            "agent": "Agent (default)",
+            "inbox": "Inbox",
+            "myIssues": "My issues"
+         },
+         "displayNames": "Display names",
+         "displayNamesDesc": "Select how names are displayed in the interface",
+         "displayNamesOptions": {
+            "username": "Username",
+            "fullName": "Full name"
+         },
+         "firstDayOfWeek": "First day of the week",
+         "firstDayOfWeekDesc": "Used for date pickers",
+         "firstDayOfWeekOptions": {
+            "monday": "Monday",
+            "sunday": "Sunday",
+            "saturday": "Saturday"
+         },
+         "emoticons": "Convert text emoticons into emojis",
+         "emoticonsDesc": "Strings like :) will be converted to 🙂",
+         "sendComments": "Send comments on...",
+         "sendCommentsDesc": "Choose which key press is used to submit comments"
+      },
+      "interfaceAndTheme": {
+         "title": "Interface and theme",
+         "appSidebar": "App sidebar",
+         "appSidebarDesc": "Customize sidebar item visibility, ordering, and badge style",
+         "customize": "Customize",
+         "fontSize": "Font size",
+         "fontSizeDesc": "Adjust the size of text across the app",
+         "fontSizeOptions": {
+            "default": "Default",
+            "small": "Small",
+            "large": "Large"
+         },
+         "pointerCursors": "Use pointer cursors",
+         "pointerCursorsDesc": "Change the cursor to a pointer when hovering over any interactive elements",
+         "underlineLinks": "Underline links",
+         "underlineLinksDesc": "Always underline links in text content"
+      },
+      "desktopApplication": {
+         "title": "Desktop application",
+         "openInDesktopApp": "Open in desktop app",
+         "openInDesktopAppDesc": "Automatically open links in desktop app when possible"
+      },
+      "automations": {
+         "title": "Automations and workflows",
+         "autoAssignToSelf": "Auto-assign to self",
+         "autoAssignToSelfDesc": "When creating new issues, always assign them to yourself by default",
+         "assignOnStarted": "On move to started status, assign to yourself",
+         "assignOnStartedDesc": "When you move an unassigned issue to started, it will be automatically assigned to you"
+      }
+   },
+   "theme": {
+      "system": "System preference",
+      "light": "Light",
+      "pureLight": "Pure Light",
+      "dark": "Dark",
+      "magicBlue": "Magic Blue",
+      "classicDark": "Classic Dark",
+      "custom": "Custom",
+      "interfaceTheme": "Interface theme",
+      "interfaceThemeDesc": "Select or customize your interface color scheme",
+      "lightDescription": "Theme to use for light system appearance",
+      "darkDescription": "Theme to use for dark system appearance",
+      "accent": "Accent",
+      "background": "Background",
+      "contrast": "Contrast",
+      "sidebarTheme": "Custom sidebar theme",
+      "sharing": "Sharing",
+      "import": "Import theme",
+      "copy": "Copy current theme",
+      "toastCopied": "Theme copied to clipboard",
+      "toastClipboardError": "Could not access the clipboard",
+      "toastImported": "Theme imported from clipboard",
+      "toastImportError": "Clipboard does not contain a valid theme"
+   },
+   "profile": {
+      "title": "Title",
+      "picture": "Profile picture",
+      "email": "Email",
+      "fullName": "Full name",
+      "titleDescription": "Your job title or role",
+      "titlePlaceholder": "Software engineer",
+      "username": "Username",
+      "usernameDescription": "One word, like a nickname or first name",
+      "workspaceAccess": {
+         "title": "Workspace access",
+         "removeSelf": "Remove yourself from workspace",
+         "leave": "Leave workspace"
+      }
+   },
+   "teams": {
+      "joinTitle": "Join or create a team",
+      "joinDescription": "Teams organize issues, cycles and projects around the people working together",
+      "create": {
+         "title": "Create a new team",
+         "namePlaceholder": "Team name, e.g. Mobile",
+         "createButton": "Create team"
+      },
+      "join": {
+         "title": "Join an existing team",
+         "button": "Join"
+      },
+      "membersAndProjects": "{members, plural, one{# member} other{# members}} · {projects, plural, one{# project} other{# projects}}",
+      "notFound": "Team not found",
+      "accessibleToAll": "Accessible to all workspace members",
+      "overview": "Team overview",
+      "general": {
+         "title": "General",
+         "description": "Name, identifier, timezone, estimates, and broader settings"
+      },
+      "access": {
+         "title": "Access and permissions",
+         "description": "Manage team access and who in the team can take certain actions"
+      },
+      "members": {
+         "title": "Members",
+         "description": "Manage team members",
+         "count": "{count, plural, one{# member} other{# members}}"
+      },
+      "slackNotifications": {
+         "title": "Slack notifications",
+         "description": "Broadcast notifications to Slack"
+      },
+      "issuesProjectsDocs": {
+         "title": "Issues, projects, and docs"
+      },
+      "issueLabels": {
+         "title": "Issue labels",
+         "description": "Labels available to this team's issues",
+         "count": "{count, plural, one{# label} other{# labels}}"
+      },
+      "templates": {
+         "title": "Templates",
+         "description": "Pre-filled templates for issues, documents, and projects",
+         "count": "{count, plural, one{# template} other{# templates}}"
+      },
+      "recurringIssues": {
+         "title": "Recurring issues",
+         "description": "Automatically create issues on a schedule"
+      },
+      "workflow": {
+         "title": "Workflow"
+      },
+      "issueStatuses": {
+         "title": "Issue statuses",
+         "description": "Customize the statuses issues go through",
+         "count": "{count, plural, one{# status} other{# statuses}}"
+      },
+      "workflows": {
+         "title": "Workflows & automations",
+         "description": "Manage issue automations, git workflows and other workflows"
+      },
+      "triage": {
+         "title": "Triage",
+         "description": "Streamline how you handle requests from outside your team"
+      },
+      "cycles": {
+         "title": "Cycles",
+         "description": "Focus your team over short, time-boxed windows",
+         "everyTwoWeeks": "Every 2 weeks"
+      },
+      "ai": {
+         "title": "AI & Agents",
+         "teamAgents": "Team agents",
+         "teamAgentsDesc": "Add guidance for how agents should operate within this team",
+         "agentSkills": "Agent skills",
+         "agentSkillsDesc": "Agent skills shared with this team",
+         "loops": "Loops",
+         "loopsDesc": "Automated agent workflows that run on a schedule or when an issue is updated",
+         "projectUpdates": "Project updates",
+         "projectUpdatesDesc": "Automatically generate updates using recent activity and defined rules",
+         "threadSummaries": "Resolved thread summaries",
+         "threadSummariesDesc": "Automatically generate summaries for resolved threads"
+      },
+      "hierarchy": {
+         "title": "Team hierarchy",
+         "description": "Teams can be nested to reflect your team structure and to share workflows and settings."
+      },
+      "dangerZone": {
+         "title": "Danger zone",
+         "leave": {
+            "title": "Leave team",
+            "description": "Remove yourself as a member of this team",
+            "button": "Leave team..."
+         },
+         "retire": {
+            "title": "Retire team",
+            "description": "Prevent creating and updating issues in this team while preserving all historical data",
+            "button": "Retire..."
+         },
+         "delete": {
+            "title": "Delete team",
+            "description": "Permanently delete this team and all its data, with a 30-day restoration window",
+            "button": "Delete..."
+         }
+      }
+   }
+}

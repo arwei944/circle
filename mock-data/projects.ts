@@ -61,34 +61,34 @@ export interface Health {
 export const health: Health[] = [
    {
       id: 'no-update',
-      name: 'No Update',
+      name: '暂无更新',
       color: '#8f9299',
-      description: 'The project has not been updated in the last 30 days.',
+      description: '该项目已超过 30 天没有更新。',
    },
    {
       id: 'off-track',
-      name: 'Off Track',
+      name: '偏离计划',
       color: '#eb5757',
-      description: 'The project is not on track and may be delayed.',
+      description: '项目进度偏离计划，存在延期风险。',
    },
    {
       id: 'on-track',
-      name: 'On Track',
+      name: '按计划进行',
       color: '#4cb782',
-      description: 'The project is on track and on schedule.',
+      description: '项目按计划进行，进度符合预期。',
    },
    {
       id: 'at-risk',
-      name: 'At Risk',
+      name: '存在风险',
       color: '#f2c94c',
-      description: 'The project is at risk and may be delayed.',
+      description: '项目存在风险，可能延期交付。',
    },
 ];
 
 const baseProjects: BaseProject[] = [
    {
       id: '1',
-      name: 'LNDev UI - Core Components',
+      name: 'LNDev UI - 核心组件',
       status: status[0],
       icon: Cuboid,
       percentComplete: 80,
@@ -99,7 +99,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '2',
-      name: 'LNDev UI - Theming',
+      name: 'LNDev UI - 主题',
       status: status[1],
       icon: Blocks,
       percentComplete: 50,
@@ -110,7 +110,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '3',
-      name: 'LNDev UI - Modals',
+      name: 'LNDev UI - 弹窗',
       status: status[2],
       icon: Vault,
       percentComplete: 0,
@@ -121,7 +121,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '4',
-      name: 'LNDev UI - Navigation',
+      name: 'LNDev UI - 导航',
       status: status[3],
       icon: BrickWall,
       percentComplete: 0,
@@ -132,7 +132,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '5',
-      name: 'LNDev UI - Layout',
+      name: 'LNDev UI - 布局',
       status: status[4],
       icon: Wallpaper,
       percentComplete: 0,
@@ -143,7 +143,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '6',
-      name: 'LNDev UI - Sidebar',
+      name: 'LNDev UI - 侧边栏',
       status: status[5],
       icon: TrafficCone,
       percentComplete: 0,
@@ -154,7 +154,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '7',
-      name: 'LNDev UI - Cards',
+      name: 'LNDev UI - 卡片',
       status: status[1],
       icon: Grid2X2,
       percentComplete: 0,
@@ -165,7 +165,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '8',
-      name: 'LNDev UI - Tooltip',
+      name: 'LNDev UI - 提示气泡',
       status: status[2],
       icon: Bomb,
       percentComplete: 0,
@@ -176,7 +176,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '9',
-      name: 'LNDev UI - Dropdown',
+      name: 'LNDev UI - 下拉菜单',
       status: status[3],
       icon: Shapes,
       percentComplete: 50,
@@ -187,7 +187,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '10',
-      name: 'LNDev UI - Data Tables',
+      name: 'LNDev UI - 数据表格',
       status: status[0],
       icon: Table,
       percentComplete: 65,
@@ -198,7 +198,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '11',
-      name: 'LNDev UI - Form Controls',
+      name: 'LNDev UI - 表单控件',
       status: status[2],
       icon: FormInput,
       percentComplete: 30,
@@ -209,7 +209,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '12',
-      name: 'LNDev UI - Notifications',
+      name: 'LNDev UI - 通知',
       status: status[1],
       icon: Bell,
       percentComplete: 45,
@@ -220,7 +220,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '13',
-      name: 'LNDev UI - Authentication Flow',
+      name: 'LNDev UI - 认证流程',
       status: status[0],
       icon: Lock,
       percentComplete: 75,
@@ -231,7 +231,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '14',
-      name: 'LNDev UI - User Preferences',
+      name: 'LNDev UI - 用户偏好',
       status: status[3],
       icon: Settings,
       percentComplete: 10,
@@ -242,7 +242,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '15',
-      name: 'LNDev UI - Dashboard Widgets',
+      name: 'LNDev UI - 仪表盘小组件',
       status: status[1],
       icon: LayoutDashboard,
       percentComplete: 55,
@@ -253,7 +253,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '16',
-      name: 'LNDev UI - Onboarding Guide',
+      name: 'LNDev UI - 新手引导',
       status: status[2],
       icon: HelpCircle,
       percentComplete: 25,
@@ -264,7 +264,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '17',
-      name: 'LNDev UI - Progress Indicators',
+      name: 'LNDev UI - 进度指示器',
       status: status[4],
       icon: Loader,
       percentComplete: 40,
@@ -275,7 +275,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '18',
-      name: 'LNDev UI - Internationalization',
+      name: 'LNDev UI - 国际化',
       status: status[5],
       icon: Globe,
       percentComplete: 15,
@@ -286,7 +286,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '19',
-      name: 'LNDev UI - Accessibility Features',
+      name: 'LNDev UI - 无障碍功能',
       status: status[0],
       icon: Accessibility,
       percentComplete: 60,
@@ -297,7 +297,7 @@ const baseProjects: BaseProject[] = [
    },
    {
       id: '20',
-      name: 'LNDev UI - Media Player',
+      name: 'LNDev UI - 媒体播放器',
       status: status[3],
       icon: Play,
       percentComplete: 20,
@@ -314,11 +314,7 @@ const baseProjects: BaseProject[] = [
 
 const TEAM_ROTATION = ['CORE', 'DESIGN', 'PERF', 'WEB', 'API', 'ANALYTICS'];
 
-const INITIATIVES = [
-   'Q3 — Ship the component platform',
-   'Q3 — Raise quality and accessibility',
-   'Q4 — Grow design system adoption',
-];
+const INITIATIVES = ['Q3 — 交付组件平台', 'Q3 — 提升质量与无障碍', 'Q4 — 扩大设计系统采用'];
 
 const pad = (value: number) => String(value).padStart(2, '0');
 

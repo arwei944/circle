@@ -1,0 +1,522 @@
+{
+   "nav": {
+      "settings": "设置"
+   },
+   "common": {
+      "enabled": "已启用",
+      "off": "关闭",
+      "none": "无",
+      "connected": "已连接",
+      "connect": "连接",
+      "showAll": "显示全部",
+      "filterByName": "按名称筛选..."
+   },
+   "placeholder": {
+      "slas": {
+         "title": "SLAs",
+         "description": "根据问题属性自动为问题设置截止日期",
+         "actionLabel": "新建 SLA",
+         "emptyLabel": "暂无 SLAs"
+      },
+      "project-labels": {
+         "title": "项目标签",
+         "actionLabel": "新建标签",
+         "emptyLabel": "暂无项目标签"
+      },
+      "project-templates": {
+         "title": "项目模板",
+         "actionLabel": "新建模板",
+         "emptyLabel": "暂无项目模板"
+      },
+      "project-updates": {
+         "title": "项目更新",
+         "description": "配置跨工作区收集项目更新的方式",
+         "emptyLabel": "暂无更新"
+      },
+      "initiatives": {
+         "title": "计划",
+         "description": "将项目归组为更大的工作范围",
+         "actionLabel": "新建计划",
+         "emptyLabel": "暂无计划"
+      },
+      "documents": {
+         "title": "文档",
+         "actionLabel": "新建文档",
+         "emptyLabel": "暂无文档"
+      },
+      "customer-requests": {
+         "title": "客户请求",
+         "description": "与团队工作一起跟踪和管理客户请求",
+         "actionLabel": "新建请求",
+         "emptyLabel": "暂无客户请求"
+      },
+      "releases": {
+         "title": "发布",
+         "actionLabel": "新建发布",
+         "emptyLabel": "暂无发布"
+      },
+      "pulse": {
+         "title": "动态",
+         "description": "工作区重要更新的动态流",
+         "emptyLabel": "暂无更新"
+      },
+      "asks": {
+         "title": "请求",
+         "description": "将请求转化为可执行的问题",
+         "actionLabel": "新建请求",
+         "emptyLabel": "暂无请求"
+      },
+      "emojis": {
+         "title": "表情符号",
+         "actionLabel": "上传",
+         "emptyLabel": "暂无表情符号"
+      }
+   },
+   "notifications": {
+      "title": "通知",
+      "pushNotifications": {
+         "title": "推送通知",
+         "description": "选择要推送到设备的通知。所有通知仍会显示在您的收件箱中。"
+      },
+      "channels": {
+         "desktop": "桌面端",
+         "mobile": "移动端",
+         "email": "邮箱",
+         "slack": "Slack",
+         "status": {
+            "enabledWithOthers": "已为分配、状态变更等 {count} 项启用",
+            "all": "已为所有通知启用"
+         }
+      },
+      "updates": {
+         "title": "来自 LNDev UI 的更新",
+         "description": "订阅 LNDev UI 团队的产品公告和重要变更",
+         "changelog": "更新日志",
+         "showInSidebar": "在侧边栏显示更新",
+         "showInSidebarDesc": "在应用侧边栏中突出显示新功能和改进",
+         "newsletter": "更新日志邮件订阅",
+         "newsletterDesc": "每月两次收到突出显示新功能和改进的邮件",
+         "marketing": "营销",
+         "marketingOnboarding": "营销与引导",
+         "marketingOnboardingDesc": "不定期更新，帮助您充分利用 LNDev UI",
+         "otherUpdates": "其他更新",
+         "inviteAccepted": "邀请被接受",
+         "inviteAcceptedDesc": "当您发送的邀请被接受时收到邮件通知",
+         "privacyLegal": "隐私与法律更新",
+         "privacyLegalDesc": "关于服务条款或隐私政策变更的重要更新"
+      }
+   },
+   "codeReviews": {
+      "title": "代码与评审",
+      "description": "在 LNDev UI 中评审 GitHub 拉取请求和智能体代码差异",
+      "enableCodeReviews": "启用代码评审",
+      "enableCodeReviewsDesc": "评审 GitHub 拉取请求，可从侧边栏访问",
+      "autoConvertDrafts": "自动将草稿拉取请求转为就绪",
+      "autoConvertDraftsDesc": "在批准或请求评审后自动将您的草稿标记为就绪",
+      "mergeStrategy": "合并策略",
+      "mergeStrategyDesc": "选择拉取请求的默认合并策略。仓库配置可能影响可用的策略",
+      "mergeStrategyOptions": {
+         "squash": "压缩并合并",
+         "mergeCommit": "合并提交",
+         "rebaseMerge": "变基并合并"
+      },
+      "codeTheme": "代码主题",
+      "codeThemeDesc": "选择代码差异和查看器中使用的语法高亮主题",
+      "codeThemeOptions": {
+         "light": "LNDev 浅色",
+         "dark": "LNDev 深色",
+         "contrast": "对比"
+      },
+      "font": "字体",
+      "fontOptions": {
+         "regular": "12px，常规，默认",
+         "medium": "13px，中等"
+      },
+      "diffLanguages": {
+         "typescript": "TypeScript",
+         "javascript": "JavaScript",
+         "python": "Python"
+      },
+      "notifications": {
+         "title": "通知",
+         "description": "选择出现在收件箱和推送通知中的评审活动",
+         "commentsReviews": "评论与评审",
+         "commentsReviewsDesc": "评论、提及和已提交的评审",
+         "commentsReviewsOptions": {
+            "excludeBots": "排除机器人",
+            "everyone": "所有人",
+            "none": "无"
+         },
+         "reviewRequests": "评审请求",
+         "reviewRequestsDesc": "请求您进行个人评审",
+         "githubTeamReviewRequests": "GitHub 团队评审请求",
+         "githubTeamReviewRequestsDesc": "来自您人数不超过 10 的 GitHub 团队的评审请求",
+         "checksMergeQueue": "检查与合并队列",
+         "checksMergeQueueDesc": "检查失败和合并队列更新"
+      },
+      "signedCommits": {
+         "title": "签名提交",
+         "requireSigned": "要求签名提交",
+         "requireSignedDesc": "用户必须在开始编码会话前上传签名密钥",
+         "noSigningKey": "尚未添加签名密钥",
+         "addKey": "添加密钥"
+      },
+      "externalTools": {
+         "title": "外部工具",
+         "configureTools": "配置编码工具",
+         "configureToolsDesc": "配置可打开问题的外部编码工具",
+         "gitAttachmentFormat": "Git 附件格式",
+         "gitAttachmentFormatDesc": "问题中 GitHub/GitLab 附件的格式",
+         "gitAttachmentFormatOptions": {
+            "title": "标题",
+            "url": "URL",
+            "compact": "紧凑"
+         },
+         "branchCopyStatus": "复制 Git 分支时，将问题移至已开始状态",
+         "branchCopyStatusDesc": "复制 Git 分支名称后，问题状态将移至团队的第一个已开始工作流状态。按住 ⌥ 可禁用。",
+         "openInToolStatus": "在编码工具中打开时，将问题移至已开始状态",
+         "openInToolStatusDesc": "在编码工具中打开问题或复制为提示词后，问题状态将移至团队的第一个已开始工作流状态。按住 ⌥ 可禁用。"
+      }
+   },
+   "security": {
+      "title": "安全与访问",
+      "sessions": {
+         "title": "会话",
+         "description": "已登录您账号的设备",
+         "currentDevice": "macOS 上的 Chrome",
+         "currentSession": "当前会话",
+         "otherSessions": "其他 {count} 个会话",
+         "revokeAll": "全部撤销",
+         "iosDevice": "LNDev UI iOS",
+         "lastSeen": "Paris, FR · 约 3 小时前在线"
+      },
+      "passkeys": {
+         "title": "通行密钥",
+         "description": "通行密钥是登录账号的安全方式",
+         "none": "尚未注册通行密钥",
+         "new": "新建通行密钥"
+      },
+      "apiKeys": {
+         "title": "个人 API 密钥",
+         "description": "使用 GraphQL API 构建您自己的集成",
+         "count": "共 {count} 个 API 密钥",
+         "new": "新建 API 密钥",
+         "accessDetails": "· 完全访问 · 公共与私有团队",
+         "createdInfo": "创建于 2 个月前 · 最后使用于 2026-07-16"
+      },
+      "signingKey": {
+         "title": "提交签名密钥",
+         "description": "编码会话使用此密钥为您的提交签名",
+         "none": "尚未添加签名密钥",
+         "addKey": "添加密钥"
+      }
+   },
+   "connectedAccounts": {
+      "title": "已连接账号",
+      "description": "连接您的用户账号，同步您在不同应用之间的操作归属",
+      "slackDescription": "同步您的消息归属，并在 Slack 中接收通知",
+      "googleCalendarDescription": "将您的日历外出状态同步到 LNDev UI",
+      "notionDescription": "在 Notion 中预览问题、项目和视图",
+      "octoRelayDescription": "在 LNDev UI 中评审代码，并同步与 Git 相关操作的归属"
+   },
+   "agentPersonalization": {
+      "title": "智能体个性化",
+      "description": "您对 LNDev 智能体的个人设置",
+      "guidance": {
+         "title": "指引",
+         "description": "在回应对话时，为智能体提供个人指令和上下文",
+         "placeholder": "输入给智能体的个人指引（可选）..."
+      },
+      "skills": {
+         "title": "技能",
+         "description": "由智能体自动选择或通过斜杠命令调用的可复用提示词",
+         "none": "尚未创建技能"
+      },
+      "mcp": {
+         "title": "MCP 连接器",
+         "description": "添加供智能体使用的 MCP 连接器。工作区管理员可在安全设置中管理可用连接器。",
+         "disabled": "此工作区已禁用智能体 MCP 访问",
+         "configure": "配置"
+      }
+   },
+   "ai": {
+      "title": "AI 与智能体",
+      "description": "使用 AI 自动化您的产品开发流程和运营",
+      "usageFeedback": "启用使用反馈",
+      "usageFeedbackDesc": "通过共享使用反馈改进 AI 功能。绝不用于训练模型",
+      "agentSection": {
+         "title": "LNDev 智能体",
+         "description": "创建问题并回答有关您工作区的问题",
+         "features": {
+            "agent": "LNDev 智能体",
+            "agentDesc": "为您的工作区进行配置",
+            "codingSessions": "编码会话",
+            "codingSessionsDesc": "分配或让智能体进行代码修改",
+            "loops": "循环",
+            "loopsDesc": "按计划或在问题更新时运行的自动化智能体工作流",
+            "codeIntelligence": "代码智能",
+            "codeIntelligenceDesc": "允许智能体分析并回答有关您仓库的问题",
+            "triageIntelligence": "分流智能",
+            "triageIntelligenceDesc": "查找相关问题并推断团队、项目、标签和指派对象等属性"
+         }
+      },
+      "beta": "Beta",
+      "integrations": {
+         "title": "智能体集成",
+         "description": "可供智能体使用的集成",
+         "browse": "浏览集成",
+         "slackDescription": "从 Slack 消息创建问题的设置和附加指引",
+         "asksForSlackDescription": "从 Asks for Slack 创建问题的设置和问题模板"
+      }
+   },
+   "integrations": {
+      "title": "集成",
+      "description": "通过丰富多样的附加组件和集成增强您的工作区",
+      "searchPlaceholder": "搜索集成",
+      "searchResultsCount": "共 {count} 个结果",
+      "enabledSection": "已启用",
+      "viewAll": "查看全部",
+      "status": {
+         "enabled": "已启用",
+         "preInstalled": "预安装"
+      }
+   },
+   "issueLabels": {
+      "title": "问题标签",
+      "workspace": "工作区",
+      "allTeams": "所有团队",
+      "newGroup": "新建分组",
+      "newLabel": "新建标签",
+      "columns": {
+         "name": "名称 ↓",
+         "description": "描述",
+         "issues": "问题数",
+         "lastApplied": "最近使用",
+         "created": "创建时间"
+      },
+      "noResults": "没有符合筛选条件的标签。"
+   },
+   "issueTemplates": {
+      "title": "问题模板",
+      "description": "这些模板可用于为工作区中的任何团队创建问题。要创建仅适用于特定团队的模板，请将其添加为团队模板。",
+      "count": "共 {count} 个问题模板"
+   },
+   "projectStatuses": {
+      "title": "项目状态",
+      "description": "项目状态定义了项目从开始到完成所经历的工作流",
+      "categories": {
+         "backlog": "积压",
+         "planned": "已计划",
+         "inProgress": "进行中",
+         "completed": "已完成",
+         "canceled": "已取消"
+      },
+      "noStatuses": "暂无状态",
+      "projectsCount": "{count} 个项目"
+   },
+   "preferences": {
+      "title": "偏好设置",
+      "general": {
+         "title": "常规",
+         "defaultHomeView": "默认首页视图",
+         "defaultHomeViewDesc": "选择启动应用时显示的视图",
+         "defaultHomeViewOptions": {
+            "agent": "智能体（默认）",
+            "inbox": "收件箱",
+            "myIssues": "我的问题"
+         },
+         "displayNames": "显示名称",
+         "displayNamesDesc": "选择界面中名称的显示方式",
+         "displayNamesOptions": {
+            "username": "用户名",
+            "fullName": "全名"
+         },
+         "firstDayOfWeek": "每周第一天",
+         "firstDayOfWeekDesc": "用于日期选择器",
+         "firstDayOfWeekOptions": {
+            "monday": "星期一",
+            "sunday": "星期日",
+            "saturday": "星期六"
+         },
+         "emoticons": "将文本表情转换为 emoji",
+         "emoticonsDesc": "类似 :) 的字符串将转换为 🙂",
+         "sendComments": "发送评论...",
+         "sendCommentsDesc": "选择用于提交评论的按键"
+      },
+      "interfaceAndTheme": {
+         "title": "界面与主题",
+         "appSidebar": "应用侧边栏",
+         "appSidebarDesc": "自定义侧边栏项目的可见性、排序和徽章样式",
+         "customize": "自定义",
+         "fontSize": "字体大小",
+         "fontSizeDesc": "调整应用中文本的大小",
+         "fontSizeOptions": {
+            "default": "默认",
+            "small": "小",
+            "large": "大"
+         },
+         "pointerCursors": "使用指针光标",
+         "pointerCursorsDesc": "悬停在任意可交互元素上时将光标改为指针",
+         "underlineLinks": "为链接添加下划线",
+         "underlineLinksDesc": "始终在文本内容中为链接添加下划线"
+      },
+      "desktopApplication": {
+         "title": "桌面应用",
+         "openInDesktopApp": "在桌面应用中打开",
+         "openInDesktopAppDesc": "尽可能自动在桌面应用中打开链接"
+      },
+      "automations": {
+         "title": "自动化与工作流",
+         "autoAssignToSelf": "自动指派给自己",
+         "autoAssignToSelfDesc": "创建新问题时，默认始终将问题指派给您自己",
+         "assignOnStarted": "移至已开始状态时指派给自己",
+         "assignOnStartedDesc": "当您将未指派的问题移至已开始状态时，将自动指派给您"
+      }
+   },
+   "theme": {
+      "system": "跟随系统",
+      "light": "浅色",
+      "pureLight": "纯浅色",
+      "dark": "深色",
+      "magicBlue": "魔法蓝",
+      "classicDark": "经典深色",
+      "custom": "自定义",
+      "interfaceTheme": "界面主题",
+      "interfaceThemeDesc": "选择或自定义您的界面配色方案",
+      "lightDescription": "用于浅色系统外观的主题",
+      "darkDescription": "用于深色系统外观的主题",
+      "accent": "强调色",
+      "background": "背景色",
+      "contrast": "对比度",
+      "sidebarTheme": "自定义侧边栏主题",
+      "sharing": "共享",
+      "import": "导入主题",
+      "copy": "复制当前主题",
+      "toastCopied": "主题已复制到剪贴板",
+      "toastClipboardError": "无法访问剪贴板",
+      "toastImported": "已从剪贴板导入主题",
+      "toastImportError": "剪贴板中没有有效的主题"
+   },
+   "profile": {
+      "title": "职位",
+      "picture": "个人头像",
+      "email": "邮箱",
+      "fullName": "全名",
+      "titleDescription": "您的职位或角色",
+      "titlePlaceholder": "软件工程师",
+      "username": "用户名",
+      "usernameDescription": "一个词，类似昵称或名字",
+      "workspaceAccess": {
+         "title": "工作区访问",
+         "removeSelf": "将自己移出工作区",
+         "leave": "离开工作区"
+      }
+   },
+   "teams": {
+      "joinTitle": "加入或创建团队",
+      "joinDescription": "团队将问题、周期和项目围绕共同协作的人员组织起来",
+      "create": {
+         "title": "创建新团队",
+         "namePlaceholder": "团队名称，例如移动端",
+         "createButton": "创建团队"
+      },
+      "join": {
+         "title": "加入现有团队",
+         "button": "加入"
+      },
+      "membersAndProjects": "{members} 名成员 · {projects} 个项目",
+      "notFound": "未找到团队",
+      "accessibleToAll": "所有工作区成员均可访问",
+      "overview": "团队概览",
+      "general": {
+         "title": "常规",
+         "description": "名称、标识符、时区、估算和更广泛的设置"
+      },
+      "access": {
+         "title": "访问与权限",
+         "description": "管理团队访问权限以及团队中可执行某些操作的人员"
+      },
+      "members": {
+         "title": "成员",
+         "description": "管理团队成员",
+         "count": "{count} 名成员"
+      },
+      "slackNotifications": {
+         "title": "Slack 通知",
+         "description": "向 Slack 广播通知"
+      },
+      "issuesProjectsDocs": {
+         "title": "问题、项目和文档"
+      },
+      "issueLabels": {
+         "title": "问题标签",
+         "description": "该团队问题可用的标签",
+         "count": "{count} 个标签"
+      },
+      "templates": {
+         "title": "模板",
+         "description": "问题、文档和项目的预填充模板",
+         "count": "{count} 个模板"
+      },
+      "recurringIssues": {
+         "title": "周期性问题",
+         "description": "按计划自动创建问题"
+      },
+      "workflow": {
+         "title": "工作流"
+      },
+      "issueStatuses": {
+         "title": "问题状态",
+         "description": "自定义问题经过的状态",
+         "count": "{count} 个状态"
+      },
+      "workflows": {
+         "title": "工作流与自动化",
+         "description": "管理问题自动化、Git 工作流和其他工作流"
+      },
+      "triage": {
+         "title": "分流",
+         "description": "高效处理来自团队外部请求"
+      },
+      "cycles": {
+         "title": "周期",
+         "description": "让团队专注于短周期、有时间窗口的工作",
+         "everyTwoWeeks": "每 2 周"
+      },
+      "ai": {
+         "title": "AI 与智能体",
+         "teamAgents": "团队智能体",
+         "teamAgentsDesc": "添加智能体在此团队内如何运作的指引",
+         "agentSkills": "智能体技能",
+         "agentSkillsDesc": "与该团队共享的智能体技能",
+         "loops": "循环",
+         "loopsDesc": "按计划或在问题更新时运行的自动化智能体工作流",
+         "projectUpdates": "项目更新",
+         "projectUpdatesDesc": "根据近期活动和已定义规则自动生成更新",
+         "threadSummaries": "已解决线程摘要",
+         "threadSummariesDesc": "自动为已解决的线程生成摘要"
+      },
+      "hierarchy": {
+         "title": "团队层级",
+         "description": "团队可以嵌套以反映您的团队结构，并共享工作流和设置。"
+      },
+      "dangerZone": {
+         "title": "危险操作区",
+         "leave": {
+            "title": "离开团队",
+            "description": "将自己移出该团队成员",
+            "button": "离开团队..."
+         },
+         "retire": {
+            "title": "停用团队",
+            "description": "阻止在该团队中创建和更新问题，同时保留所有历史数据",
+            "button": "停用..."
+         },
+         "delete": {
+            "title": "删除团队",
+            "description": "永久删除该团队及其所有数据，提供 30 天的恢复窗口",
+            "button": "删除..."
+         }
+      }
+   }
+}

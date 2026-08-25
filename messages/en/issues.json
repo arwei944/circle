@@ -1,0 +1,209 @@
+{
+   "list": {
+      "issueCount": "{count, plural, one {# issue} other {# issues}}",
+      "hiddenByFilters": "hidden by filters",
+      "clearFilters": "Clear filters",
+      "hiddenColumns": "Hidden columns",
+      "noIssues": "No issues to show."
+   },
+   "group": {
+      "noAssignee": "No assignee",
+      "noProject": "No project",
+      "allIssues": "All issues"
+   },
+   "drop": {
+      "updateStatus": "Drop to update status"
+   },
+   "line": {
+      "dueDate": "Due {date}"
+   },
+   "contextMenu": {
+      "status": "Status",
+      "assignee": "Assignee",
+      "unassigned": "Unassigned",
+      "priority": "Priority",
+      "labels": "Labels",
+      "project": "Project",
+      "noProject": "No Project",
+      "setDueDate": "Set due date...",
+      "rename": "Rename...",
+      "addLink": "Add link...",
+      "convertInto": "Convert into",
+      "document": "Document",
+      "comment": "Comment",
+      "makeACopy": "Make a copy...",
+      "createRelated": "Create related",
+      "markAs": "Mark as",
+      "completed": "Completed",
+      "duplicate": "Duplicate",
+      "wontFix": "Won't Fix",
+      "move": "Move",
+      "subscribe": "Subscribe",
+      "unsubscribe": "Unsubscribe",
+      "favorite": "Favorite",
+      "unfavorite": "Unfavorite",
+      "copy": "Copy",
+      "remindMe": "Remind me",
+      "delete": "Delete...",
+      "toasts": {
+         "statusUpdated": "Status updated to {status}",
+         "priorityUpdated": "Priority updated to {priority}",
+         "assignedTo": "Assigned to {name}",
+         "unassigned": "Unassigned",
+         "removedLabel": "Removed label: {label}",
+         "addedLabel": "Added label: {label}",
+         "projectSetTo": "Project set to {project}",
+         "projectRemoved": "Project removed",
+         "dueDateSet": "Due date set to 7 days from now",
+         "linkAdded": "Link added",
+         "issueCopied": "Issue copied",
+         "relatedCreated": "Related issue created",
+         "markedAs": "Marked as {type}",
+         "issueMoved": "Issue moved",
+         "unsubscribed": "Unsubscribed from issue",
+         "subscribed": "Subscribed to issue",
+         "removedFromFavorites": "Removed from favorites",
+         "addedToFavorites": "Added to favorites",
+         "copiedToClipboard": "Copied to clipboard",
+         "reminderSet": "Reminder set"
+      }
+   },
+   "filter": {
+      "columns": {
+         "status": "Status",
+         "statusType": "Status type",
+         "assignee": "Assignee",
+         "priority": "Priority",
+         "labels": "Labels",
+         "project": "Project",
+         "cycle": "Cycle",
+         "unassigned": "Unassigned",
+         "noCycle": "No cycle"
+      },
+      "statusTypes": {
+         "triage": "Triage",
+         "backlog": "Backlog",
+         "unstarted": "Unstarted",
+         "started": "Started",
+         "completed": "Completed",
+         "canceled": "Canceled"
+      }
+   },
+   "insights": {
+      "issues": "issues",
+      "measure": "Measure",
+      "slice": "Slice",
+      "segment": "Segment",
+      "issueCount": "Issue count",
+      "status": "Status",
+      "priority": "Priority",
+      "clearFilter": "Clear filter",
+      "filter": "Filter",
+      "setDefault": "Set default for everyone"
+   },
+   "search": {
+      "results": "Results ({count})",
+      "noResultsFor": "No results found for \"{query}\"",
+      "placeholder": "Search issues...",
+      "label": "Search"
+   },
+   "selector": {
+      "setPriority": "Set priority...",
+      "noPriorityFound": "No priority found.",
+      "setStatus": "Set status...",
+      "noStatusFound": "No status found."
+   },
+   "assignee": {
+      "assignTo": "Assign to...",
+      "noAssignee": "No assignee",
+      "newUser": "New user",
+      "inviteAndAssign": "Invite and assign..."
+   },
+   "details": {
+      "issueNotFound": "Issue {id} not found.",
+      "backToIssues": "Back to issues",
+      "addReaction": "Add reaction",
+      "attachFile": "Attach file",
+      "subIssues": "Sub-issues",
+      "addSubIssues": "Add sub-issues"
+   },
+   "activity": {
+      "title": "Activity",
+      "subscribe": "Subscribe",
+      "leaveComment": "Leave a comment...",
+      "comment": "Comment",
+      "justNow": "just now"
+   },
+   "properties": {
+      "title": "Properties",
+      "labels": "Labels",
+      "project": "Project",
+      "blockedBy": "Blocked by",
+      "related": "Related",
+      "diffs": "Diffs",
+      "assign": "Assign"
+   },
+   "header": {
+      "previousIssue": "Previous issue",
+      "nextIssue": "Next issue"
+   },
+   "tabs": {
+      "active": "Active",
+      "backlog": "Backlog",
+      "allIssues": "All issues"
+   },
+   "headerOptions": {
+      "toggleInsights": "Toggle insights panel"
+   },
+   "notifications": {
+      "label": "Notifications",
+      "title": "Inbox notifications",
+      "issueAddedToTeam": "An issue is added to the team",
+      "issueCompletedOrCanceled": "An issue is marked completed or canceled",
+      "issueAddedToTriage": "An issue is added to the triage queue",
+      "slackNotifications": "Slack notifications",
+      "configure": "Configure"
+   },
+   "display": {
+      "button": "Display",
+      "list": "List",
+      "board": "Board",
+      "grouping": "Grouping",
+      "subGrouping": "Sub-grouping",
+      "noGrouping": "No grouping",
+      "ordering": "Ordering",
+      "orderCompletedByRecency": "Order completed by recency",
+      "completedIssues": "Completed issues",
+      "all": "All",
+      "none": "None",
+      "showSubIssues": "Show sub-issues",
+      "listOptions": "List options",
+      "showEmptyGroups": "Show empty groups",
+      "displayProperties": "Display properties",
+      "reset": "Reset",
+      "setDefaultForEveryone": "Set default for everyone",
+      "group": {
+         "status": "Status",
+         "assignee": "Assignee",
+         "priority": "Priority",
+         "project": "Project",
+         "none": "No grouping"
+      },
+      "order": {
+         "priority": "Priority",
+         "created": "Created",
+         "title": "Title"
+      },
+      "properties": {
+         "id": "ID",
+         "status": "Status",
+         "assignee": "Assignee",
+         "priority": "Priority",
+         "labels": "Labels",
+         "project": "Project",
+         "dueDate": "Due date",
+         "created": "Created",
+         "cycle": "Cycle"
+      }
+   }
+}

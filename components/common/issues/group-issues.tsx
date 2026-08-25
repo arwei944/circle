@@ -7,6 +7,7 @@ import { useViewStore } from '@/store/view-store';
 import { useCreateIssueStore } from '@/store/create-issue-store';
 import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { FC, ReactNode, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { AnimatePresence, motion } from 'motion/react';
@@ -99,6 +100,7 @@ export function GroupIssues({ group, issues, count }: GroupIssuesProps) {
 const IssueGridList: FC<{ issues: Issue[]; status?: Status }> = ({ issues, status }) => {
    const ref = useRef<HTMLDivElement>(null);
    const { updateIssueStatus } = useIssuesStore();
+   const t = useTranslations('issues');
 
    // Set up drop functionality to accept only issue items.
    const [{ isOver }, drop] = useDrop(() => ({
@@ -135,7 +137,7 @@ const IssueGridList: FC<{ issues: Issue[]; status?: Status }> = ({ issues, statu
                   }}
                >
                   <div className="bg-background border border-border rounded-md p-3 shadow-md max-w-[90%]">
-                     <p className="text-sm font-medium text-center">Drop to update status</p>
+                     <p className="text-sm font-medium text-center">{t('drop.updateStatus')}</p>
                   </div>
                </motion.div>
             )}

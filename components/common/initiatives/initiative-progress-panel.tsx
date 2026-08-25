@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { getInitiativeProjects, Initiative } from '@/mock-data/initiatives';
 import { health as allHealth } from '@/mock-data/projects';
 import { teams } from '@/mock-data/teams';
+import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 
@@ -24,6 +25,7 @@ interface ProgressPoint {
 /** Progress area chart + Health/Status/Teams/Leads breakdown of an initiative. */
 export function InitiativeProgressPanel({ initiative }: { initiative: Initiative }) {
    const [tab, setTab] = useState<BreakdownTab>('teams');
+   const t = useTranslations('initiatives');
    const projects = useMemo(() => getInitiativeProjects(initiative), [initiative]);
 
    const series = useMemo<ProgressPoint[]>(() => {
@@ -100,7 +102,7 @@ export function InitiativeProgressPanel({ initiative }: { initiative: Initiative
 
    return (
       <div className="flex flex-col gap-3">
-         <span className="text-sm font-medium">Progress</span>
+         <span className="text-sm font-medium">{t('progress.title')}</span>
          <div className="h-44 -mx-2">
             <ResponsiveContainer width="100%" height="100%">
                <AreaChart data={series} margin={{ top: 4, right: 4, bottom: 0, left: 4 }}>
@@ -126,7 +128,7 @@ export function InitiativeProgressPanel({ initiative }: { initiative: Initiative
                      stroke="#5e6ad2"
                      fill="#5e6ad2"
                      fillOpacity={0.55}
-                     name="Completed"
+                     name={t('progress.completed')}
                   />
                   <Area
                      type="monotone"
@@ -135,7 +137,7 @@ export function InitiativeProgressPanel({ initiative }: { initiative: Initiative
                      stroke="#f2c94c"
                      fill="#f2c94c"
                      fillOpacity={0.4}
-                     name="Started"
+                     name={t('progress.started')}
                   />
                   <Area
                      type="monotone"
@@ -144,7 +146,7 @@ export function InitiativeProgressPanel({ initiative }: { initiative: Initiative
                      stroke="#95a2b3"
                      fill="#95a2b3"
                      fillOpacity={0.18}
-                     name="Scope"
+                     name={t('progress.scope')}
                   />
                </AreaChart>
             </ResponsiveContainer>
@@ -152,10 +154,10 @@ export function InitiativeProgressPanel({ initiative }: { initiative: Initiative
          <div className="flex items-center gap-1.5 flex-wrap">
             {(
                [
-                  ['health', 'Health'],
-                  ['status', 'Status'],
-                  ['teams', 'Teams'],
-                  ['leads', 'Leads'],
+                  ['health', 'progress.health'],
+                  ['status', 'progress.status'],
+                  ['teams', 'progress.teams'],
+                  ['leads', 'progress.leads'],
                ] as const
             ).map(([key, label]) => (
                <button
@@ -168,7 +170,7 @@ export function InitiativeProgressPanel({ initiative }: { initiative: Initiative
                         : 'text-muted-foreground hover:bg-accent/50'
                   )}
                >
-                  {label}
+                  {t(label)}
                </button>
             ))}
          </div>

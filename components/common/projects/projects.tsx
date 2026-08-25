@@ -11,6 +11,7 @@ import { BarChart3 } from 'lucide-react';
 import { parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useMemo } from 'react';
 import { Filter } from '@/components/layout/headers/projects/filter';
+import { useTranslations } from 'next-intl';
 import ProjectsBoard from './projects-board';
 import { ProjectsDisplayOptions } from './projects-display-options';
 import ProjectsInsightsPanel from './projects-insights-panel';
@@ -26,9 +27,9 @@ export interface ProjectGroup {
 
 const TABS = ['all', 'active'] as const;
 
-const TAB_ITEMS: { label: string; value: (typeof TABS)[number] }[] = [
-   { label: 'All projects', value: 'all' },
-   { label: 'Active projects', value: 'active' },
+const TAB_ITEMS: { labelKey: string; value: (typeof TABS)[number] }[] = [
+   { labelKey: 'tabs.all', value: 'all' },
+   { labelKey: 'tabs.active', value: 'active' },
 ];
 
 /** Status categories considered "active" for the Active projects tab. */
@@ -41,6 +42,7 @@ const CLOSED_CATEGORIES = new Set(['completed', 'canceled']);
  * options, views, insights) is scoped to that team's projects.
  */
 export default function Projects({ teamId }: { teamId?: string }) {
+   const t = useTranslations('projects');
    const { filters } = useProjectsFilterStore();
    const { viewTypes, grouping, ordering, closedProjects, showEmptyGroups } =
       useProjectsDisplayStore();
@@ -85,7 +87,7 @@ export default function Projects({ teamId }: { teamId?: string }) {
 
    const groups = useMemo<ProjectGroup[]>(() => {
       if (grouping === 'none') {
-         return [{ id: 'all', name: 'All projects', projects: displayed }];
+         return [{ id: 'all', name: t('tabs.all'), projects: displayed }];
       }
       return teams
          .map((team) => ({
@@ -95,7 +97,7 @@ export default function Projects({ teamId }: { teamId?: string }) {
             projects: displayed.filter((project) => project.teamId === team.id),
          }))
          .filter((group) => showEmptyGroups || group.projects.length > 0);
-   }, [displayed, grouping, showEmptyGroups]);
+   }, [displayed, grouping, showEmptyGroups, t]);
 
    return (
       <div className="w-full h-full flex flex-col overflow-hidden">
@@ -116,7 +118,7 @@ export default function Projects({ teamId }: { teamId?: string }) {
                               : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-accent/50'
                         )}
                      >
-                        {item.label}
+                        {t(item.labelKey)}
                      </button>
                   );
                })}
@@ -128,7 +130,7 @@ export default function Projects({ teamId }: { teamId?: string }) {
                   size="xs"
                   variant={openPanel === 'insights' ? 'secondary' : 'ghost'}
                   onClick={() => togglePanel('insights')}
-                  aria-label="Toggle projects insights panel"
+                  aria-label={t('insights.togglePanel')}
                >
                   <BarChart3 className="size-4" />
                </Button>

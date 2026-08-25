@@ -6,6 +6,7 @@ import { getInitiativeById } from '@/mock-data/initiatives';
 import { ChevronRight, MoreHorizontal, Star } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { parseAsStringLiteral, useQueryState } from 'nuqs';
 
 const TABS = ['overview', 'activity', 'projects'] as const;
@@ -13,10 +14,8 @@ const TABS = ['overview', 'activity', 'projects'] as const;
 export default function Header() {
    const { orgId, initiativeId } = useParams<{ orgId: string; initiativeId: string }>();
    const initiative = getInitiativeById(initiativeId);
-   const [tab, setTab] = useQueryState(
-      'tab',
-      parseAsStringLiteral(TABS).withDefault('overview')
-   );
+   const t = useTranslations('initiatives');
+   const [tab, setTab] = useQueryState('tab', parseAsStringLiteral(TABS).withDefault('overview'));
 
    if (!initiative) return null;
 
@@ -29,7 +28,7 @@ export default function Header() {
                   href={`/${orgId}/initiatives`}
                   className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors shrink-0"
                >
-                  Initiatives
+                  {t('title')}
                </Link>
                <ChevronRight className="size-3.5 text-muted-foreground shrink-0" />
                <span className="inline-flex size-5 items-center justify-center rounded bg-muted/50 text-xs shrink-0">
@@ -52,7 +51,7 @@ export default function Header() {
                         : 'text-muted-foreground hover:bg-accent/50'
                   )}
                >
-                  {candidate}
+                  {t(`tabs.${candidate}`)}
                </button>
             ))}
          </div>

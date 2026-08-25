@@ -6,6 +6,7 @@ import { User } from '@/mock-data/users';
 import { format, parseISO } from 'date-fns';
 import { SquareUser } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
 interface MemberLineProps {
@@ -33,6 +34,7 @@ const hashString = (value: string): number => {
 
 export default function MemberLine({ user }: MemberLineProps) {
    const { orgId } = useParams<{ orgId: string }>();
+   const t = useTranslations('members');
    const isApplication = user.role === 'Application';
    // Like Linear, some accounts show their e-mail as the primary line.
    const showEmailAsName = !isApplication && hashString(user.id) % 4 === 0;
@@ -59,7 +61,7 @@ export default function MemberLine({ user }: MemberLineProps) {
          {/* Status (role) */}
          <div className="w-[110px] shrink-0">
             {isApplication ? (
-               <span className="text-xs text-muted-foreground">Application</span>
+               <span className="text-xs text-muted-foreground">{t('line.application')}</span>
             ) : (
                <span
                   className={cn(
@@ -97,7 +99,7 @@ export default function MemberLine({ user }: MemberLineProps) {
             {user.status === 'online' && !isApplication && (
                <>
                   <span className="size-1.5 rounded-full bg-[#00cc66]" />
-                  Online
+                  {t('line.online')}
                </>
             )}
          </div>

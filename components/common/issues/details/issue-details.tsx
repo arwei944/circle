@@ -4,6 +4,7 @@ import { getIssueDetail } from '@/mock-data/issue-details';
 import { useIssuesStore } from '@/store/issues-store';
 import { Paperclip, Plus, SmilePlus } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { AssigneeUser } from '../assignee-user';
@@ -18,6 +19,7 @@ import { IssuePropertiesPanel } from './issue-properties-panel';
 export default function IssueDetails() {
    const { orgId, issueId } = useParams<{ orgId: string; issueId: string }>();
    const { issues } = useIssuesStore();
+   const t = useTranslations('issues');
 
    const issue = useMemo(
       () => issues.find((candidate) => candidate.identifier === issueId),
@@ -29,9 +31,9 @@ export default function IssueDetails() {
    if (!issue || !detail) {
       return (
          <div className="flex flex-col items-center justify-center h-full gap-2 text-sm text-muted-foreground">
-            <p>Issue {issueId} not found.</p>
+            <p>{t('details.issueNotFound', { id: issueId })}</p>
             <Link href={`/${orgId ?? 'lndev-ui'}/team/CORE/all`} className="underline">
-               Back to issues
+               {t('details.backToIssues')}
             </Link>
          </div>
       );
@@ -54,10 +56,10 @@ export default function IssueDetails() {
 
                {/* Quick actions */}
                <div className="flex items-center gap-3 mt-6 text-muted-foreground">
-                  <button className="hover:text-foreground" aria-label="Add reaction">
+                  <button className="hover:text-foreground" aria-label={t('details.addReaction')}>
                      <SmilePlus className="size-4" />
                   </button>
-                  <button className="hover:text-foreground" aria-label="Attach file">
+                  <button className="hover:text-foreground" aria-label={t('details.attachFile')}>
                      <Paperclip className="size-4" />
                   </button>
                </div>
@@ -67,7 +69,7 @@ export default function IssueDetails() {
                   {subIssues.length > 0 ? (
                      <>
                         <h2 className="text-sm font-medium mb-1">
-                           Sub-issues{' '}
+                           {t('details.subIssues')}{' '}
                            <span className="text-muted-foreground">
                               {
                                  subIssues.filter(
@@ -99,7 +101,7 @@ export default function IssueDetails() {
                   ) : (
                      <button className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
                         <Plus className="size-4" />
-                        Add sub-issues
+                        {t('details.addSubIssues')}
                      </button>
                   )}
                </div>

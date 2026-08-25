@@ -6,6 +6,7 @@ import { getCycleById } from '@/mock-data/cycles';
 import { IssueDetail } from '@/mock-data/issue-details';
 import { Issue } from '@/mock-data/issues';
 import { Ban, GitPullRequestArrow, Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { AssigneeUser } from '../assignee-user';
 import { LabelBadge } from '../label-badge';
 import { PrioritySelector } from '../priority-selector';
@@ -32,10 +33,11 @@ function Section({ title, children }: { title: string; children: React.ReactNode
  */
 export function IssuePropertiesPanel({ issue, detail }: IssuePropertiesPanelProps) {
    const cycle = issue.cycleId ? getCycleById(issue.cycleId) : undefined;
+   const t = useTranslations('issues');
 
    return (
       <div className="flex flex-col gap-7">
-         <Section title="Properties">
+         <Section title={t('properties.title')}>
             <div className="flex flex-col gap-1.5">
                <div className="flex items-center gap-1.5 -ml-1.5">
                   <StatusSelector status={issue.status} issueId={issue.id} />
@@ -47,7 +49,9 @@ export function IssuePropertiesPanel({ issue, detail }: IssuePropertiesPanelProp
                </div>
                <div className="flex items-center gap-2 mt-0.5">
                   <AssigneeUser user={issue.assignee} />
-                  <span className="text-sm">{issue.assignee ? issue.assignee.name : 'Assign'}</span>
+                  <span className="text-sm">
+                     {issue.assignee ? issue.assignee.name : t('properties.assign')}
+                  </span>
                </div>
                {cycle && (
                   <div className="flex items-center gap-2 mt-0.5">
@@ -58,7 +62,7 @@ export function IssuePropertiesPanel({ issue, detail }: IssuePropertiesPanelProp
             </div>
          </Section>
 
-         <Section title="Labels">
+         <Section title={t('properties.labels')}>
             <div className="flex items-center flex-wrap gap-1.5">
                <LabelBadge label={issue.labels} />
                <Button variant="ghost" size="icon" className="size-6 rounded-full border">
@@ -68,7 +72,7 @@ export function IssuePropertiesPanel({ issue, detail }: IssuePropertiesPanelProp
          </Section>
 
          {issue.project && (
-            <Section title="Project">
+            <Section title={t('properties.project')}>
                <div className="flex items-center gap-2 text-sm">
                   <issue.project.icon className="size-4 text-muted-foreground shrink-0" />
                   <span className="truncate">{issue.project.name}</span>
@@ -83,7 +87,7 @@ export function IssuePropertiesPanel({ issue, detail }: IssuePropertiesPanelProp
          )}
 
          {detail.blockedByIds && detail.blockedByIds.length > 0 && (
-            <Section title="Blocked by">
+            <Section title={t('properties.blockedBy')}>
                <div className="flex flex-col">
                   {detail.blockedByIds.map((identifier) => (
                      <div key={identifier} className="flex items-center gap-1.5 min-w-0">
@@ -96,7 +100,7 @@ export function IssuePropertiesPanel({ issue, detail }: IssuePropertiesPanelProp
          )}
 
          {detail.relatedIds && detail.relatedIds.length > 0 && (
-            <Section title="Related">
+            <Section title={t('properties.related')}>
                <div className="flex flex-col">
                   {detail.relatedIds.map((identifier) => (
                      <IssueRefRow key={identifier} identifier={identifier} />
@@ -106,7 +110,7 @@ export function IssuePropertiesPanel({ issue, detail }: IssuePropertiesPanelProp
          )}
 
          {detail.prLinks && detail.prLinks.length > 0 && (
-            <Section title="Diffs">
+            <Section title={t('properties.diffs')}>
                <div className="flex flex-col gap-1">
                   {detail.prLinks.map((pr) => (
                      <div key={pr.id} className="flex items-center gap-2 text-sm min-w-0">

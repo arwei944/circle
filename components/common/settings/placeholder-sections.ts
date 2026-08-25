@@ -7,63 +7,63 @@ export interface PlaceholderConfig {
 }
 
 export const PLACEHOLDER_SECTIONS: Record<string, PlaceholderConfig> = {
-   slas: {
-      title: 'SLAs',
-      description: 'Automatically apply deadlines to issues based on their properties',
-      actionLabel: 'New SLA',
-      emptyLabel: 'No SLAs',
+   'slas': {
+      title: 'placeholder.slas.title',
+      description: 'placeholder.slas.description',
+      actionLabel: 'placeholder.slas.actionLabel',
+      emptyLabel: 'placeholder.slas.emptyLabel',
    },
    'project-labels': {
-      title: 'Project labels',
-      actionLabel: 'New label',
-      emptyLabel: 'No project labels',
+      title: 'placeholder.project-labels.title',
+      actionLabel: 'placeholder.project-labels.actionLabel',
+      emptyLabel: 'placeholder.project-labels.emptyLabel',
    },
    'project-templates': {
-      title: 'Project templates',
-      actionLabel: 'New template',
-      emptyLabel: 'No project templates',
+      title: 'placeholder.project-templates.title',
+      actionLabel: 'placeholder.project-templates.actionLabel',
+      emptyLabel: 'placeholder.project-templates.emptyLabel',
    },
    'project-updates': {
-      title: 'Project updates',
-      description: 'Configure how project updates are collected across the workspace',
-      emptyLabel: 'No updates',
+      title: 'placeholder.project-updates.title',
+      description: 'placeholder.project-updates.description',
+      emptyLabel: 'placeholder.project-updates.emptyLabel',
    },
-   initiatives: {
-      title: 'Initiatives',
-      description: 'Group projects into larger bodies of work',
-      actionLabel: 'New initiative',
-      emptyLabel: 'No initiatives',
+   'initiatives': {
+      title: 'placeholder.initiatives.title',
+      description: 'placeholder.initiatives.description',
+      actionLabel: 'placeholder.initiatives.actionLabel',
+      emptyLabel: 'placeholder.initiatives.emptyLabel',
    },
-   documents: {
-      title: 'Documents',
-      actionLabel: 'New document',
-      emptyLabel: 'No documents',
+   'documents': {
+      title: 'placeholder.documents.title',
+      actionLabel: 'placeholder.documents.actionLabel',
+      emptyLabel: 'placeholder.documents.emptyLabel',
    },
    'customer-requests': {
-      title: 'Customer requests',
-      description: 'Track and manage customer requests alongside your team’s work',
-      actionLabel: 'New request',
-      emptyLabel: 'No customer requests',
+      title: 'placeholder.customer-requests.title',
+      description: 'placeholder.customer-requests.description',
+      actionLabel: 'placeholder.customer-requests.actionLabel',
+      emptyLabel: 'placeholder.customer-requests.emptyLabel',
    },
-   releases: {
-      title: 'Releases',
-      actionLabel: 'New release',
-      emptyLabel: 'No releases',
+   'releases': {
+      title: 'placeholder.releases.title',
+      actionLabel: 'placeholder.releases.actionLabel',
+      emptyLabel: 'placeholder.releases.emptyLabel',
    },
-   pulse: {
-      title: 'Pulse',
-      description: 'A feed of important updates across your workspace',
-      emptyLabel: 'No updates',
+   'pulse': {
+      title: 'placeholder.pulse.title',
+      description: 'placeholder.pulse.description',
+      emptyLabel: 'placeholder.pulse.emptyLabel',
    },
-   asks: {
-      title: 'Asks',
-      description: 'Turn requests into actionable issues',
-      actionLabel: 'New Ask',
-      emptyLabel: 'No asks',
+   'asks': {
+      title: 'placeholder.asks.title',
+      description: 'placeholder.asks.description',
+      actionLabel: 'placeholder.asks.actionLabel',
+      emptyLabel: 'placeholder.asks.emptyLabel',
    },
-   emojis: {
-      title: 'Emojis',
-      actionLabel: 'Upload',
-      emptyLabel: 'No emojis',
+   'emojis': {
+      title: 'placeholder.emojis.title',
+      actionLabel: 'placeholder.emojis.actionLabel',
+      emptyLabel: 'placeholder.emojis.emptyLabel',
    },
 };

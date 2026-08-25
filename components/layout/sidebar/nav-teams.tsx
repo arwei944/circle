@@ -35,12 +35,14 @@ import {
 } from '@/components/ui/sidebar';
 import { teams } from '@/mock-data/teams';
 import { RiDonutChartFill } from '@remixicon/react';
+import { useTranslations } from 'next-intl';
 
 export function NavTeams() {
+   const t = useTranslations('common');
    const joinedTeams = teams.filter((t) => t.joined);
    return (
       <SidebarGroup>
-         <SidebarGroupLabel>Your teams</SidebarGroupLabel>
+         <SidebarGroupLabel>{t('sidebar.yourTeams')}</SidebarGroupLabel>
          <SidebarMenu>
             {joinedTeams.map((item, index) => (
                <Collapsible
@@ -64,7 +66,7 @@ export function NavTeams() {
                                  <SidebarMenuAction asChild showOnHover>
                                     <div>
                                        <MoreHorizontal />
-                                       <span className="sr-only">More</span>
+                                       <span className="sr-only">{t('sidebar.more')}</span>
                                     </div>
                                  </SidebarMenuAction>
                               </DropdownMenuTrigger>
@@ -75,24 +77,24 @@ export function NavTeams() {
                               >
                                  <DropdownMenuItem>
                                     <Settings className="size-4" />
-                                    <span>Team settings</span>
+                                    <span>{t('sidebar.teamSettings')}</span>
                                  </DropdownMenuItem>
                                  <DropdownMenuItem>
                                     <LinkIcon className="size-4" />
-                                    <span>Copy link</span>
+                                    <span>{t('sidebar.copyLink')}</span>
                                  </DropdownMenuItem>
                                  <DropdownMenuItem>
                                     <Archive className="size-4" />
-                                    <span>Open archive</span>
+                                    <span>{t('sidebar.openArchive')}</span>
                                  </DropdownMenuItem>
                                  <DropdownMenuSeparator />
                                  <DropdownMenuItem>
                                     <Bell className="size-4" />
-                                    <span>Subscribe</span>
+                                    <span>{t('sidebar.subscribe')}</span>
                                  </DropdownMenuItem>
                                  <DropdownMenuSeparator />
                                  <DropdownMenuItem>
-                                    <span>Leave team...</span>
+                                    <span>{t('sidebar.leaveTeam')}</span>
                                  </DropdownMenuItem>
                               </DropdownMenuContent>
                            </DropdownMenu>
@@ -104,7 +106,7 @@ export function NavTeams() {
                               <SidebarMenuSubButton asChild>
                                  <Link href={`/lndev-ui/team/${item.id}/overview`}>
                                     <Home size={14} />
-                                    <span>Home</span>
+                                    <span>{t('sidebar.home')}</span>
                                  </Link>
                               </SidebarMenuSubButton>
                            </SidebarMenuSubItem>
@@ -112,7 +114,7 @@ export function NavTeams() {
                               <SidebarMenuSubButton asChild>
                                  <Link href={`/lndev-ui/team/${item.id}/all`}>
                                     <CopyMinus size={14} />
-                                    <span>Issues</span>
+                                    <span>{t('sidebar.issues')}</span>
                                  </Link>
                               </SidebarMenuSubButton>
                            </SidebarMenuSubItem>
@@ -120,21 +122,21 @@ export function NavTeams() {
                               <SidebarMenuSubButton asChild>
                                  <Link href={`/lndev-ui/team/${item.id}/cycles`}>
                                     <RiDonutChartFill size={14} />
-                                    <span>Cycles</span>
+                                    <span>{t('sidebar.cycles')}</span>
                                  </Link>
                               </SidebarMenuSubButton>
                               <SidebarMenuSub className="mr-0 pr-0">
                                  <SidebarMenuSubItem>
                                     <SidebarMenuSubButton asChild>
                                        <Link href={`/lndev-ui/team/${item.id}/cycle/active`}>
-                                          <span>Current</span>
+                                          <span>{t('sidebar.current')}</span>
                                        </Link>
                                     </SidebarMenuSubButton>
                                  </SidebarMenuSubItem>
                                  <SidebarMenuSubItem>
                                     <SidebarMenuSubButton asChild>
                                        <Link href={`/lndev-ui/team/${item.id}/cycle/upcoming`}>
-                                          <span>Upcoming</span>
+                                          <span>{t('sidebar.upcoming')}</span>
                                        </Link>
                                     </SidebarMenuSubButton>
                                  </SidebarMenuSubItem>
@@ -144,7 +146,7 @@ export function NavTeams() {
                               <SidebarMenuSubButton asChild>
                                  <Link href={`/lndev-ui/team/${item.id}/projects`}>
                                     <Box size={14} />
-                                    <span>Projects</span>
+                                    <span>{t('sidebar.projects')}</span>
                                  </Link>
                               </SidebarMenuSubButton>
                            </SidebarMenuSubItem>
@@ -152,7 +154,7 @@ export function NavTeams() {
                               <SidebarMenuSubButton asChild>
                                  <Link href={`/lndev-ui/team/${item.id}/views`}>
                                     <Layers size={14} />
-                                    <span>Views</span>
+                                    <span>{t('sidebar.views')}</span>
                                  </Link>
                               </SidebarMenuSubButton>
                            </SidebarMenuSubItem>

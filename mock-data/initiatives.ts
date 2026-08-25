@@ -20,13 +20,10 @@ export interface Initiative {
    createdAt: string;
 }
 
-export const INITIATIVE_STATUS_META: Record<
-   InitiativeStatus,
-   { label: string; color: string }
-> = {
-   active: { label: 'Active', color: '#f2c94c' },
-   planned: { label: 'Planned', color: '#95a2b3' },
-   completed: { label: 'Completed', color: '#5e6ad2' },
+export const INITIATIVE_STATUS_META: Record<InitiativeStatus, { label: string; color: string }> = {
+   active: { label: '进行中', color: '#f2c94c' },
+   planned: { label: '计划中', color: '#95a2b3' },
+   completed: { label: '已完成', color: '#5e6ad2' },
 };
 
 const noUpdate = health[0];
@@ -39,8 +36,8 @@ const byId = (id: string): Health => health.find((entry) => entry.id === id) ?? 
 export const initiatives: Initiative[] = [
    {
       id: 'component-platform',
-      name: 'Q3 — Ship the component platform',
-      description: 'Deliver the full core component suite with stable APIs and docs.',
+      name: 'Q3 — 交付组件平台',
+      description: '交付完整核心组件套件，并提供稳定的 API 与文档。',
       icon: '🧱',
       status: 'active',
       priority: priorities[0],
@@ -52,8 +49,8 @@ export const initiatives: Initiative[] = [
    },
    {
       id: 'quality-accessibility',
-      name: 'Q3 — Raise quality and accessibility',
-      description: 'WCAG AA across the library, visual regression coverage and audits.',
+      name: 'Q3 — 提升质量与无障碍',
+      description: '全库通过 WCAG AA 无障碍标准，并覆盖视觉回归测试与审计。',
       icon: '♿',
       status: 'active',
       priority: priorities[2],
@@ -65,8 +62,8 @@ export const initiatives: Initiative[] = [
    },
    {
       id: 'design-system-adoption',
-      name: 'Q4 — Grow design system adoption',
-      description: 'Templates, starter kits and integrations that drive adoption.',
+      name: 'Q4 — 扩大设计系统采用',
+      description: '通过模板、起步套件与集成推动设计系统采用。',
       icon: '🌱',
       status: 'active',
       priority: priorities[3],
@@ -78,8 +75,8 @@ export const initiatives: Initiative[] = [
    },
    {
       id: 'performance-lab',
-      name: 'Q3 — Cut bundle size in half',
-      description: 'Tree-shakeable exports, lazy primitives and a leaner runtime.',
+      name: 'Q3 — 将包体积减半',
+      description: '可摇树优化的导出、按需加载的原子组件与更精简的运行时。',
       icon: '⚡',
       status: 'active',
       priority: priorities[1],
@@ -91,7 +88,7 @@ export const initiatives: Initiative[] = [
    },
    {
       id: 'docs-refresh',
-      name: 'Q3 — Documentation refresh',
+      name: 'Q3 — 文档更新',
       icon: '📚',
       status: 'active',
       priority: priorities[0],
@@ -103,8 +100,8 @@ export const initiatives: Initiative[] = [
    },
    {
       id: 'theming-engine',
-      name: 'Q4 — Next-gen theming engine',
-      description: 'Design tokens, runtime variants and a visual theme builder.',
+      name: 'Q4 — 下一代主题引擎',
+      description: '设计令牌、运行时主题变体与可视化主题构建器。',
       icon: '🎨',
       status: 'planned',
       priority: priorities[2],
@@ -116,8 +113,8 @@ export const initiatives: Initiative[] = [
    },
    {
       id: 'mobile-primitives',
-      name: 'Q4 — Mobile-first primitives',
-      description: 'Touch targets, gestures and adaptive layouts for small screens.',
+      name: 'Q4 — 移动端优先的原子组件',
+      description: '针对小屏优化的触控目标、手势与自适应布局。',
       icon: '📱',
       status: 'planned',
       priority: priorities[0],
@@ -129,19 +126,19 @@ export const initiatives: Initiative[] = [
    },
    {
       id: 'playground',
-      name: 'Q4 — Interactive component playground',
+      name: 'Q4 — 交互式组件演练场',
       icon: '🛝',
       status: 'planned',
       priority: priorities[4],
       owner: users[7],
-      target: 'Sep 30th',
+      target: '9 月 30 日',
       health: noUpdate,
       projectIds: ['21', '25'],
       createdAt: '2026-06-18',
    },
    {
       id: 'backlog-grooming',
-      name: 'Backlog — Community requests',
+      name: '待办 — 社区请求',
       icon: '🧺',
       status: 'planned',
       priority: priorities[0],
@@ -152,8 +149,8 @@ export const initiatives: Initiative[] = [
    },
    {
       id: 'v2-launch',
-      name: 'Q2 — Launch LNDev UI v2',
-      description: 'Rebrand, new website and the v2 breaking-changes migration guide.',
+      name: 'Q2 — 发布 LNDev UI v2',
+      description: '品牌焕新、新官网与 v2 破坏性变更迁移指南。',
       icon: '🚀',
       status: 'completed',
       priority: priorities[1],
@@ -165,7 +162,7 @@ export const initiatives: Initiative[] = [
    },
    {
       id: 'infra-migration',
-      name: 'Q2 — Move CI to self-hosted runners',
+      name: 'Q2 — 将 CI 迁移到自托管运行器',
       icon: '🏗️',
       status: 'completed',
       priority: priorities[3],

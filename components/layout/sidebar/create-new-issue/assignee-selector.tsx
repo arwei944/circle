@@ -15,6 +15,7 @@ import { User, users } from '@/mock-data/users';
 import { CheckIcon, UserCircle } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useTranslations } from 'next-intl';
 
 interface AssigneeSelectorProps {
    assignee: User | null;
@@ -23,6 +24,7 @@ interface AssigneeSelectorProps {
 
 export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps) {
    const id = useId();
+   const t = useTranslations('common');
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string | null>(assignee?.id || null);
 
@@ -78,7 +80,9 @@ export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps) 
                      <UserCircle className="size-5" />
                   )}
                   <span>
-                     {value ? users.find((user) => user.id === value)?.name : 'Unassigned'}
+                     {value
+                        ? users.find((user) => user.id === value)?.name
+                        : t('createIssue.unassigned')}
                   </span>
                </Button>
             </PopoverTrigger>
@@ -87,9 +91,9 @@ export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps) 
                align="start"
             >
                <Command>
-                  <CommandInput placeholder="Assign to..." />
+                  <CommandInput placeholder={t('createIssue.assignTo')} />
                   <CommandList>
-                     <CommandEmpty>No users found.</CommandEmpty>
+                     <CommandEmpty>{t('createIssue.noUsersFound')}</CommandEmpty>
                      <CommandGroup>
                         <CommandItem
                            value="unassigned"
@@ -98,7 +102,7 @@ export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps) 
                         >
                            <div className="flex items-center gap-2">
                               <UserCircle className="size-5" />
-                              Unassigned
+                              {t('createIssue.unassigned')}
                            </div>
                            {value === null && <CheckIcon size={16} className="ml-auto" />}
                            <span className="text-muted-foreground text-xs">

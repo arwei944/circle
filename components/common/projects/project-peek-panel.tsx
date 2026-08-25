@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import { ProjectProgressChart } from './details/project-progress-chart';
 
@@ -54,6 +55,7 @@ function Card({ children, className }: { children: React.ReactNode; className?: 
  * progress cards stacked over the right side of the timeline.
  */
 export function ProjectPeekPanel({ projectId, onClose }: ProjectPeekPanelProps) {
+   const t = useTranslations('projects');
    const { orgId } = useParams<{ orgId: string }>();
    const { issues: allIssues } = useIssuesStore();
 
@@ -100,7 +102,7 @@ export function ProjectPeekPanel({ projectId, onClose }: ProjectPeekPanelProps) 
             <Link
                href={`/${orgId}/project/${project.id}/overview`}
                className="flex-1 min-w-0 flex items-center gap-1.5 group"
-               aria-label="Open project"
+               aria-label={t('peekPanel.openProject')}
             >
                <span className="font-medium truncate group-hover:text-foreground/80 transition-colors">
                   {project.name}
@@ -113,7 +115,7 @@ export function ProjectPeekPanel({ projectId, onClose }: ProjectPeekPanelProps) 
             <button
                onClick={onClose}
                className="text-muted-foreground hover:text-foreground transition-colors shrink-0"
-               aria-label="Close panel"
+               aria-label={t('peekPanel.closePanel')}
             >
                <X className="size-4" />
             </button>
@@ -122,28 +124,28 @@ export function ProjectPeekPanel({ projectId, onClose }: ProjectPeekPanelProps) 
          {/* Properties */}
          <Card>
             <div className="flex items-center justify-between mb-1.5">
-               <h3 className="text-sm font-medium">Properties</h3>
+               <h3 className="text-sm font-medium">{t('properties.title')}</h3>
                <button className="text-muted-foreground hover:text-foreground transition-colors">
                   <Plus className="size-3.5" />
                </button>
             </div>
             <div className="flex flex-col">
-               <PropertyRow label="Status">
+               <PropertyRow label={t('properties.status')}>
                   <project.status.icon />
                   <span>{project.status.name}</span>
                </PropertyRow>
-               <PropertyRow label="Priority">
+               <PropertyRow label={t('properties.priority')}>
                   <project.priority.icon className="size-3.5 text-muted-foreground" />
                   <span>{project.priority.name}</span>
                </PropertyRow>
-               <PropertyRow label="Lead">
+               <PropertyRow label={t('properties.lead')}>
                   <Avatar className="size-5">
                      <AvatarImage src={project.lead.avatarUrl} alt={project.lead.name} />
                      <AvatarFallback>{project.lead.name[0]}</AvatarFallback>
                   </Avatar>
                   <span className="truncate max-w-40">{project.lead.name}</span>
                </PropertyRow>
-               <PropertyRow label="Members">
+               <PropertyRow label={t('properties.members')}>
                   {members.length > 0 ? (
                      <span className="inline-flex items-center gap-1.5">
                         <span className="flex -space-x-1.5">
@@ -154,16 +156,16 @@ export function ProjectPeekPanel({ projectId, onClose }: ProjectPeekPanelProps) 
                               </Avatar>
                            ))}
                         </span>
-                        {members.length} {members.length === 1 ? 'member' : 'members'}
+                        {t('properties.memberCount', { count: members.length })}
                      </span>
                   ) : (
                      <button className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
                         <UserPlus className="size-3.5" />
-                        Add members
+                        {t('properties.addMembers')}
                      </button>
                   )}
                </PropertyRow>
-               <PropertyRow label="Dates">
+               <PropertyRow label={t('properties.dates')}>
                   <span className="inline-flex items-center gap-1">
                      <Calendar className="size-3.5 text-muted-foreground" />
                      {formatDay(project.startDate)}
@@ -174,37 +176,37 @@ export function ProjectPeekPanel({ projectId, onClose }: ProjectPeekPanelProps) 
                      {project.targetDate ? (
                         <span className="text-foreground">{formatDay(project.targetDate)}</span>
                      ) : (
-                        'Target'
+                        t('properties.target')
                      )}
                   </span>
                </PropertyRow>
-               <PropertyRow label="Teams">
+               <PropertyRow label={t('properties.teams')}>
                   <span className="inline-flex items-center gap-1.5">
                      {team?.icon} {team?.name ?? project.teamId}
                   </span>
                </PropertyRow>
-               <PropertyRow label="Slack">
+               <PropertyRow label={t('properties.slack')}>
                   <button className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
                      <Slack className="size-3.5" />
-                     Connect channel
+                     {t('properties.connectChannel')}
                   </button>
                </PropertyRow>
-               <PropertyRow label="Initiatives">
+               <PropertyRow label={t('properties.initiatives')}>
                   {project.initiative ? (
                      <span className="truncate max-w-44">{project.initiative}</span>
                   ) : (
                      <span className="inline-flex items-center gap-1.5 text-muted-foreground">
                         <Compass className="size-3.5" />
-                        No initiative
+                        {t('properties.noInitiative')}
                      </span>
                   )}
                </PropertyRow>
-               <PropertyRow label="Labels">
+               <PropertyRow label={t('properties.labels')}>
                   <div className="flex items-center gap-1.5">
                      {project.labels.length === 0 && (
                         <span className="inline-flex items-center gap-1.5 text-muted-foreground">
                            <Tag className="size-3.5" />
-                           Add label
+                           {t('properties.addLabel')}
                         </span>
                      )}
                      {project.labels.map((label) => (
@@ -227,15 +229,15 @@ export function ProjectPeekPanel({ projectId, onClose }: ProjectPeekPanelProps) 
          {/* Milestones */}
          <Card>
             <div className="flex items-center justify-between mb-2">
-               <h3 className="text-sm font-medium">Milestones</h3>
+               <h3 className="text-sm font-medium">{t('milestones.title')}</h3>
                <button className="text-muted-foreground hover:text-foreground transition-colors">
                   <Plus className="size-3.5" />
                </button>
             </div>
             {detail.milestones.length === 0 ? (
                <p className="text-xs text-muted-foreground">
-                  Add milestones to organize work within your project and break it into more
-                  granular stages. <span className="text-foreground/70 underline">Learn more</span>
+                  {t('milestones.empty')}{' '}
+                  <span className="text-foreground/70 underline">{t('milestones.learnMore')}</span>
                </p>
             ) : (
                <div className="flex flex-col gap-1.5">
@@ -264,26 +266,26 @@ export function ProjectPeekPanel({ projectId, onClose }: ProjectPeekPanelProps) 
 
          {/* Progress */}
          <Card>
-            <h3 className="text-sm font-medium mb-3">Progress</h3>
+            <h3 className="text-sm font-medium mb-3">{t('progress.title')}</h3>
             <div className="grid grid-cols-3 gap-2 mb-2">
                <div className="flex flex-col gap-0.5">
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                      <span className="size-2 rounded-[2px] bg-[#8f9299]" />
-                     Scope
+                     {t('progress.scope')}
                   </div>
                   <span className="text-sm font-medium">{issues.length}</span>
                </div>
                <div className="flex flex-col gap-0.5">
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                      <span className="size-2 rounded-[2px] bg-[#facc15]" />
-                     Started
+                     {t('progress.started')}
                   </div>
                   <span className="text-sm font-medium">{started}</span>
                </div>
                <div className="flex flex-col gap-0.5">
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                      <span className="size-2 rounded-[2px] bg-[#6771c5]" />
-                     Completed
+                     {t('progress.completed')}
                   </div>
                   <span className="text-sm font-medium">{completed}</span>
                </div>

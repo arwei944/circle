@@ -14,6 +14,7 @@ import { useIssuesStore } from '@/store/issues-store';
 import { useRightPanelStore } from '@/store/right-panel-store';
 import { useSearchStore } from '@/store/search-store';
 import { BarChart3, PanelRight, SearchIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
 import { DisplayOptions } from '../display-options';
 import Notifications from '../issues/notifications';
@@ -23,6 +24,7 @@ function HeaderNav() {
       useSearchStore();
    const searchInputRef = useRef<HTMLInputElement>(null);
    const searchContainerRef = useRef<HTMLDivElement>(null);
+   const t = useTranslations('my-issues');
 
    useEffect(() => {
       if (isSearchOpen && searchInputRef.current) {
@@ -49,7 +51,7 @@ function HeaderNav() {
       <div className="w-full flex justify-between items-center border-b py-1.5 px-6 h-10">
          <div className="flex items-center gap-2">
             <SidebarTrigger />
-            <span className="text-sm font-medium">My issues</span>
+            <span className="text-sm font-medium">{t('title')}</span>
          </div>
          <div className="flex items-center gap-2">
             {isSearchOpen ? (
@@ -60,7 +62,7 @@ function HeaderNav() {
                      ref={searchInputRef}
                      value={searchQuery}
                      onChange={(event) => setSearchQuery(event.target.value)}
-                     placeholder="Search issues..."
+                     placeholder={t('search.placeholder')}
                      className="pl-8 h-7 text-sm"
                      onKeyDown={(event) => {
                         if (event.key === 'Escape') {
@@ -77,7 +79,7 @@ function HeaderNav() {
                      size="icon"
                      onClick={toggleSearch}
                      className="h-8 w-8"
-                     aria-label="Search"
+                     aria-label={t('search.label')}
                   >
                      <SearchIcon className="h-4 w-4" />
                   </Button>
@@ -93,6 +95,7 @@ function HeaderOptions() {
    const [tab, setTab] = useMyIssuesTab();
    const { issues } = useIssuesStore();
    const { openPanel, togglePanel } = useRightPanelStore();
+   const t = useTranslations('my-issues');
 
    const count = scopeMyIssues(issues, tab).length;
 
@@ -112,12 +115,12 @@ function HeaderOptions() {
                            : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-accent/50'
                      )}
                   >
-                     {item.label}
+                     {t(`tabs.${item.value}`)}
                   </button>
                ))}
             </div>
             <span className="text-sm text-muted-foreground hidden sm:inline">
-               {count} {count === 1 ? 'issue' : 'issues'}
+               {t('issueCount', { count })}
             </span>
          </div>
          <div className="flex items-center gap-1">
@@ -126,7 +129,7 @@ function HeaderOptions() {
                size="xs"
                variant={openPanel === 'insights' ? 'secondary' : 'ghost'}
                onClick={() => togglePanel('insights')}
-               aria-label="Toggle insights panel"
+               aria-label={t('toggleInsights')}
             >
                <BarChart3 className="size-4" />
             </Button>
@@ -134,7 +137,7 @@ function HeaderOptions() {
                size="xs"
                variant={openPanel === 'breakdown' ? 'secondary' : 'ghost'}
                onClick={() => togglePanel('breakdown')}
-               aria-label="Toggle breakdown panel"
+               aria-label={t('toggleBreakdown')}
             >
                <PanelRight className="size-4" />
             </Button>

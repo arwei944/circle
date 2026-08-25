@@ -11,7 +11,7 @@ const NoPriorityIcon = ({ className, ...props }: IconProps) => (
       viewBox="0 0 16 16"
       fill="currentColor"
       className={className}
-      aria-label="No Priority"
+      aria-label="无优先级"
       role="img"
       focusable="false"
       xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,7 @@ const UrgentPriorityIcon = ({ className, ...props }: IconProps) => (
       viewBox="0 0 16 16"
       fill="currentColor"
       className={className}
-      aria-label="Urgent Priority"
+      aria-label="紧急优先级"
       role="img"
       focusable="false"
       xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@ const HighPriorityIcon = ({ className, ...props }: IconProps) => (
       viewBox="0 0 16 16"
       fill="currentColor"
       className={className}
-      aria-label="High Priority"
+      aria-label="高优先级"
       role="img"
       focusable="false"
       xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +66,7 @@ const MediumPriorityIcon = ({ className, ...props }: IconProps) => (
       viewBox="0 0 16 16"
       fill="currentColor"
       className={className}
-      aria-label="Medium Priority"
+      aria-label="中优先级"
       role="img"
       focusable="false"
       xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +85,7 @@ const LowPriorityIcon = ({ className, ...props }: IconProps) => (
       viewBox="0 0 16 16"
       fill="currentColor"
       className={className}
-      aria-label="Low Priority"
+      aria-label="低优先级"
       role="img"
       focusable="false"
       xmlns="http://www.w3.org/2000/svg"
@@ -104,9 +104,9 @@ export interface Priority {
 }
 
 export const priorities: Priority[] = [
-   { id: 'no-priority', name: 'No priority', icon: NoPriorityIcon },
-   { id: 'urgent', name: 'Urgent', icon: UrgentPriorityIcon },
-   { id: 'high', name: 'High', icon: HighPriorityIcon },
-   { id: 'medium', name: 'Medium', icon: MediumPriorityIcon },
-   { id: 'low', name: 'Low', icon: LowPriorityIcon },
+   { id: 'no-priority', name: '无优先级', icon: NoPriorityIcon },
+   { id: 'urgent', name: '紧急', icon: UrgentPriorityIcon },
+   { id: 'high', name: '高', icon: HighPriorityIcon },
+   { id: 'medium', name: '中', icon: MediumPriorityIcon },
+   { id: 'low', name: '低', icon: LowPriorityIcon },
 ];

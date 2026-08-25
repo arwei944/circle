@@ -1,0 +1,18 @@
+{
+   "newChat": "New chat",
+   "startNewChat": "Start a new chat",
+   "composer": {
+      "placeholder": "Ask the agent…",
+      "skills": "Skills",
+      "send": "Send"
+   },
+   "banner": {
+      "text": "Agent is now your default view",
+      "change": "Change",
+      "keep": "Keep"
+   },
+   "hero": {
+      "examples": "Get started with some examples",
+      "dismissExamples": "Dismiss examples"
+   }
+}

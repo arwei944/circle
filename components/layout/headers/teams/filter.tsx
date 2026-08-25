@@ -11,6 +11,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useMemo, useState } from 'react';
 import { ArrowUpDown, CheckIcon, ChevronRight, ListFilter, Shield } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { Team, teams } from '@/mock-data/teams';
 import { useTeamsFilterStore } from '@/store/team-filter-store';
 
@@ -28,13 +29,14 @@ export function Filter() {
 
    const { filters, sort, toggleFilter, clearFilters, getActiveFiltersCount, setSort } =
       useTeamsFilterStore();
+   const t = useTranslations('teams');
 
    return (
       <Popover open={open} onOpenChange={setOpen}>
          <PopoverTrigger asChild>
             <Button size="xs" variant="ghost" className="relative">
                <ListFilter className="size-4 mr-1" />
-               Filter
+               {t('filter.filter')}
                {getActiveFiltersCount() > 0 && (
                   <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] rounded-full size-4 flex items-center justify-center">
                      {getActiveFiltersCount()}
@@ -53,7 +55,7 @@ export function Filter() {
                         >
                            <span className="flex items-center gap-2">
                               <Shield className="size-4 text-muted-foreground" />
-                              Members
+                              {t('filter.members')}
                            </span>
                            <div className="flex items-center">
                               {filters.membership.length > 0 && (
@@ -70,7 +72,7 @@ export function Filter() {
                         >
                            <span className="flex items-center gap-2">
                               <Shield className="size-4 text-muted-foreground" />
-                              Identifiers
+                              {t('filter.identifiers')}
                            </span>
                            <div className="flex items-center">
                               {filters.identifier.length > 0 && (
@@ -87,7 +89,7 @@ export function Filter() {
                         >
                            <span className="flex items-center gap-2">
                               <ArrowUpDown className="size-4 text-muted-foreground" />
-                              Sort by
+                              {t('filter.sortBy')}
                            </span>
                            <ChevronRight className="size-4" />
                         </CommandItem>
@@ -100,7 +102,7 @@ export function Filter() {
                                  onSelect={() => clearFilters()}
                                  className="cursor-pointer"
                               >
-                                 Clear all filters
+                                 {t('filter.clearAllFilters')}
                               </CommandItem>
                            </CommandGroup>
                         </>
@@ -118,7 +120,7 @@ export function Filter() {
                      >
                         <ChevronRight className="size-4 rotate-180" />
                      </Button>
-                     <span className="ml-2 font-medium">Status</span>
+                     <span className="ml-2 font-medium">{t('filter.status')}</span>
                   </div>
                   <CommandList>
                      <CommandGroup>
@@ -129,7 +131,9 @@ export function Filter() {
                               onSelect={() => toggleFilter('membership', type)}
                               className="flex items-center justify-between"
                            >
-                              {type}
+                              {type === 'Joined'
+                                 ? t('membership.joined')
+                                 : t('membership.notJoined')}
                               {filters.membership.includes(type) && <CheckIcon size={16} />}
                            </CommandItem>
                         ))}
@@ -147,7 +151,7 @@ export function Filter() {
                      >
                         <ChevronRight className="size-4 rotate-180" />
                      </Button>
-                     <span className="ml-2 font-medium">Status</span>
+                     <span className="ml-2 font-medium">{t('filter.status')}</span>
                   </div>
                   <CommandList>
                      <CommandGroup>
@@ -176,54 +180,56 @@ export function Filter() {
                      >
                         <ChevronRight className="size-4 rotate-180" />
                      </Button>
-                     <span className="ml-2 font-medium">Sort by</span>
+                     <span className="ml-2 font-medium">{t('filter.sortBy')}</span>
                   </div>
                   <CommandList>
-                     <CommandGroup heading="Name">
+                     <CommandGroup heading={t('filter.name')}>
                         <CommandItem
                            onSelect={() => setSort('name-asc')}
                            className="flex items-center justify-between"
                         >
-                           A → Z{sort === 'name-asc' && <CheckIcon size={16} />}
+                           {t('filter.sortAsc')}
+                           {sort === 'name-asc' && <CheckIcon size={16} />}
                         </CommandItem>
                         <CommandItem
                            onSelect={() => setSort('name-desc')}
                            className="flex items-center justify-between"
                         >
-                           Z → A{sort === 'name-desc' && <CheckIcon size={16} />}
+                           {t('filter.sortDesc')}
+                           {sort === 'name-desc' && <CheckIcon size={16} />}
                         </CommandItem>
                      </CommandGroup>
                      <CommandSeparator />
-                     <CommandGroup heading="Members">
+                     <CommandGroup heading={t('filter.members')}>
                         <CommandItem
                            onSelect={() => setSort('members-asc')}
                            className="flex items-center justify-between"
                         >
-                           No. of Members (asc)
+                           {t('filter.membersAsc')}
                            {sort === 'members-asc' && <CheckIcon size={16} />}
                         </CommandItem>
                         <CommandItem
                            onSelect={() => setSort('members-desc')}
                            className="flex items-center justify-between"
                         >
-                           No. of Members (desc)
+                           {t('filter.membersDesc')}
                            {sort === 'members-desc' && <CheckIcon size={16} />}
                         </CommandItem>
                      </CommandGroup>
                      <CommandSeparator />
-                     <CommandGroup heading="Projects">
+                     <CommandGroup heading={t('filter.projects')}>
                         <CommandItem
                            onSelect={() => setSort('projects-asc')}
                            className="flex items-center justify-between"
                         >
-                           No. of Projects (asc)
+                           {t('filter.projectsAsc')}
                            {sort === 'projects-asc' && <CheckIcon size={16} />}
                         </CommandItem>
                         <CommandItem
                            onSelect={() => setSort('projects-desc')}
                            className="flex items-center justify-between"
                         >
-                           No. of Projects (desc)
+                           {t('filter.projectsDesc')}
                            {sort === 'projects-desc' && <CheckIcon size={16} />}
                         </CommandItem>
                      </CommandGroup>

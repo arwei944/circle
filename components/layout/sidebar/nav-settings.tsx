@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 interface SettingsNavItem {
    name: string;
@@ -47,46 +48,58 @@ interface SettingsNavGroup {
 /** Linear-style settings navigation. */
 export const settingsNav: SettingsNavGroup[] = [
    {
-      label: 'Personal',
+      label: 'settingsNav.personal',
       items: [
-         { name: 'Preferences', url: '/settings/preferences', icon: Settings },
-         { name: 'Profile', url: '/settings/profile', icon: UserRound },
-         { name: 'Notifications', url: '/settings/notifications', icon: Bell },
-         { name: 'Code & reviews', url: '/settings/code-and-reviews', icon: Code },
-         { name: 'Security & access', url: '/settings/security', icon: KeyRound },
-         { name: 'Connected accounts', url: '/settings/connected-accounts', icon: Users },
-         { name: 'Agent personalization', url: '/settings/agent-personalization', icon: Bot },
+         { name: 'settingsNav.preferences', url: '/settings/preferences', icon: Settings },
+         { name: 'settingsNav.profile', url: '/settings/profile', icon: UserRound },
+         { name: 'settingsNav.notifications', url: '/settings/notifications', icon: Bell },
+         { name: 'settingsNav.codeAndReviews', url: '/settings/code-and-reviews', icon: Code },
+         { name: 'settingsNav.securityAndAccess', url: '/settings/security', icon: KeyRound },
+         {
+            name: 'settingsNav.connectedAccounts',
+            url: '/settings/connected-accounts',
+            icon: Users,
+         },
+         {
+            name: 'settingsNav.agentPersonalization',
+            url: '/settings/agent-personalization',
+            icon: Bot,
+         },
       ],
    },
    {
-      label: 'Issues',
+      label: 'settingsNav.issues',
       items: [
-         { name: 'Labels', url: '/settings/issue-labels', icon: Tag },
-         { name: 'Templates', url: '/settings/issue-templates', icon: FileText },
-         { name: 'SLAs', url: '/settings/slas', icon: Flame },
+         { name: 'settingsNav.labels', url: '/settings/issue-labels', icon: Tag },
+         { name: 'settingsNav.templates', url: '/settings/issue-templates', icon: FileText },
+         { name: 'settingsNav.slas', url: '/settings/slas', icon: Flame },
       ],
    },
    {
-      label: 'Projects',
+      label: 'settingsNav.projects',
       items: [
-         { name: 'Labels', url: '/settings/project-labels', icon: Tag },
-         { name: 'Templates', url: '/settings/project-templates', icon: FileText },
-         { name: 'Statuses', url: '/settings/project-statuses', icon: Target },
-         { name: 'Updates', url: '/settings/project-updates', icon: Zap },
+         { name: 'settingsNav.labels', url: '/settings/project-labels', icon: Tag },
+         { name: 'settingsNav.templates', url: '/settings/project-templates', icon: FileText },
+         { name: 'settingsNav.statuses', url: '/settings/project-statuses', icon: Target },
+         { name: 'settingsNav.updates', url: '/settings/project-updates', icon: Zap },
       ],
    },
    {
-      label: 'Features',
+      label: 'settingsNav.features',
       items: [
-         { name: 'AI & Agents', url: '/settings/ai', icon: Sparkles },
-         { name: 'Initiatives', url: '/settings/initiatives', icon: Compass },
-         { name: 'Documents', url: '/settings/documents', icon: FileText },
-         { name: 'Customer requests', url: '/settings/customer-requests', icon: HeartHandshake },
-         { name: 'Releases', url: '/settings/releases', icon: Rocket },
-         { name: 'Pulse', url: '/settings/pulse', icon: Zap },
-         { name: 'Asks', url: '/settings/asks', icon: MessageCircleQuestion },
-         { name: 'Emojis', url: '/settings/emojis', icon: Smile },
-         { name: 'Integrations', url: '/settings/integrations', icon: Blocks },
+         { name: 'settingsNav.aiAndAgents', url: '/settings/ai', icon: Sparkles },
+         { name: 'settingsNav.initiatives', url: '/settings/initiatives', icon: Compass },
+         { name: 'settingsNav.documents', url: '/settings/documents', icon: FileText },
+         {
+            name: 'settingsNav.customerRequests',
+            url: '/settings/customer-requests',
+            icon: HeartHandshake,
+         },
+         { name: 'settingsNav.releases', url: '/settings/releases', icon: Rocket },
+         { name: 'settingsNav.pulse', url: '/settings/pulse', icon: Zap },
+         { name: 'settingsNav.asks', url: '/settings/asks', icon: MessageCircleQuestion },
+         { name: 'settingsNav.emojis', url: '/settings/emojis', icon: Smile },
+         { name: 'settingsNav.integrations', url: '/settings/integrations', icon: Blocks },
       ],
    },
 ];
@@ -94,12 +107,13 @@ export const settingsNav: SettingsNavGroup[] = [
 export function NavSettings() {
    const { orgId } = useParams<{ orgId: string }>();
    const pathname = usePathname();
+   const t = useTranslations('common');
 
    return (
       <>
          {settingsNav.map((group) => (
             <SidebarGroup key={group.label} className="group-data-[collapsible=icon]:hidden">
-               <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
+               <SidebarGroupLabel>{t(group.label)}</SidebarGroupLabel>
                <SidebarMenu>
                   {group.items.map((item) => {
                      const href = `/${orgId}${item.url}`;
@@ -109,7 +123,7 @@ export function NavSettings() {
                            <SidebarMenuButton asChild isActive={isActive}>
                               <Link href={href}>
                                  <item.icon className="size-4" />
-                                 <span>{item.name}</span>
+                                 <span>{t(item.name)}</span>
                               </Link>
                            </SidebarMenuButton>
                         </SidebarMenuItem>

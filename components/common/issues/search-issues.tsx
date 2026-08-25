@@ -2,6 +2,7 @@
 
 import { useIssuesStore } from '@/store/issues-store';
 import { useSearchStore } from '@/store/search-store';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { IssueLine } from './issue-line';
 
@@ -9,6 +10,7 @@ export function SearchIssues() {
    const [searchResults, setSearchResults] = useState<
       ReturnType<typeof useIssuesStore.getState>['issues']
    >([]);
+   const t = useTranslations('issues');
    const { searchIssues } = useIssuesStore();
    const { searchQuery, isSearchOpen } = useSearchStore();
 
@@ -33,7 +35,9 @@ export function SearchIssues() {
                {searchResults.length > 0 ? (
                   <div className="border rounded-md mt-4">
                      <div className="py-2 px-4 border-b bg-muted/50">
-                        <h3 className="text-sm font-medium">Results ({searchResults.length})</h3>
+                        <h3 className="text-sm font-medium">
+                           {t('search.results', { count: searchResults.length })}
+                        </h3>
                      </div>
                      <div className="divide-y">
                         {searchResults.map((issue) => (
@@ -43,7 +47,7 @@ export function SearchIssues() {
                   </div>
                ) : (
                   <div className="text-center py-8 text-muted-foreground">
-                     No results found for &quot;{searchQuery}&quot;
+                     {t('search.noResultsFor', { query: searchQuery })}
                   </div>
                )}
             </div>

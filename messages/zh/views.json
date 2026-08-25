@@ -1,0 +1,19 @@
+{
+   "title": "视图",
+   "notFound": "未找到视图",
+   "tab": {
+      "issues": "问题",
+      "projects": "项目"
+   },
+   "ordering": "排序",
+   "displayProperties": "显示属性",
+   "name": "名称",
+   "created": "创建时间",
+   "updated": "更新时间",
+   "owner": "负责人",
+   "team": "团队",
+   "workspace": "工作区",
+   "noViews": "无视图",
+   "issueCount": "{count} 个问题",
+   "projectCount": "{count} 个项目"
+}

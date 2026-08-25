@@ -2,38 +2,56 @@
 
 import { Switch } from '@/components/ui/switch';
 import { Mail, Monitor, Slack, Smartphone } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { EnabledDot, SettingsCard, SettingsRow, SettingsSection, SettingsShell } from './shared';
 
 const CHANNELS = [
    {
       icon: <Monitor className="size-4" />,
-      title: 'Desktop',
-      status: 'Enabled for assignments, status changes, 13 others',
+      titleKey: 'notifications.channels.desktop',
+      statusKey: 'notifications.channels.status.enabledWithOthers',
+      statusCount: 13,
    },
    {
       icon: <Smartphone className="size-4" />,
-      title: 'Mobile',
-      status: 'Enabled for assignments, status changes, 13 others',
+      titleKey: 'notifications.channels.mobile',
+      statusKey: 'notifications.channels.status.enabledWithOthers',
+      statusCount: 13,
    },
-   { icon: <Mail className="size-4" />, title: 'Email', status: 'Enabled for all notifications' },
-   { icon: <Slack className="size-4" />, title: 'Slack', status: 'Enabled for all notifications' },
+   {
+      icon: <Mail className="size-4" />,
+      titleKey: 'notifications.channels.email',
+      statusKey: 'notifications.channels.status.all',
+   },
+   {
+      icon: <Slack className="size-4" />,
+      titleKey: 'notifications.channels.slack',
+      statusKey: 'notifications.channels.status.all',
+   },
 ];
 
 /** Personal notification settings (push channels + product updates). */
 export default function AccountNotifications() {
+   const t = useTranslations('settings');
    return (
-      <SettingsShell title="Notifications">
+      <SettingsShell title={t('notifications.title')}>
          <SettingsSection
-            title="Push notifications"
-            description="Choose which notifications are pushed to your devices. All notifications will still appear in your inbox."
+            title={t('notifications.pushNotifications.title')}
+            description={t('notifications.pushNotifications.description')}
          >
             <SettingsCard>
                {CHANNELS.map((channel) => (
                   <SettingsRow
-                     key={channel.title}
+                     key={channel.titleKey}
                      icon={channel.icon}
-                     title={channel.title}
-                     description={<EnabledDot>{channel.status}</EnabledDot>}
+                     title={t(channel.titleKey)}
+                     description={
+                        <EnabledDot>
+                           {channel.statusCount != null
+                              ? t(channel.statusKey, { count: channel.statusCount })
+                              : t(channel.statusKey)}
+                        </EnabledDot>
+                     }
                      chevron
                      onClick={() => {}}
                   />
@@ -42,42 +60,42 @@ export default function AccountNotifications() {
          </SettingsSection>
 
          <SettingsSection
-            title="Updates from LNDev UI"
-            description="Subscribe to product announcements and important changes from the LNDev UI team"
+            title={t('notifications.updates.title')}
+            description={t('notifications.updates.description')}
          >
-            <h3 className="text-sm font-medium mt-2">Changelog</h3>
+            <h3 className="text-sm font-medium mt-2">{t('notifications.updates.changelog')}</h3>
             <SettingsCard>
                <SettingsRow
-                  title="Show updates in sidebar"
-                  description="Highlight new features and improvements in the app sidebar"
+                  title={t('notifications.updates.showInSidebar')}
+                  description={t('notifications.updates.showInSidebarDesc')}
                   trailing={<Switch defaultChecked />}
                />
                <SettingsRow
-                  title="Changelog newsletter"
-                  description="Receive an email twice a month highlighting new features and improvements"
+                  title={t('notifications.updates.newsletter')}
+                  description={t('notifications.updates.newsletterDesc')}
                   trailing={<Switch />}
                />
             </SettingsCard>
 
-            <h3 className="text-sm font-medium mt-2">Marketing</h3>
+            <h3 className="text-sm font-medium mt-2">{t('notifications.updates.marketing')}</h3>
             <SettingsCard>
                <SettingsRow
-                  title="Marketing and onboarding"
-                  description="Occasional updates to help you get the most out of LNDev UI"
+                  title={t('notifications.updates.marketingOnboarding')}
+                  description={t('notifications.updates.marketingOnboardingDesc')}
                   trailing={<Switch />}
                />
             </SettingsCard>
 
-            <h3 className="text-sm font-medium mt-2">Other updates</h3>
+            <h3 className="text-sm font-medium mt-2">{t('notifications.updates.otherUpdates')}</h3>
             <SettingsCard>
                <SettingsRow
-                  title="Invite accepted"
-                  description="Receive an email when an invite you sent is accepted"
+                  title={t('notifications.updates.inviteAccepted')}
+                  description={t('notifications.updates.inviteAcceptedDesc')}
                   trailing={<Switch defaultChecked />}
                />
                <SettingsRow
-                  title="Privacy and legal updates"
-                  description="Important updates about terms of service or privacy policy changes"
+                  title={t('notifications.updates.privacyLegal')}
+                  description={t('notifications.updates.privacyLegalDesc')}
                   trailing={<Switch defaultChecked />}
                />
             </SettingsCard>

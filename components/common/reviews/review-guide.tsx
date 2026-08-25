@@ -1,18 +1,16 @@
 'use client';
 
 import { Checkbox } from '@/components/ui/checkbox';
-import {
-   getReviewFileDiff,
-   getReviewGuide,
-   Review,
-} from '@/mock-data/reviews';
+import { getReviewFileDiff, getReviewGuide, Review } from '@/mock-data/reviews';
 import { FileCode2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { DiffView } from './diff-view';
 import { DiffStat, InlineText, PrIcon } from './review-shared';
 
 /** Guide tab: narrated walk-through sections next to the relevant diff. */
 export function ReviewGuide({ review }: { review: Review }) {
+   const t = useTranslations('reviews');
    const sections = useMemo(() => getReviewGuide(review), [review]);
 
    return (
@@ -43,10 +41,11 @@ export function ReviewGuide({ review }: { review: Review }) {
                      <div className="flex flex-col gap-3">
                         <h2 className="text-lg font-semibold leading-snug">{section.title}</h2>
                         <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                           {String(index + 1).padStart(2, '0')} / {String(sections.length).padStart(2, '0')}
+                           {String(index + 1).padStart(2, '0')} /{' '}
+                           {String(sections.length).padStart(2, '0')}
                            <label className="inline-flex items-center gap-1.5 cursor-pointer">
                               <Checkbox className="size-3.5" />
-                              Reviewed
+                              {t('common.reviewed')}
                            </label>
                         </div>
                         {section.paragraphs.map((paragraph, pIndex) => (
@@ -80,7 +79,7 @@ export function ReviewGuide({ review }: { review: Review }) {
 
          <div className="sticky bottom-4 flex justify-center pointer-events-none">
             <span className="pointer-events-auto inline-flex items-center gap-2 rounded-full border bg-container shadow-sm px-4 py-1.5 text-xs text-muted-foreground">
-               {review.files.length} files changed
+               {t('common.filesChanged', { count: review.files.length })}
                <DiffStat additions={review.additions} deletions={review.deletions} />
             </span>
          </div>

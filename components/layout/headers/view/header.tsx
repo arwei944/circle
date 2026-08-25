@@ -5,19 +5,19 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import { filterIssuesForView, filterProjectsForView, getViewById } from '@/mock-data/views';
 import { useRightPanelStore } from '@/store/right-panel-store';
 import { BarChart3, MoreHorizontal, Star } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
 export default function Header() {
    const { viewId } = useParams<{ orgId: string; viewId: string }>();
    const view = getViewById(viewId);
    const { openPanel, togglePanel } = useRightPanelStore();
+   const t = useTranslations('views');
 
    if (!view) return null;
 
    const count =
-      view.type === 'issue'
-         ? filterIssuesForView(view).length
-         : filterProjectsForView(view).length;
+      view.type === 'issue' ? filterIssuesForView(view).length : filterProjectsForView(view).length;
 
    return (
       <div className="w-full flex flex-col">
@@ -34,7 +34,7 @@ export default function Header() {
          </div>
          <div className="w-full flex justify-between items-center border-b py-1.5 px-6 h-10">
             <span className="text-xs text-muted-foreground">
-               {count} {view.type === 'issue' ? 'issues' : 'projects'}
+               {view.type === 'issue' ? t('issueCount', { count }) : t('projectCount', { count })}
             </span>
             {view.type === 'issue' && (
                <Button

@@ -6,6 +6,7 @@ import { getInitiativeProjects, Initiative } from '@/mock-data/initiatives';
 import { health as allHealth } from '@/mock-data/projects';
 import { teams } from '@/mock-data/teams';
 import { UserRound } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 
 type PanelTab = 'owner' | 'team' | 'health';
@@ -22,6 +23,7 @@ interface BreakdownRow {
 /** Right side panel of the Initiatives page: counts by owner / team / health. */
 export function InitiativesSidePanel({ initiatives }: { initiatives: Initiative[] }) {
    const [tab, setTab] = useState<PanelTab>('owner');
+   const t = useTranslations('initiatives');
 
    const rows = useMemo<BreakdownRow[]>(() => {
       if (tab === 'owner') {
@@ -33,7 +35,7 @@ export function InitiativesSidePanel({ initiatives }: { initiatives: Initiative[
             else
                byOwner.set(key, {
                   key,
-                  label: initiative.owner?.name ?? 'No owner',
+                  label: initiative.owner?.name ?? t('sidePanel.noOwner'),
                   avatarUrl: initiative.owner?.avatarUrl,
                   count: 1,
                });
@@ -51,7 +53,8 @@ export function InitiativesSidePanel({ initiatives }: { initiatives: Initiative[
                if (!team) continue;
                const existing = byTeam.get(teamId);
                if (existing) existing.count += 1;
-               else byTeam.set(teamId, { key: teamId, label: team.name, icon: team.icon, count: 1 });
+               else
+                  byTeam.set(teamId, { key: teamId, label: team.name, icon: team.icon, count: 1 });
             }
          }
          return [...byTeam.values()].sort((a, b) => b.count - a.count);
@@ -65,16 +68,16 @@ export function InitiativesSidePanel({ initiatives }: { initiatives: Initiative[
          }))
          .filter((row) => row.count > 0)
          .sort((a, b) => b.count - a.count);
-   }, [tab, initiatives]);
+   }, [tab, initiatives, t]);
 
    return (
       <aside className="hidden lg:flex flex-col w-72 shrink-0 border-l h-full overflow-y-auto bg-container p-4 gap-4">
          <div className="flex items-center gap-1.5">
             {(
                [
-                  ['owner', 'Owner'],
-                  ['team', 'Team'],
-                  ['health', 'Health'],
+                  ['owner', 'sidePanel.owner'],
+                  ['team', 'sidePanel.team'],
+                  ['health', 'sidePanel.health'],
                ] as const
             ).map(([key, label]) => (
                <button
@@ -87,7 +90,7 @@ export function InitiativesSidePanel({ initiatives }: { initiatives: Initiative[
                         : 'text-muted-foreground hover:bg-accent/50'
                   )}
                >
-                  {label}
+                  {t(label)}
                </button>
             ))}
          </div>

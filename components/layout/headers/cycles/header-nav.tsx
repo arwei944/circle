@@ -4,10 +4,12 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import { teams } from '@/mock-data/teams';
 import { ChevronRight, Star } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
 export default function HeaderNav() {
    const { orgId, teamId } = useParams<{ orgId: string; teamId: string }>();
+   const t = useTranslations('cycles');
    const team = teams.find((t) => t.id === teamId) ?? teams[0];
 
    return (
@@ -24,7 +26,7 @@ export default function HeaderNav() {
                <span className="text-sm font-medium truncate">{team.name}</span>
             </Link>
             <ChevronRight className="size-3.5 text-muted-foreground shrink-0" />
-            <span className="text-sm font-medium">Cycles</span>
+            <span className="text-sm font-medium">{t('cycles')}</span>
             <Star className="size-3.5 text-muted-foreground shrink-0 ml-1" />
          </div>
       </div>

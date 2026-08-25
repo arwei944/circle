@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -13,6 +14,7 @@ interface DatePickerProps {
 }
 
 export function DatePicker({ date, onDateChange }: DatePickerProps) {
+   const t = useTranslations('projects');
    const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(date);
    const [open, setOpen] = React.useState<boolean>(false);
 
@@ -39,7 +41,7 @@ export function DatePicker({ date, onDateChange }: DatePickerProps) {
                   </span>
                ) : (
                   <span className="text-xs text-muted-foreground hidden xl:inline mt-[1px]">
-                     No date
+                     {t('datePicker.noDate')}
                   </span>
                )}
             </Button>

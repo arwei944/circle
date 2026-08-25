@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { issues } from '@/mock-data/issues';
 import { labels } from '@/mock-data/labels';
+import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { SelectMenu } from './shared';
 
@@ -36,6 +37,7 @@ const formatCount = (count: number) =>
 /** Workspace "Issue labels" settings: filterable table of every label. */
 export default function IssueLabelsSettings() {
    const [query, setQuery] = useState('');
+   const t = useTranslations('settings');
 
    const rows = useMemo(() => {
       const counts = new Map<string, number>();
@@ -59,33 +61,37 @@ export default function IssueLabelsSettings() {
    return (
       <div className="w-full overflow-y-auto h-full">
          <div className="max-w-5xl mx-auto px-6 py-10 pb-20">
-            <h1 className="text-2xl font-medium mb-6">Issue labels</h1>
+            <h1 className="text-2xl font-medium mb-6">{t('issueLabels.title')}</h1>
 
             <div className="flex items-center justify-between gap-3 mb-6">
                <div className="flex items-center gap-2">
                   <Input
-                     placeholder="Filter by name..."
+                     placeholder={t('common.filterByName')}
                      value={query}
                      onChange={(event) => setQuery(event.target.value)}
                      className="w-64 h-8"
                   />
-                  <SelectMenu options={['Workspace', 'All teams']} />
+                  <SelectMenu options={[t('issueLabels.workspace'), t('issueLabels.allTeams')]} />
                </div>
                <div className="flex items-center gap-2">
                   <Button size="xs" variant="secondary">
-                     New group
+                     {t('issueLabels.newGroup')}
                   </Button>
-                  <Button size="xs">New label</Button>
+                  <Button size="xs">{t('issueLabels.newLabel')}</Button>
                </div>
             </div>
 
             {/* Header */}
             <div className="flex items-center px-2 py-1.5 text-xs text-muted-foreground border-b">
-               <div className="flex-1 min-w-0">Name ↓</div>
-               <div className="hidden md:block w-[260px]">Description</div>
-               <div className="w-[70px]">Issues</div>
-               <div className="hidden sm:block w-[110px]">Last applied</div>
-               <div className="w-[80px]">Created</div>
+               <div className="flex-1 min-w-0">{t('issueLabels.columns.name')}</div>
+               <div className="hidden md:block w-[260px]">
+                  {t('issueLabels.columns.description')}
+               </div>
+               <div className="w-[70px]">{t('issueLabels.columns.issues')}</div>
+               <div className="hidden sm:block w-[110px]">
+                  {t('issueLabels.columns.lastApplied')}
+               </div>
+               <div className="w-[80px]">{t('issueLabels.columns.created')}</div>
             </div>
 
             {rows.map((label) => (
@@ -113,7 +119,7 @@ export default function IssueLabelsSettings() {
                </div>
             ))}
             {rows.length === 0 && (
-               <p className="text-sm text-muted-foreground py-6">No labels match your filter.</p>
+               <p className="text-sm text-muted-foreground py-6">{t('issueLabels.noResults')}</p>
             )}
          </div>
       </div>

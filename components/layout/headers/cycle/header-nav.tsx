@@ -6,11 +6,13 @@ import { getCurrentCycle, getUpcomingCycle } from '@/mock-data/cycles';
 import { teams } from '@/mock-data/teams';
 import { ChevronRight, MoreHorizontal, Star } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { CycleView } from '@/components/common/issues/cycle-issues';
 
 export default function HeaderNav({ cycleView }: { cycleView: CycleView }) {
    const { orgId, teamId } = useParams<{ orgId: string; teamId: string }>();
+   const t = useTranslations('cycles');
    const team = teams.find((t) => t.id === teamId) ?? teams[0];
    const cycle = cycleView === 'active' ? getCurrentCycle() : getUpcomingCycle();
 
@@ -32,7 +34,7 @@ export default function HeaderNav({ cycleView }: { cycleView: CycleView }) {
                href={`/${orgId}/team/${team.id}/cycles`}
                className="text-sm font-medium text-muted-foreground hover:text-foreground"
             >
-               Cycles
+               {t('cycles')}
             </Link>
             <ChevronRight className="size-3.5 text-muted-foreground shrink-0" />
             <div className="flex items-center gap-1.5 min-w-0">

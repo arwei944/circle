@@ -1,0 +1,209 @@
+{
+   "list": {
+      "issueCount": "{count} 个问题",
+      "hiddenByFilters": "被筛选隐藏",
+      "clearFilters": "清除筛选",
+      "hiddenColumns": "隐藏列",
+      "noIssues": "没有要显示的问题"
+   },
+   "group": {
+      "noAssignee": "无负责人",
+      "noProject": "无项目",
+      "allIssues": "所有问题"
+   },
+   "drop": {
+      "updateStatus": "拖到此处更新状态"
+   },
+   "line": {
+      "dueDate": "截止 {date}"
+   },
+   "contextMenu": {
+      "status": "状态",
+      "assignee": "负责人",
+      "unassigned": "未分配",
+      "priority": "优先级",
+      "labels": "标签",
+      "project": "项目",
+      "noProject": "无项目",
+      "setDueDate": "设置截止日期...",
+      "rename": "重命名...",
+      "addLink": "添加链接...",
+      "convertInto": "转换为",
+      "document": "文档",
+      "comment": "评论",
+      "makeACopy": "创建副本...",
+      "createRelated": "创建相关问题",
+      "markAs": "标记为",
+      "completed": "已完成",
+      "duplicate": "重复",
+      "wontFix": "不予修复",
+      "move": "移动",
+      "subscribe": "订阅",
+      "unsubscribe": "取消订阅",
+      "favorite": "收藏",
+      "unfavorite": "取消收藏",
+      "copy": "复制",
+      "remindMe": "提醒我",
+      "delete": "删除...",
+      "toasts": {
+         "statusUpdated": "状态已更新为 {status}",
+         "priorityUpdated": "优先级已更新为 {priority}",
+         "assignedTo": "已分配给 {name}",
+         "unassigned": "已取消分配",
+         "removedLabel": "已移除标签：{label}",
+         "addedLabel": "已添加标签：{label}",
+         "projectSetTo": "项目已设置为 {project}",
+         "projectRemoved": "项目已移除",
+         "dueDateSet": "截止日期已设置为 7 天后",
+         "linkAdded": "链接已添加",
+         "issueCopied": "问题已复制",
+         "relatedCreated": "相关问题已创建",
+         "markedAs": "已标记为 {type}",
+         "issueMoved": "问题已移动",
+         "unsubscribed": "已取消订阅该问题",
+         "subscribed": "已订阅该问题",
+         "removedFromFavorites": "已从收藏中移除",
+         "addedToFavorites": "已加入收藏",
+         "copiedToClipboard": "已复制到剪贴板",
+         "reminderSet": "已设置提醒"
+      }
+   },
+   "filter": {
+      "columns": {
+         "status": "状态",
+         "statusType": "状态类型",
+         "assignee": "负责人",
+         "priority": "优先级",
+         "labels": "标签",
+         "project": "项目",
+         "cycle": "周期",
+         "unassigned": "未分配",
+         "noCycle": "无周期"
+      },
+      "statusTypes": {
+         "triage": "待处理",
+         "backlog": "待办",
+         "unstarted": "未开始",
+         "started": "进行中",
+         "completed": "已完成",
+         "canceled": "已取消"
+      }
+   },
+   "insights": {
+      "issues": "个问题",
+      "measure": "度量",
+      "slice": "切片",
+      "segment": "分段",
+      "issueCount": "问题数",
+      "status": "状态",
+      "priority": "优先级",
+      "clearFilter": "清除筛选",
+      "filter": "筛选",
+      "setDefault": "为所有人设为默认"
+   },
+   "search": {
+      "results": "搜索结果 ({count})",
+      "noResultsFor": "未找到与 \"{query}\" 相关的结果",
+      "placeholder": "搜索问题...",
+      "label": "搜索"
+   },
+   "selector": {
+      "setPriority": "设置优先级...",
+      "noPriorityFound": "未找到优先级",
+      "setStatus": "设置状态...",
+      "noStatusFound": "未找到状态"
+   },
+   "assignee": {
+      "assignTo": "分配给...",
+      "noAssignee": "无负责人",
+      "newUser": "新用户",
+      "inviteAndAssign": "邀请并分配..."
+   },
+   "details": {
+      "issueNotFound": "问题 {id} 未找到",
+      "backToIssues": "返回问题",
+      "addReaction": "添加表情",
+      "attachFile": "添加附件",
+      "subIssues": "子问题",
+      "addSubIssues": "添加子问题"
+   },
+   "activity": {
+      "title": "动态",
+      "subscribe": "订阅",
+      "leaveComment": "发表评论...",
+      "comment": "评论",
+      "justNow": "刚刚"
+   },
+   "properties": {
+      "title": "属性",
+      "labels": "标签",
+      "project": "项目",
+      "blockedBy": "被阻塞",
+      "related": "相关",
+      "diffs": "差异",
+      "assign": "分配"
+   },
+   "header": {
+      "previousIssue": "上一个问题",
+      "nextIssue": "下一个问题"
+   },
+   "tabs": {
+      "active": "进行中",
+      "backlog": "待办",
+      "allIssues": "所有问题"
+   },
+   "headerOptions": {
+      "toggleInsights": "切换洞察面板"
+   },
+   "notifications": {
+      "label": "通知",
+      "title": "收件箱通知",
+      "issueAddedToTeam": "有新问题添加到团队",
+      "issueCompletedOrCanceled": "有问题被标记为已完成或已取消",
+      "issueAddedToTriage": "有新问题加入待处理队列",
+      "slackNotifications": "Slack 通知",
+      "configure": "配置"
+   },
+   "display": {
+      "button": "显示",
+      "list": "列表",
+      "board": "看板",
+      "grouping": "分组",
+      "subGrouping": "子分组",
+      "noGrouping": "不分组",
+      "ordering": "排序",
+      "orderCompletedByRecency": "按最近完成排序",
+      "completedIssues": "已完成问题",
+      "all": "全部",
+      "none": "无",
+      "showSubIssues": "显示子问题",
+      "listOptions": "列表选项",
+      "showEmptyGroups": "显示空分组",
+      "displayProperties": "显示属性",
+      "reset": "重置",
+      "setDefaultForEveryone": "为所有人设为默认",
+      "group": {
+         "status": "状态",
+         "assignee": "负责人",
+         "priority": "优先级",
+         "project": "项目",
+         "none": "不分组"
+      },
+      "order": {
+         "priority": "优先级",
+         "created": "创建时间",
+         "title": "标题"
+      },
+      "properties": {
+         "id": "ID",
+         "status": "状态",
+         "assignee": "负责人",
+         "priority": "优先级",
+         "labels": "标签",
+         "project": "项目",
+         "dueDate": "截止日期",
+         "created": "创建时间",
+         "cycle": "周期"
+      }
+   }
+}
