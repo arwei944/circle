@@ -4,7 +4,7 @@ import { existsSync, rmSync } from 'node:fs';
 import { createSqliteClient, resetDbForTests } from '@/db/client';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import { runSeed } from '@/db/seed';
-import { createIssue, getIssue, listIssues } from './issues-service';
+import { createIssue, deleteIssue, getIssue, listIssues, updateIssue } from './issues-service';
 
 const dbPath = path.join(process.cwd(), 'data', 'test-service.db');
 
@@ -50,4 +50,42 @@ it('getIssue returns null for missing id', async () => {
    const db = fresh();
    await runSeed(db);
    expect(getIssue(db, 'nope')).toBeNull();
+});
+
+it('updateIssue updates scalar fields and replaces labels', async () => {
+   const db = fresh();
+   await runSeed(db);
+   const created = createIssue(db, { title: 'before', labels: [] });
+   const updated = updateIssue(db, created.id, {
+      title: 'after',
+      labels: ['bug', 'ui'],
+   });
+   expect(updated.title).toBe('after');
+   expect(updated.labels.map((l) => l.id).sort()).toEqual(['bug', 'ui']);
+   const reRead = getIssue(db, created.id);
+   expect(reRead?.labels.map((l) => l.id)).toEqual(['bug', 'ui']);
+});
+
+it('updateIssue moves rank between neighbors', async () => {
+   const db = fresh();
+   await runSeed(db);
+   const a = createIssue(db, { title: 'a' });
+   const b = createIssue(db, { title: 'b' });
+   updateIssue(db, b.id, { rank: { afterIssueId: a.id } });
+   const list = listIssues(db);
+   expect(list[0].identifier).toBe(a.identifier);
+   expect(list[1].identifier).toBe(b.identifier);
+});
+
+it('deleteIssue returns false for missing and removes labels', async () => {
+   const db = fresh();
+   await runSeed(db);
+   const created = createIssue(db, { title: 'x', labels: ['bug'] });
+   expect(deleteIssue(db, 'missing')).toBe(false);
+   expect(deleteIssue(db, created.id)).toBe(true);
+   expect(getIssue(db, created.id)).toBeNull();
+   const rels = db.$client
+      .prepare('SELECT COUNT(*) AS c FROM issue_labels WHERE issue_id = ?')
+      .get(created.id) as { c: number };
+   expect(rels.c).toBe(0);
 });

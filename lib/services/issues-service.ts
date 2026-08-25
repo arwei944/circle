@@ -1,6 +1,6 @@
 import { desc, eq, inArray } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
-import { topRankFrom } from '@/lib/rank';
+import { computeRankBetween, topRankFrom } from '@/lib/rank';
 import type { Db } from '@/db/client';
 import { issues, issueLabels, labels as labelsTable, projects, users } from '@/db/schema';
 import type { LeanIssue, LeanLabel, LeanProject, LeanUser } from '@/lib/dto';
@@ -210,4 +210,160 @@ export function createIssue(db: Db, input: CreateIssueInput): LeanIssue {
    const created = getIssue(db, id);
    if (!created) throw new Error('create failed');
    return created;
+}
+
+export type RankMove = { beforeIssueId?: string; afterIssueId?: string };
+
+export interface UpdateIssueInput {
+   title?: string;
+   description?: string;
+   statusId?: string;
+   priorityId?: string;
+   assigneeId?: string | null;
+   projectId?: string | null;
+   cycleId?: string | null;
+   dueDate?: number | null;
+   labels?: string[];
+   rank?: RankMove;
+}
+
+export function assertDomainRefs(
+   db: Db,
+   refs: { assigneeId?: string | null; projectId?: string | null; labelIds?: string[] }
+): void {
+   if (refs.assigneeId) {
+      const u = db.select().from(users).where(eq(users.id, refs.assigneeId)).get();
+      if (!u) throw new Error(`unknown assignee: ${refs.assigneeId}`);
+   }
+   if (refs.projectId) {
+      const p = db.select().from(projects).where(eq(projects.id, refs.projectId)).get();
+      if (!p) throw new Error(`unknown project: ${refs.projectId}`);
+   }
+   for (const labelId of refs.labelIds ?? []) {
+      const l = db.$client.prepare('SELECT id FROM labels WHERE id = ?').get(labelId);
+      if (!l) throw new Error(`unknown label: ${labelId}`);
+   }
+}
+
+function rankByIssueId(db: Db, id: string): string | null {
+   return (
+      db.select({ id: issues.id, rank: issues.rank }).from(issues).where(eq(issues.id, id)).get()
+         ?.rank ?? null
+   );
+}
+
+/** 显示序下方紧邻：小于给定 rank 的最大 rank（排除自身，防 moved issue 作为自身边界）。 */
+function rankBelow(db: Db, rank: string, excludeId?: string): string | null {
+   const row = db.$client
+      .prepare(
+         excludeId
+            ? 'SELECT rank FROM issues WHERE rank < ? AND id != ? ORDER BY rank DESC LIMIT 1'
+            : 'SELECT rank FROM issues WHERE rank < ? ORDER BY rank DESC LIMIT 1'
+      )
+      .get(...(excludeId ? [rank, excludeId] : [rank])) as { rank: string } | undefined;
+   return row?.rank ?? null;
+}
+
+/** 显示序上方紧邻：大于给定 rank 的最小 rank（排除自身）。 */
+function rankAbove(db: Db, rank: string, excludeId?: string): string | null {
+   const row = db.$client
+      .prepare(
+         excludeId
+            ? 'SELECT rank FROM issues WHERE rank > ? AND id != ? ORDER BY rank ASC LIMIT 1'
+            : 'SELECT rank FROM issues WHERE rank > ? ORDER BY rank ASC LIMIT 1'
+      )
+      .get(...(excludeId ? [rank, excludeId] : [rank])) as { rank: string } | undefined;
+   return row?.rank ?? null;
+}
+
+function applyRank(db: Db, issueId: string, move: RankMove): string | undefined {
+   const beforeId = move.beforeIssueId;
+   const afterId = move.afterIssueId;
+   if (!beforeId && !afterId) return undefined;
+
+   let lo: string | null = null; // 升序下方（更小 rank）
+   let hi: string | null = null; // 升序上方（更大 rank）
+
+   if (beforeId && afterId) {
+      // X 落在 after(下) 与 before(上) 之间 → 取双方当前秩
+      lo = rankByIssueId(db, afterId);
+      hi = rankByIssueId(db, beforeId);
+   } else if (beforeId) {
+      // X 在 before 上方 → lo=before.rank, hi=before 的上方紧邻
+      const bRank = rankByIssueId(db, beforeId);
+      lo = bRank;
+      hi = bRank ? rankAbove(db, bRank, issueId) : null;
+   } else if (afterId) {
+      // X 在 after 下方 → hi=after.rank, lo=after 的下方紧邻
+      const aRank = rankByIssueId(db, afterId);
+      lo = aRank ? rankBelow(db, aRank, issueId) : null;
+      hi = aRank;
+   }
+
+   if (lo === null && hi === null) return undefined;
+   const newRank = computeRankBetween(lo, hi);
+   db.update(issues).set({ rank: newRank }).where(eq(issues.id, issueId)).run();
+   return newRank;
+}
+
+export function updateIssue(db: Db, id: string, input: UpdateIssueInput): LeanIssue {
+   const existing = db.select().from(issues).where(eq(issues.id, id)).get();
+   if (!existing) throw new Error(`issue not found: ${id}`);
+
+   const statusId = input.statusId ?? existing.statusId;
+   const priorityId = input.priorityId ?? existing.priorityId;
+   assertValid(statusId, priorityId);
+   if (
+      input.assigneeId !== undefined ||
+      input.projectId !== undefined ||
+      input.labels !== undefined
+   ) {
+      assertDomainRefs(db, {
+         assigneeId: input.assigneeId !== undefined ? input.assigneeId : existing.assigneeId,
+         projectId: input.projectId !== undefined ? input.projectId : existing.projectId,
+         labelIds: input.labels,
+      });
+   }
+
+   db.$client.transaction(() => {
+      db.update(issues)
+         .set({
+            title: input.title ?? existing.title,
+            description: input.description ?? existing.description,
+            statusId,
+            priorityId,
+            assigneeId: input.assigneeId !== undefined ? input.assigneeId : existing.assigneeId,
+            projectId: input.projectId !== undefined ? input.projectId : existing.projectId,
+            cycleId: input.cycleId !== undefined ? (input.cycleId ?? '') : existing.cycleId,
+            dueDate: input.dueDate !== undefined ? input.dueDate : existing.dueDate,
+         })
+         .where(eq(issues.id, id))
+         .run();
+
+      if (input.labels !== undefined) {
+         db.delete(issueLabels).where(eq(issueLabels.issueId, id)).run();
+         const labelIds = [...new Set(input.labels)];
+         if (labelIds.length > 0) {
+            db.insert(issueLabels)
+               .values(labelIds.map((labelId) => ({ issueId: id, labelId })))
+               .run();
+         }
+      }
+
+      if (input.rank) applyRank(db, id, input.rank);
+   })();
+
+   const updated = getIssue(db, id);
+   if (!updated) throw new Error('update failed');
+   return updated;
+}
+
+export function deleteIssue(db: Db, id: string): boolean {
+   const existing = db.select().from(issues).where(eq(issues.id, id)).get();
+   if (!existing) return false;
+   db.$client.transaction(() => {
+      db.delete(issueLabels).where(eq(issueLabels.issueId, id)).run();
+      db.delete(issues).where(eq(issues.id, id)).run();
+   })();
+   return true;
 }
