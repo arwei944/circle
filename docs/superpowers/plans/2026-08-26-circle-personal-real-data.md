@@ -1614,7 +1614,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
    await ensureDb();
-   const db = (await import('@/db/client')).createDb();
+   const db = getDb();
    const parsed = createIssueSchema.safeParse(await request.json().catch(() => null));
    if (!parsed.success) {
       return NextResponse.json(apiError('ARG', 'Invalid body'), { status: 422 });
@@ -1627,8 +1627,6 @@ export async function POST(request: Request) {
    }
 }
 ```
-
-> 修正命名：Task 2 的 `getDb()` 仅在本文件注释里使用 `createDb` 别名，避免误用。最终统一用 `getDb`；上面的 `createDb` 只是示意，实作请写 `getDb`。
 
 - [ ] **Step 5: 写 [id] 路由**
 
@@ -2266,6 +2264,6 @@ git commit -m "docs+ops: backup script and personal data-layer README"
 1. **规格覆盖**：Schema（§4.1 表）、identifier（§4.2）、rank（§4.2/§5.2）→ Task 4-6；API（§5）→ Task 7；前端接入（§6）→ Task 8-9；测试（§7）→ 各 Task；运行/备份（§8）→ Task 10；范围外维持 mock（约束）。
 2. **占位符**：无 TBD/TODO；每个代码步骤都有具体代码。
 3. **类型一致性**：`LeanIssue/LeanUser/LeanProject/LeanLabel` 在 Task 4/6/7 一致；`createIssue/updateIssue/deleteIssue/listIssues/listMeta` 签名在各 Task 引用一致；store 方法签名与 Task 8 定义一致；`toIssue` 输入用 LeanIssue、输出为 `Issue`。
-4. **已知取舍**：Task 7 路由内 `getDb`/`createDb` 命名注意事项已注明；Task 8 富化辅助若膨胀则抽 `lib/frontend-dto.ts`；Team/Review 等页面仍显示 mock（范围外，符合规格）。
+4. **已知取舍**：Task 7 路由统一使用 `getDb`（无 `createDb` 命名问题）；Task 8 富化辅助若膨胀则抽 `lib/frontend-dto.ts`；Team/Review 等页面仍显示 mock（范围外，符合规格）。
 
 执行方式（由执行阶段决定）：建议 subagent-driven-development，每个 Task 独立子代理 + 两阶段评审。
