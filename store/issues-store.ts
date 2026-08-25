@@ -86,8 +86,7 @@ const toLeanPatch = (updatedIssue: Partial<Issue>): Record<string, unknown> => {
       statusId: updatedIssue.status?.id,
       priorityId: updatedIssue.priority?.id,
       assigneeId: 'assignee' in updatedIssue ? (updatedIssue.assignee?.id ?? null) : undefined,
-      projectId:
-         updatedIssue.project === undefined ? undefined : (updatedIssue.project?.id ?? null),
+      projectId: 'project' in updatedIssue ? (updatedIssue.project?.id ?? null) : undefined,
       cycleId: updatedIssue.cycleId,
       dueDate:
          'dueDate' in updatedIssue

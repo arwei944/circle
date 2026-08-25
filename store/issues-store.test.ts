@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useIssuesStore, setStoreMeta } from '@/store/issues-store';
-import { issues as mockIssues, type Issue } from '@/mock-data/issues';
+import { type Issue } from '@/mock-data/issues';
 import { status } from '@/mock-data/status';
 import { priorities } from '@/mock-data/priorities';
 import type { LeanIssue } from '@/lib/dto';
@@ -146,5 +146,19 @@ describe('addIssue optimistic replace', () => {
       expect(row!.priority.id).toBe('high');
       expect(row!.identifier).toBe('P-042');
       expect(row!.project?.name).toBe('LNDev UI - 核心组件');
+   });
+
+   it('rolls back and notifies on create failure', async () => {
+      const a = mkIssue('i1');
+      useIssuesStore.getState().hydrate([a]);
+      const { notifyError } = await import('@/lib/toast');
+      vi.spyOn(realApi, 'createIssue').mockRejectedValueOnce(new Error('boom'));
+      await useIssuesStore
+         .getState()
+         .addIssue({ ...mkIssue('temp_tmp'), identifier: 'P-000', rank: 'zzz' });
+      const s = useIssuesStore.getState();
+      expect(s.issues.some((i) => i.id === 'temp_tmp')).toBe(false);
+      expect(s.issues.some((i) => i.id === 'i1')).toBe(true);
+      expect(notifyError).toHaveBeenCalledWith('boom');
    });
 });
