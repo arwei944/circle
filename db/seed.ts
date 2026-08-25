@@ -1,0 +1,108 @@
+import type { Db } from './client';
+import { users as mockUsers } from '@/mock-data/users';
+import { labels as mockLabels } from '@/mock-data/labels';
+import { projects as mockProjects } from '@/mock-data/projects';
+import { cycles as mockCycles } from '@/mock-data/cycles';
+import { issues as mockIssues } from '@/mock-data/issues';
+import { labels, projects, cycles, users, issues, issueLabels } from './schema';
+
+const toEpochMs = (iso: string | undefined): number => {
+   if (!iso) return Date.now();
+   const t = Date.parse(iso);
+   return Number.isNaN(t) ? Date.now() : t;
+};
+
+export async function runSeed(db: Db): Promise<void> {
+   const { c } = db.$client.prepare('SELECT COUNT(*) AS c FROM users').get() as { c: number };
+   if (c > 0) return; // 幂等：已有数据则跳过
+
+   db.$client.transaction(() => {
+      db.insert(users)
+         .values(
+            mockUsers.map((u) => ({
+               id: u.id,
+               name: u.name,
+               email: u.email,
+               avatarUrl: u.avatarUrl,
+               timezone: u.timezone,
+               status: u.status,
+               role: u.role,
+               joinedDate: u.joinedDate,
+               teamIds: u.teamIds,
+            }))
+         )
+         .run();
+
+      db.insert(labels)
+         .values(mockLabels.map((l) => ({ id: l.id, name: l.name, color: l.color })))
+         .run();
+
+      db.insert(projects)
+         .values(
+            mockProjects.map((p, i) => ({
+               id: p.id,
+               name: p.name,
+               iconIndex: i % 9,
+               color: '#8f9299',
+               description: '',
+               statusId: p.status.id,
+               health: p.health.id,
+               priority: p.priority.id,
+               leadId: p.lead?.id ?? null,
+               startDate: p.startDate ?? null,
+               targetDate: p.targetDate ?? null,
+               percentComplete: p.percentComplete,
+               teamId: p.teamId,
+            }))
+         )
+         .run();
+
+      db.insert(cycles)
+         .values(
+            mockCycles.map((cy) => ({
+               id: cy.id,
+               name: cy.name,
+               teamId: cy.teamId,
+               status: cy.status,
+               startDate: cy.startDate,
+               endDate: cy.endDate,
+            }))
+         )
+         .run();
+
+      db.insert(issues)
+         .values(
+            mockIssues.map((iss, i) => ({
+               id: iss.id || `seed-issue-${i}`,
+               identifier: iss.identifier,
+               title: iss.title,
+               description: iss.description,
+               statusId: iss.status.id,
+               priorityId: iss.priority.id,
+               assigneeId: iss.assignee?.id ?? null,
+               projectId: iss.project?.id ?? null,
+               cycleId: iss.cycleId ?? '',
+               createdAt: toEpochMs(iss.createdAt),
+               dueDate: iss.dueDate ? toEpochMs(iss.dueDate) : null,
+               rank: iss.rank,
+               subissues: iss.subissues ?? [],
+            }))
+         )
+         .run();
+
+      const rows = db.$client.prepare('SELECT id, identifier FROM issues').all() as {
+         id: string;
+         identifier: string;
+      }[];
+      const idByIdentifier = new Map(rows.map((r) => [r.identifier, r.id]));
+      const rels: { issueId: string; labelId: string }[] = [];
+      for (const iss of mockIssues) {
+         const issueId = idByIdentifier.get(iss.identifier);
+         if (!issueId) continue;
+         for (const label of iss.labels) {
+            rels.push({ issueId, labelId: label.id });
+         }
+      }
+      if (rels.length > 0) db.insert(issueLabels).values(rels).run();
+   })();
+}
