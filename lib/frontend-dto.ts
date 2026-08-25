@@ -3,7 +3,6 @@ import { priorities } from '@/mock-data/priorities';
 import { health } from '@/mock-data/projects';
 import { iconByIndex } from '@/lib/project-icons';
 import type { Issue } from '@/mock-data/issues';
-import type { Project } from '@/mock-data/projects';
 import type { User } from '@/mock-data/users';
 import type { Status } from '@/mock-data/status';
 import type { Priority } from '@/mock-data/priorities';

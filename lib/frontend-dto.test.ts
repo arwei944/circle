@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { expect, it } from 'vitest';
 import { dtoToIssue, type Meta } from './frontend-dto';
 
 const meta: Meta = {

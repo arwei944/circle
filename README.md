@@ -38,6 +38,15 @@ pnpm install
 pnpm dev
 ```
 
+## 数据层（个人版）
+
+- 存储：SQLite `data/circle.db`（Drizzle ORM + better-sqlite3）
+- 首次启动自动迁移并 seed（来自 mock-data）；`SKIP_SEED=1` 可跳过
+- API：`/api/issues`、`/api/issues/[id]`、`/api/meta`（zod 校验 + 统一错误信封）
+- 前端：`issues-data-provider` 灌入 `issues-store`，所有问题写操作乐观更新、失败自动回滚
+- 命令：`pnpm db:generate` / `db:migrate` / `db:seed` / `backup` / `test`
+- 备份：`pnpm backup`（保留最近 7 份）
+
 ## Star History
 
 <a href="https://www.star-history.com/#ln-dev7/circle&Date">
