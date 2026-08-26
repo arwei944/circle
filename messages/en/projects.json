@@ -195,6 +195,7 @@
    },
    "overview": {
       "description": "Description",
+      "noDescription": "No description yet.",
       "writeUpdate": "Write project update",
       "writeFirstUpdate": "Write first project update"
    },
@@ -211,7 +212,6 @@
       "progressPrefix": "0% →",
       "writeWithAgent": "Write with Agent",
       "postUpdate": "Post update",
-      "postComment": "Post comment",
       "deleteUpdate": "Delete",
       "issueCreated": "Created {title}",
       "createdIssues": "Recently created issues",
@@ -222,11 +222,7 @@
          "off-track": "Off track",
          "no-update": "No update"
       },
-      "empty": "No updates yet — post the first one to keep the team in the loop.",
-      "mode": {
-         "comment": "Comment",
-         "update": "Update"
-      }
+      "empty": "No updates yet — post the first one to keep the team in the loop."
    },
    "createDialog": {
       "title": "Create project",

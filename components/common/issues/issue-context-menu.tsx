@@ -39,6 +39,7 @@ import React, { useMemo, useState } from 'react';
 import { useIssuesStore } from '@/store/issues-store';
 import { useProjectsStore } from '@/store/projects-store';
 import { toProjectViewModels } from '@/components/common/projects/project-adapter';
+import { toLocalDateString } from '@/lib/date-utils';
 import { status } from '@/mock-data/status';
 import { priorities } from '@/mock-data/priorities';
 import { users } from '@/mock-data/users';
@@ -130,7 +131,7 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       if (!issueId) return;
       const dueDate = new Date();
       dueDate.setDate(dueDate.getDate() + 7);
-      updateIssue(issueId, { dueDate: dueDate.toISOString() });
+      updateIssue(issueId, { dueDate: toLocalDateString(dueDate) });
       toast.success(t('contextMenu.toasts.dueDateSet'));
    };
 

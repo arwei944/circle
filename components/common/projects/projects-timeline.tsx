@@ -9,6 +9,7 @@ import {
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
+import { toLocalDateString } from '@/lib/date-utils';
 import { Project } from '@/mock-data/projects';
 import { useProjectsDisplayStore } from '@/store/projects-display-store';
 import { useTranslations } from 'next-intl';
@@ -253,7 +254,7 @@ export default function ProjectsTimeline({ groups }: ProjectsTimelineProps) {
    }, [syncViewport]);
 
    useEffect(() => {
-      const iso = new Date().toISOString().slice(0, 10);
+      const iso = toLocalDateString(new Date());
       setTodayIso(iso);
       // Bring today into view on mount (a third from the left edge, but always
       // clear of the sticky project list so the line stays visible).

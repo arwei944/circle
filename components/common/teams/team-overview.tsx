@@ -9,7 +9,7 @@ import {
 } from '@/components/common/cycles/cycle-utils';
 import { ApiError } from '@/lib/api-client';
 import { fetchTeam } from '@/lib/api-teams';
-import type { LeanCycle } from '@/lib/dto';
+import { useCyclesStore } from '@/store/cycles-store';
 import { useProjectsStore } from '@/store/projects-store';
 import { RiDonutChartFill } from '@remixicon/react';
 import { Box, CopyMinus, Layers, Settings } from 'lucide-react';
@@ -30,9 +30,10 @@ interface LeanTeamHeader {
 }
 
 /**
- * Team Home — "Overview" tab: team identity + cycles loaded from
- * `/api/teams/{teamId}` via `fetchTeam`, projects derived live from
- * `useProjectsStore` (same source as the Projects page) filtered by team.
+ * Team Home — "Overview" tab: team identity from `/api/teams/{teamId}` via
+ * `fetchTeam`, plus projects and cycles derived live from `useProjectsStore` /
+ * `useCyclesStore` (the same sources as the Projects / Cycles pages, so a
+ * freshly created cycle shows up here on return).
  */
 export default function TeamOverview() {
    const { orgId, teamId } = useParams<{ orgId: string; teamId: string }>();
@@ -41,27 +42,21 @@ export default function TeamOverview() {
 
    const [status, setStatus] = useState<OverviewStatus>('loading');
    const [team, setTeam] = useState<LeanTeamHeader | null>(null);
-   const [cycles, setCycles] = useState<LeanCycle[]>([]);
    const [reloadKey, setReloadKey] = useState(0);
 
    useEffect(() => {
       let cancelled = false;
       setStatus('loading');
       setTeam(null);
-      setCycles([]);
       fetchTeam(teamId)
          .then((overview) => {
             if (cancelled) return;
-            const parsed = overview as unknown as {
-               team: LeanTeamHeader | null;
-               cycles: LeanCycle[];
-            };
+            const parsed = overview as unknown as { team: LeanTeamHeader | null };
             if (!parsed.team) {
                setStatus('notFound');
                return;
             }
             setTeam(parsed.team);
-            setCycles(parsed.cycles ?? []);
             setStatus('ready');
          })
          .catch((error: unknown) => {
@@ -81,6 +76,12 @@ export default function TeamOverview() {
       [storeProjects, teamId]
    );
    const projectViews = useMemo(() => toProjectViewModels(teamProjects), [teamProjects]);
+
+   const storeCycles = useCyclesStore((s) => s.cycles);
+   const cycles = useMemo(
+      () => storeCycles.filter((c) => c.teamId === teamId),
+      [storeCycles, teamId]
+   );
 
    if (status === 'loading') {
       return (

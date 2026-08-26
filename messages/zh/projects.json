@@ -195,6 +195,7 @@
    },
    "overview": {
       "description": "描述",
+      "noDescription": "暂无描述",
       "writeUpdate": "发布项目更新",
       "writeFirstUpdate": "发布首个项目更新"
    },
@@ -211,7 +212,6 @@
       "progressPrefix": "0% →",
       "writeWithAgent": "使用 Agent 撰写",
       "postUpdate": "发布更新",
-      "postComment": "发布评论",
       "deleteUpdate": "删除",
       "issueCreated": "创建了 {title}",
       "createdIssues": "最近创建的问题",
@@ -222,11 +222,7 @@
          "off-track": "偏离计划",
          "no-update": "暂无更新"
       },
-      "empty": "暂无更新 — 发布第一条以让团队保持同步。",
-      "mode": {
-         "comment": "评论",
-         "update": "更新"
-      }
+      "empty": "暂无更新 — 发布第一条以让团队保持同步。"
    },
    "createDialog": {
       "title": "新建项目",

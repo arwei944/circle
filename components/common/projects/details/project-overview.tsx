@@ -1,6 +1,9 @@
 'use client';
 
-import { ContentBlocks } from '@/components/common/issues/details/content-blocks';
+import {
+   ContentBlocks,
+   type ContentBlock,
+} from '@/components/common/issues/details/content-blocks';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { getProjectDetail } from '@/mock-data/project-details';
 import { useIssuesStore } from '@/store/issues-store';
@@ -37,7 +40,16 @@ export default function ProjectOverview({ projectId }: ProjectOverviewProps) {
 
    const { orgId } = useParams<{ orgId: string }>();
    const scrollRef = useRef<HTMLDivElement>(null);
-   const outlineItems = useMemo(() => getOutlineItems(detail.description), [detail.description]);
+
+   /** Real DB description (plain text) rendered as a single paragraph block. */
+   const descriptionBlocks = useMemo<ContentBlock[] | null>(() => {
+      const text = lean?.description?.trim();
+      return text ? [{ type: 'paragraph', text }] : null;
+   }, [lean?.description]);
+   const outlineItems = useMemo(
+      () => getOutlineItems(descriptionBlocks ?? []),
+      [descriptionBlocks]
+   );
 
    if (!lean) return null;
    const project = toProjectViewModel(lean);
@@ -54,7 +66,6 @@ export default function ProjectOverview({ projectId }: ProjectOverviewProps) {
                      <project.icon className="size-6" />
                   </div>
                   <h1 className="text-3xl font-semibold tracking-tight">{project.name}</h1>
-                  <p className="mt-3 text-muted-foreground leading-relaxed">{detail.summary}</p>
 
                   {/* Inline properties */}
                   <div className="mt-6 flex flex-col gap-2.5 text-sm">
@@ -174,7 +185,11 @@ export default function ProjectOverview({ projectId }: ProjectOverviewProps) {
                         <ChevronDown className="size-3.5" />
                      </div>
                      <div className="text-[15px] leading-relaxed">
-                        <ContentBlocks blocks={detail.description} />
+                        {descriptionBlocks ? (
+                           <ContentBlocks blocks={descriptionBlocks} />
+                        ) : (
+                           <p className="text-muted-foreground">{t('overview.noDescription')}</p>
+                        )}
                      </div>
                   </div>
                </div>
