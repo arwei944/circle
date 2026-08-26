@@ -10,7 +10,7 @@ import {
    teams as teamsTable,
    users,
 } from '@/db/schema';
-import type { LeanLabel, LeanProject, LeanProjectUpdate, LeanUser } from '@/lib/dto';
+import type { LeanLabel, LeanProjectAgg, LeanProjectUpdate, LeanUser } from '@/lib/dto';
 import { status as statuses } from '@/mock-data/status';
 import { priorities } from '@/mock-data/priorities';
 
@@ -76,7 +76,7 @@ const toLeanProjectUpdate = (u: typeof projectUpdates.$inferSelect): LeanProject
    createdAt: u.createdAt,
 });
 
-function toLean(rel: ProjectRelations): LeanProject {
+function toLean(rel: ProjectRelations): LeanProjectAgg {
    const { row, labels, lead } = rel;
    const percentComplete =
       row.totalIssues === 0 ? 0 : Math.round((row.completedIssues / row.totalIssues) * 100);
@@ -98,7 +98,7 @@ function toLean(rel: ProjectRelations): LeanProject {
       labels: labels.map(toLeanLabel),
       totalIssues: row.totalIssues,
       completedIssues: row.completedIssues,
-      healthUpdatedAgoDays: row.healthUpdatedAgoDays ?? undefined,
+      healthUpdatedAgoDays: row.healthUpdatedAgoDays,
       lead: lead ? toLeanUser(lead) : null,
    };
 }
@@ -186,20 +186,20 @@ export function assertProjectRefs(
    }
 }
 
-export function listProjects(db: Db): LeanProject[] {
+export function listProjects(db: Db): LeanProjectAgg[] {
    const rows = withCounts(db, db.select().from(projects).all()).sort((a, b) =>
       a.name.localeCompare(b.name, 'zh')
    );
    return loadProjectRelations(db, rows).map(toLean);
 }
 
-export function getProject(db: Db, id: string): LeanProject | null {
+export function getProject(db: Db, id: string): LeanProjectAgg | null {
    const row = withCounts(db, db.select().from(projects).where(eq(projects.id, id)).all())[0];
    if (!row) return null;
    return toLean(loadProjectRelations(db, [row])[0]);
 }
 
-export function createProject(db: Db, input: CreateProjectInput): LeanProject {
+export function createProject(db: Db, input: CreateProjectInput): LeanProjectAgg {
    const statusId = input.statusId ?? 'to-do';
    const priority = input.priority ?? 'no-priority';
    const health = input.health ?? 'no-update';
@@ -244,7 +244,7 @@ export function createProject(db: Db, input: CreateProjectInput): LeanProject {
    return created;
 }
 
-export function updateProject(db: Db, id: string, input: UpdateProjectInput): LeanProject {
+export function updateProject(db: Db, id: string, input: UpdateProjectInput): LeanProjectAgg {
    const existing = db.select().from(projects).where(eq(projects.id, id)).get();
    if (!existing) throw new Error(`project not found: ${id}`);
 

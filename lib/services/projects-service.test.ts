@@ -4,7 +4,7 @@ import { existsSync, rmSync } from 'node:fs';
 import { createSqliteClient, resetDbForTests } from '@/db/client';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import { runSeed } from '@/db/seed';
-import { createIssue } from './issues-service';
+import { createIssue, listIssues, updateIssue } from './issues-service';
 import {
    listProjects,
    getProject,
@@ -76,4 +76,21 @@ it('project updates persist and filter by project', async () => {
    expect(list[0].health).toBe('on-track');
    expect(deleteProjectUpdate(db, p.id, u.id)).toBe(true);
    expect(listProjectUpdates(db, p.id)).toHaveLength(0);
+});
+
+it('aggregates totalIssues/completedIssues/percentComplete from real issues', async () => {
+   const db = fresh();
+   await runSeed(db);
+   const p = createProject(db, { name: 'agg-proj' });
+   createIssue(db, { title: 'a', projectId: p.id, statusId: 'done' });
+   createIssue(db, { title: 'b', projectId: p.id, statusId: 'backlog' });
+   const got = getProject(db, p.id)!;
+   expect(got.totalIssues).toBe(2);
+   expect(got.completedIssues).toBe(1);
+   expect(got.percentComplete).toBe(50);
+   // update issue 后聚合取真值
+   const issueA = listIssues(db).find((i) => i.title === 'a')!;
+   updateIssue(db, issueA.id, { statusId: 'backlog' });
+   expect(getProject(db, p.id)!.completedIssues).toBe(0);
+   expect(getProject(db, p.id)!.percentComplete).toBe(0);
 });

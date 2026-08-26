@@ -28,8 +28,15 @@ export interface LeanProject {
    labels?: LeanLabel[];
    totalIssues?: number;
    completedIssues?: number;
-   healthUpdatedAgoDays?: number;
+   healthUpdatedAgoDays?: number | null;
    lead?: LeanUser | null;
+}
+
+export interface LeanProjectAgg extends LeanProject {
+   labels: LeanLabel[];
+   totalIssues: number;
+   completedIssues: number;
+   healthUpdatedAgoDays: number | null;
 }
 
 export interface LeanProjectUpdate {
