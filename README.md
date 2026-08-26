@@ -47,6 +47,7 @@ pnpm dev
 - 命令：`pnpm db:generate` / `db:migrate` / `db:seed` / `backup` / `test`
 - 备份：`pnpm backup`（保留最近 7 份）
 - 注：列内拖拽排序为未来能力；当前跨列拖拽变更状态已持久化。
+- projects/cycles/teams 已真实化（聚合实时计算 + 完整 CRUD + 发布更新持久化）
 
 ## Star History
 
