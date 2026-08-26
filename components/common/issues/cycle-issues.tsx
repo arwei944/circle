@@ -1,12 +1,12 @@
 'use client';
 
 import { CycleDetailsPanel } from '@/components/common/cycles/cycle-details-panel';
-import { getCurrentCycle, getUpcomingCycle } from '@/mock-data/cycles';
 import { displayOrderedStatus } from '@/mock-data/status';
 import { useFilterStore } from '@/store/filter-store';
 import { useIssuesStore } from '@/store/issues-store';
 import { applyIssueFilters } from './issue-filter-columns';
 import { IssueFilterBar } from './issue-filter-bar';
+import { useCyclesStore } from '@/store/cycles-store';
 import { useRightPanelStore } from '@/store/right-panel-store';
 import { useSearchStore } from '@/store/search-store';
 import { useViewStore } from '@/store/view-store';
@@ -32,15 +32,19 @@ export default function CycleIssues({ cycleView }: CycleIssuesProps) {
    const { filters } = useFilterStore();
    const { issues } = useIssuesStore();
    const { openPanel } = useRightPanelStore();
+   const cycles = useCyclesStore((s) => s.cycles);
 
-   const cycle = cycleView === 'active' ? getCurrentCycle() : getUpcomingCycle();
+   const cycle = useMemo(
+      () => cycles.find((c) => c.status === (cycleView === 'active' ? 'current' : 'upcoming')),
+      [cycles, cycleView]
+   );
 
    const isSearching = isSearchOpen && searchQuery.trim() !== '';
    const isViewTypeGrid = viewType === 'grid';
 
    const cycleIssues = useMemo(
-      () => issues.filter((issue) => issue.cycleId === cycle.id),
-      [issues, cycle.id]
+      () => (cycle ? issues.filter((issue) => issue.cycleId === cycle.id) : []),
+      [issues, cycle]
    );
 
    const displayedIssues = useMemo(
@@ -56,6 +60,10 @@ export default function CycleIssues({ cycleView }: CycleIssuesProps) {
             </div>
          </div>
       );
+   }
+
+   if (!cycle) {
+      return <div className="w-full h-full" />;
    }
 
    return (

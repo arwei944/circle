@@ -1,6 +1,6 @@
 'use client';
 
-import { Cycle } from '@/mock-data/cycles';
+import type { LeanCycle } from '@/lib/dto';
 import { format, parseISO } from 'date-fns';
 import { useTranslations } from 'next-intl';
 import {
@@ -22,7 +22,7 @@ const COLORS = {
 };
 
 interface CycleBurnupChartProps {
-   cycle: Cycle;
+   cycle: LeanCycle;
    height?: number;
    /** Compact mode hides axes details (used inside the details panel). */
    compact?: boolean;
@@ -123,7 +123,7 @@ export function CycleBurnupChart({ cycle, height = 210, compact = false }: Cycle
    );
 }
 
-export function CycleProgressLegend({ cycle }: { cycle: Cycle }) {
+export function CycleProgressLegend({ cycle }: { cycle: LeanCycle }) {
    const t = useTranslations('cycles');
    const completedPercent = cycle.scope > 0 ? Math.round((cycle.completed / cycle.scope) * 100) : 0;
    const startedPercent = cycle.scope > 0 ? Math.round((cycle.started / cycle.scope) * 100) : 0;
@@ -134,8 +134,6 @@ export function CycleProgressLegend({ cycle }: { cycle: Cycle }) {
          label: t('chart.scope'),
          swatch: COLORS.scope,
          value: cycle.scope,
-         extra: cycle.scopeDelta !== 0 ? `+${cycle.scopeDelta}%` : undefined,
-         extraClass: 'text-red-500',
       },
       {
          key: 'started',

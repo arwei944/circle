@@ -1,11 +1,15 @@
 'use client';
 
-import { Cycle, cycleStatusLabel } from '@/mock-data/cycles';
+import { Button } from '@/components/ui/button';
+import type { LeanCycle } from '@/lib/dto';
 import { cn } from '@/lib/utils';
+import { Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { CapacityRing } from './capacity-ring';
+import { CycleFormDialog } from './cycle-form-dialog';
+import { cycleStatusLabel, type CycleStatus } from './cycle-utils';
 
 export function CyclePlayIcon({ className }: { className?: string }) {
    return (
@@ -25,7 +29,7 @@ export function CyclePlayIcon({ className }: { className?: string }) {
 }
 
 interface CycleLineProps {
-   cycle: Cycle;
+   cycle: LeanCycle;
 }
 
 /**
@@ -35,6 +39,7 @@ interface CycleLineProps {
 export default function CycleLine({ cycle }: CycleLineProps) {
    const { orgId, teamId } = useParams<{ orgId: string; teamId: string }>();
    const t = useTranslations('cycles');
+   const statusKey = cycleStatusLabel[cycle.status as CycleStatus] ?? cycle.status;
 
    const href =
       cycle.status === 'current'
@@ -52,7 +57,7 @@ export default function CycleLine({ cycle }: CycleLineProps) {
 
          <div className="flex items-center gap-3 sm:gap-6 shrink-0">
             <span className="text-xs px-2 py-1 rounded-md bg-accent text-muted-foreground whitespace-nowrap">
-               {cycleStatusLabel[cycle.status]}
+               {t(statusKey)}
             </span>
 
             {cycle.status === 'completed' ? (
@@ -86,13 +91,32 @@ export default function CycleLine({ cycle }: CycleLineProps) {
       </div>
    );
 
-   if (href) {
-      return (
-         <Link href={href} className="block w-full">
-            {content}
-         </Link>
-      );
-   }
+   const row = href ? (
+      <Link href={href} className="block w-full min-w-0">
+         {content}
+      </Link>
+   ) : (
+      <div className="w-full min-w-0">{content}</div>
+   );
 
-   return content;
+   return (
+      <div className="w-full flex items-center gap-1">
+         <div className="flex-1 min-w-0">{row}</div>
+         <div className="shrink-0">
+            <CycleFormDialog
+               cycleId={cycle.id}
+               trigger={
+                  <Button
+                     variant="ghost"
+                     size="icon"
+                     className="size-7 text-muted-foreground"
+                     aria-label={t('editDialog.title')}
+                  >
+                     <Pencil className="size-3.5" />
+                  </Button>
+               }
+            />
+         </div>
+      </div>
+   );
 }

@@ -1,18 +1,37 @@
 'use client';
 
-import { cycles } from '@/mock-data/cycles';
+import { Button } from '@/components/ui/button';
+import { useCyclesStore } from '@/store/cycles-store';
 import { format, parseISO } from 'date-fns';
+import { useTranslations } from 'next-intl';
 import { Fragment } from 'react';
+import { Plus } from 'lucide-react';
 import CycleLine from './cycle-line';
 import { CycleBurnupChart, CycleProgressLegend } from './cycle-burnup-chart';
+import { CycleFormDialog } from './cycle-form-dialog';
 
 /**
  * Cycles timeline: a date rail on the left and one row per cycle,
  * newest first. The current cycle is expanded with its burn-up chart.
+ * Data comes from `useCyclesStore` (hydrated from `/api/cycles`).
  */
 export default function Cycles() {
+   const t = useTranslations('cycles');
+   const cycles = useCyclesStore((s) => s.cycles);
+
    return (
       <div className="w-full py-4">
+         <div className="flex items-center justify-end px-6 pb-2">
+            <CycleFormDialog
+               trigger={
+                  <Button size="xs" variant="secondary">
+                     <Plus className="size-4 md:mr-1" />
+                     <span className="hidden md:inline">{t('createDialog.title')}</span>
+                  </Button>
+               }
+            />
+         </div>
+
          {cycles.map((cycle) => (
             <Fragment key={cycle.id}>
                <div className="w-full flex items-stretch">

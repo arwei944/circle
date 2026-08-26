@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
-import { Cycle, cycleStatusLabel, formatCycleDateRange } from '@/mock-data/cycles';
+import type { LeanCycle } from '@/lib/dto';
 import { Issue } from '@/mock-data/issues';
 import { useRightPanelStore } from '@/store/right-panel-store';
 import { Plus, User, X } from 'lucide-react';
@@ -14,6 +14,7 @@ import { useMemo } from 'react';
 import { CapacityRing } from './capacity-ring';
 import { CycleBurnupChart } from './cycle-burnup-chart';
 import { CyclePlayIcon } from './cycle-line';
+import { cycleStatusLabel, formatCycleDateRange, type CycleStatus } from './cycle-utils';
 
 interface BreakdownRow {
    key: string;
@@ -26,7 +27,7 @@ interface BreakdownRow {
 }
 
 interface CycleDetailsPanelProps {
-   cycle: Cycle;
+   cycle: LeanCycle;
    issues: Issue[];
 }
 
@@ -118,6 +119,7 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
    const { closePanel } = useRightPanelStore();
    const { isActive, toggle } = usePanelFilter();
    const t = useTranslations('cycles');
+   const statusKey = cycleStatusLabel[cycle.status as CycleStatus] ?? cycle.status;
 
    const completedPercent = cycle.scope > 0 ? Math.round((cycle.completed / cycle.scope) * 100) : 0;
    const startedPercent = cycle.scope > 0 ? Math.round((cycle.started / cycle.scope) * 100) : 0;
@@ -231,7 +233,7 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
             <div className="flex items-center justify-between gap-2">
                <div className="flex items-center gap-1.5 flex-wrap">
                   <span className="text-xs px-2 py-1 rounded-md bg-accent text-muted-foreground">
-                     {cycleStatusLabel[cycle.status]}
+                     {t(statusKey)}
                   </span>
                   <span className="text-xs px-2 py-1 rounded-md bg-accent text-muted-foreground">
                      {formatCycleDateRange(cycle)}
@@ -263,10 +265,7 @@ export function CycleDetailsPanel({ cycle, issues }: CycleDetailsPanelProps) {
                      {t('details.scope')}
                   </div>
                   <div className="text-sm">
-                     <span className="font-medium">{cycle.scope}</span>{' '}
-                     {cycle.scopeDelta !== 0 && (
-                        <span className="text-xs text-red-500">+{cycle.scopeDelta}%</span>
-                     )}
+                     <span className="font-medium">{cycle.scope}</span>
                   </div>
                </div>
                <div className="flex flex-col gap-0.5">

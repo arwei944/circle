@@ -1,6 +1,12 @@
 {
    "cycles": "周期",
    "issueCount": "{count, plural, one {# 个问题} other {# 个问题}}",
+   "status": {
+      "planned": "计划中",
+      "upcoming": "即将开始",
+      "current": "进行中",
+      "completed": "已完成"
+   },
    "line": {
       "success": "成功率",
       "completed": "已完成",
@@ -34,6 +40,35 @@
          "priority": "优先级",
          "projects": "项目"
       }
+   },
+   "createDialog": {
+      "title": "新建周期",
+      "description": "创建新周期并设置其属性。",
+      "name": "名称",
+      "namePlaceholder": "例如：冲刺 23",
+      "team": "团队",
+      "status": "状态",
+      "startDate": "开始日期",
+      "endDate": "结束日期",
+      "capacity": "容量（%）",
+      "save": "创建",
+      "cancel": "取消",
+      "created": "周期已创建"
+   },
+   "editDialog": {
+      "title": "编辑周期",
+      "description": "更新该周期的详情。",
+      "save": "保存修改",
+      "delete": "删除周期",
+      "updated": "周期已更新",
+      "deleted": "周期已删除"
+   },
+   "deleteDialog": {
+      "title": "删除周期",
+      "unlink": "该周期内的问题将回到「无周期」状态 — 问题本身会被保留。",
+      "confirmText": "此操作无法撤销。",
+      "confirm": "删除",
+      "cancel": "取消"
    },
    "cycleHeader": {
       "toggleInsights": "切换洞察面板",

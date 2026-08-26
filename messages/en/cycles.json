@@ -1,6 +1,12 @@
 {
    "cycles": "Cycles",
    "issueCount": "{count, plural, one {# issue} other {# issues}}",
+   "status": {
+      "planned": "Planned",
+      "upcoming": "Upcoming",
+      "current": "In progress",
+      "completed": "Completed"
+   },
    "line": {
       "success": "success",
       "completed": "completed",
@@ -34,6 +40,35 @@
          "priority": "Priority",
          "projects": "Projects"
       }
+   },
+   "createDialog": {
+      "title": "New cycle",
+      "description": "Create a new cycle and set its properties.",
+      "name": "Name",
+      "namePlaceholder": "e.g. Sprint 23",
+      "team": "Team",
+      "status": "Status",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "capacity": "Capacity (%)",
+      "save": "Create",
+      "cancel": "Cancel",
+      "created": "Cycle created"
+   },
+   "editDialog": {
+      "title": "Edit cycle",
+      "description": "Update this cycle's details.",
+      "save": "Save changes",
+      "delete": "Delete cycle",
+      "updated": "Cycle updated",
+      "deleted": "Cycle deleted"
+   },
+   "deleteDialog": {
+      "title": "Delete cycle",
+      "unlink": "Issues in this cycle will no longer belong to a cycle — the issues themselves are kept.",
+      "confirmText": "This action cannot be undone.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
    },
    "cycleHeader": {
       "toggleInsights": "Toggle insights panel",
