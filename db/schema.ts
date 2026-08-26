@@ -34,6 +34,7 @@ export const projects = sqliteTable('projects', {
    leadId: text('lead_id'),
    startDate: text('start_date'),
    targetDate: text('target_date'),
+   initiative: text('initiative'),
    percentComplete: integer('percent_complete').notNull().default(0),
    teamId: text('team_id').notNull().default('CORE'),
 });
@@ -45,6 +46,7 @@ export const cycles = sqliteTable('cycles', {
    status: text('status').notNull().default('planned'),
    startDate: text('start_date').notNull(),
    endDate: text('end_date').notNull(),
+   capacity: integer('capacity').notNull().default(100),
 });
 
 export const issues = sqliteTable('issues', {
@@ -59,6 +61,7 @@ export const issues = sqliteTable('issues', {
    cycleId: text('cycle_id').notNull().default(''),
    createdAt: integer('created_at').notNull(),
    dueDate: integer('due_date'),
+   completedAt: integer('completed_at'),
    rank: text('rank').notNull(),
    subissues: text('subissues', { mode: 'json' })
       .$type<string[]>()
@@ -79,5 +82,41 @@ export const issueLabels = sqliteTable(
    (t) => [primaryKey({ columns: [t.issueId, t.labelId] })]
 );
 
+export const projectUpdates = sqliteTable('project_updates', {
+   id: text('id').primaryKey(),
+   projectId: text('project_id')
+      .notNull()
+      .references(() => projects.id, { onDelete: 'cascade' }),
+   message: text('message').notNull(),
+   health: text('health').notNull().default('no-update'),
+   authorId: text('author_id'),
+   createdAt: integer('created_at').notNull(),
+});
+
+export const projectLabels = sqliteTable(
+   'project_labels',
+   {
+      projectId: text('project_id')
+         .notNull()
+         .references(() => projects.id, { onDelete: 'cascade' }),
+      labelId: text('label_id')
+         .notNull()
+         .references(() => labels.id, { onDelete: 'cascade' }),
+   },
+   (t) => [primaryKey({ columns: [t.projectId, t.labelId] })]
+);
+
+export const teams = sqliteTable('teams', {
+   id: text('id').primaryKey(),
+   name: text('name').notNull(),
+   icon: text('icon').notNull().default(''),
+   color: text('color').notNull().default('#8f9299'),
+   joined: integer('joined').notNull().default(1),
+});
+
 export type IssueRow = typeof issues.$inferSelect;
 export type NewIssueRow = typeof issues.$inferInsert;
+export type ProjectRow = typeof projects.$inferSelect;
+export type ProjectUpdateRow = typeof projectUpdates.$inferSelect;
+export type ProjectLabelRow = typeof projectLabels.$inferSelect;
+export type TeamRow = typeof teams.$inferSelect;
