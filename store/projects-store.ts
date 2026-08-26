@@ -16,7 +16,7 @@ interface ProjectsState {
    deleteProject: (id: string) => Promise<boolean>;
 }
 
-export const useProjectsStore = create<ProjectsState>((set) => ({
+export const useProjectsStore = create<ProjectsState>((set, get) => ({
    projects: [],
    hydrated: false,
    hydrate: (projects) => set({ projects, hydrated: true }),
@@ -34,22 +34,26 @@ export const useProjectsStore = create<ProjectsState>((set) => ({
       }
    },
    updateProject: async (id, patch) => {
+      const previous = get().projects;
       set((s) => ({ projects: s.projects.map((p) => (p.id === id ? { ...p, ...patch } : p)) }));
       try {
          const server = (await apiUpdate(id, patch)) as LeanProjectAgg;
          set((s) => ({ projects: s.projects.map((p) => (p.id === id ? server : p)) }));
          return true;
       } catch (e) {
+         set({ projects: previous });
          notifyError((e as Error).message);
          return false;
       }
    },
    deleteProject: async (id) => {
+      const previous = get().projects;
       set((s) => ({ projects: s.projects.filter((p) => p.id !== id) }));
       try {
          await apiDelete(id);
          return true;
       } catch (e) {
+         set({ projects: previous });
          notifyError((e as Error).message);
          return false;
       }

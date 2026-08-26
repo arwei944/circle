@@ -97,6 +97,9 @@ describe('updateProject optimistic', () => {
       const s = useProjectsStore.getState();
       expect(ok).toBe(false);
       expect(notifyError).toHaveBeenCalledWith('boom');
+      expect(s.projects).toHaveLength(1);
+      expect(s.projects[0].id).toBe('p1');
+      expect(s.projects[0].name).toBe('project p1');
    });
 });
 
@@ -123,5 +126,7 @@ describe('deleteProject optimistic', () => {
       const s = useProjectsStore.getState();
       expect(ok).toBe(false);
       expect(notifyError).toHaveBeenCalledWith('boom');
+      expect(s.projects.some((p) => p.id === 'p1')).toBe(true);
+      expect(s.projects).toHaveLength(2);
    });
 });

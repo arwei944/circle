@@ -95,6 +95,9 @@ describe('updateCycle optimistic', () => {
       const s = useCyclesStore.getState();
       expect(ok).toBe(false);
       expect(notifyError).toHaveBeenCalledWith('boom');
+      expect(s.cycles).toHaveLength(1);
+      expect(s.cycles[0].id).toBe('c1');
+      expect(s.cycles[0].name).toBe('cycle c1');
    });
 });
 
@@ -121,5 +124,7 @@ describe('deleteCycle optimistic', () => {
       const s = useCyclesStore.getState();
       expect(ok).toBe(false);
       expect(notifyError).toHaveBeenCalledWith('boom');
+      expect(s.cycles.some((c) => c.id === 'c1')).toBe(true);
+      expect(s.cycles).toHaveLength(2);
    });
 });

@@ -16,7 +16,7 @@ interface CyclesState {
    deleteCycle: (id: string) => Promise<boolean>;
 }
 
-export const useCyclesStore = create<CyclesState>((set) => ({
+export const useCyclesStore = create<CyclesState>((set, get) => ({
    cycles: [],
    hydrated: false,
    hydrate: (cycles) => set({ cycles, hydrated: true }),
@@ -34,22 +34,26 @@ export const useCyclesStore = create<CyclesState>((set) => ({
       }
    },
    updateCycle: async (id, patch) => {
+      const previous = get().cycles;
       set((s) => ({ cycles: s.cycles.map((c) => (c.id === id ? { ...c, ...patch } : c)) }));
       try {
          const server = (await apiUpdate(id, patch)) as LeanCycle;
          set((s) => ({ cycles: s.cycles.map((c) => (c.id === id ? server : c)) }));
          return true;
       } catch (e) {
+         set({ cycles: previous });
          notifyError((e as Error).message);
          return false;
       }
    },
    deleteCycle: async (id) => {
+      const previous = get().cycles;
       set((s) => ({ cycles: s.cycles.filter((c) => c.id !== id) }));
       try {
          await apiDelete(id);
          return true;
       } catch (e) {
+         set({ cycles: previous });
          notifyError((e as Error).message);
          return false;
       }
