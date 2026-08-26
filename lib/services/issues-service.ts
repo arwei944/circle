@@ -22,6 +22,7 @@ const VALID_STATUS = [
    'duplicate',
 ];
 const VALID_PRIORITY = ['no-priority', 'urgent', 'high', 'medium', 'low'];
+const COMPLETED_IDS = ['done', 'shipped'];
 
 export interface CreateIssueInput {
    title: string;
@@ -195,6 +196,7 @@ export function createIssue(db: Db, input: CreateIssueInput): LeanIssue {
             cycleId: input.cycleId ?? '',
             createdAt,
             dueDate: input.dueDate ?? null,
+            completedAt: COMPLETED_IDS.includes(statusId) ? Date.now() : null,
             rank,
             subissues: [],
          })
@@ -350,6 +352,10 @@ export function updateIssue(db: Db, id: string, input: UpdateIssueInput): LeanIs
             projectId: input.projectId !== undefined ? input.projectId : existing.projectId,
             cycleId: input.cycleId !== undefined ? (input.cycleId ?? '') : existing.cycleId,
             dueDate: input.dueDate !== undefined ? input.dueDate : existing.dueDate,
+            completedAt:
+               COMPLETED_IDS.includes(statusId) && existing.completedAt == null
+                  ? Date.now()
+                  : existing.completedAt,
          })
          .where(eq(issues.id, id))
          .run();

@@ -4,6 +4,7 @@ import { existsSync, rmSync } from 'node:fs';
 import { createSqliteClient, resetDbForTests } from '@/db/client';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import { runSeed } from '@/db/seed';
+import { status as statuses } from '@/mock-data/status';
 import { createIssue, deleteIssue, getIssue, listIssues, updateIssue } from './issues-service';
 
 const dbPath = path.join(process.cwd(), 'data', 'test-service.db');
@@ -117,4 +118,33 @@ it('updateIssue rejects same or inverted rank anchors', async () => {
    expect(() =>
       updateIssue(db, a.id, { rank: { beforeIssueId: b.id, afterIssueId: a.id } })
    ).toThrow(/inverted|order/);
+});
+
+const doneStatus = statuses.find((s) => s.category === 'completed')!;
+const startedStatus = statuses.find((s) => s.category === 'started')!;
+
+it('updateIssue stamps completedAt on entering completed and keeps it historically', async () => {
+   const db = fresh();
+   await runSeed(db);
+   const created = createIssue(db, { title: 'x' });
+   // started → completed：写入 completedAt
+   updateIssue(db, created.id, { statusId: doneStatus.id });
+   const row1 = db.$client
+      .prepare('SELECT completed_at AS c FROM issues WHERE id = ?')
+      .get(created.id) as { c: number | null };
+   expect(typeof row1.c).toBe('number');
+
+   // 离开 completed（历史不改）
+   updateIssue(db, created.id, { statusId: startedStatus.id });
+   const row2 = db.$client
+      .prepare('SELECT completed_at AS c FROM issues WHERE id = ?')
+      .get(created.id) as { c: number | null };
+   expect(row2.c).toBe(row1.c);
+
+   // 再次进入 completed：已存在则不再覆盖
+   updateIssue(db, created.id, { statusId: doneStatus.id });
+   const row3 = db.$client
+      .prepare('SELECT completed_at AS c FROM issues WHERE id = ?')
+      .get(created.id) as { c: number | null };
+   expect(row3.c).toBe(row1.c);
 });
