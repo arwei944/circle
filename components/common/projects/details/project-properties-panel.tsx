@@ -10,6 +10,7 @@ import { Project } from '@/mock-data/projects';
 import { teams } from '@/mock-data/teams';
 import { PanelFilterTarget, usePanelFilter } from '@/components/common/issues/use-panel-filter';
 import { cn } from '@/lib/utils';
+import { toLocalDateString } from '@/lib/date-utils';
 import { useProjectsStore } from '@/store/projects-store';
 import { format, parseISO } from 'date-fns';
 import { ProjectProgressChart } from './project-progress-chart';
@@ -37,7 +38,7 @@ const isCompleted = (issue: Issue) => issue.status.category === 'completed';
 
 const formatDay = (iso?: string) => (iso ? format(parseISO(iso), 'MMM do') : '—');
 
-const isoOf = (date?: Date): string | null => (date ? date.toISOString().slice(0, 10) : null);
+const isoOf = (date?: Date): string | null => (date ? toLocalDateString(date) : null);
 
 interface BreakdownRow {
    key: string;

@@ -62,4 +62,12 @@ describe('computeBurnup', () => {
       expect(points[0].date).toBe('2026-01-05');
       expect(points[0].scope).toBe(1);
    });
+
+   it('caps output at 366 points for ranges spanning over a year', () => {
+      // 800 天距离的区间按规格 §4 截断为 ≤366 点（含两端端点）
+      const points = computeBurnup('2026-01-01', '2028-03-11', []);
+      expect(points).toHaveLength(366);
+      expect(points[0].date).toBe('2026-01-01');
+      expect(points[365].date).toBe('2027-01-01');
+   });
 });

@@ -27,6 +27,7 @@ import {
    SelectValue,
 } from '@/components/ui/select';
 import { DatePicker } from './date-picker';
+import { toLocalDateString } from '@/lib/date-utils';
 import { notifySuccess } from '@/lib/toast';
 import { health } from '@/mock-data/projects';
 import { priorities } from '@/mock-data/priorities';
@@ -45,8 +46,7 @@ interface ProjectFormDialogProps {
    projectId?: string;
 }
 
-const isoDate = (date: Date | undefined): string | null =>
-   date ? date.toISOString().slice(0, 10) : null;
+const isoDate = (date: Date | undefined): string | null => (date ? toLocalDateString(date) : null);
 
 /**
  * Create / edit project dialog. In edit mode the footer also exposes a
