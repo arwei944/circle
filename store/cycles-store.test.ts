@@ -41,24 +41,30 @@ describe('hydrate', () => {
 });
 
 describe('createCycle', () => {
-   it('appends the server-returned cycle on success', async () => {
-      const a = mkCycle('c1');
+   it('inserts the server-returned cycle in startDate order and resolves true', async () => {
+      const a = mkCycle('c1', { startDate: '2026-08-03' });
       useCyclesStore.getState().hydrate([a]);
-      const server = mkCycle('cyc_new', { name: 'New Cycle', status: 'current' });
+      const server = mkCycle('cyc_new', {
+         name: 'New Cycle',
+         status: 'current',
+         startDate: '2026-07-01',
+      });
       vi.spyOn(realApi, 'createCycle').mockResolvedValueOnce(server as never);
-      await useCyclesStore.getState().createCycle({ name: 'New Cycle' });
+      const ok = await useCyclesStore.getState().createCycle({ name: 'New Cycle' });
       const s = useCyclesStore.getState();
-      expect(s.cycles.some((c) => c.id === 'cyc_new')).toBe(true);
+      expect(ok).toBe(true);
+      expect(s.cycles.map((c) => c.id)).toEqual(['cyc_new', 'c1']);
       expect(s.hydrated).toBe(true);
    });
 
-   it('rolls back and notifies on failure', async () => {
+   it('resolves false and notifies on failure without changing the list', async () => {
       const a = mkCycle('c1');
       useCyclesStore.getState().hydrate([a]);
       const { notifyError } = await import('@/lib/toast');
       vi.spyOn(realApi, 'createCycle').mockRejectedValueOnce(new Error('boom'));
-      await useCyclesStore.getState().createCycle({ name: 'x' });
+      const ok = await useCyclesStore.getState().createCycle({ name: 'x' });
       const s = useCyclesStore.getState();
+      expect(ok).toBe(false);
       expect(s.cycles).toHaveLength(1);
       expect(s.cycles[0].id).toBe('c1');
       expect(notifyError).toHaveBeenCalledWith('boom');
@@ -66,53 +72,54 @@ describe('createCycle', () => {
 });
 
 describe('updateCycle optimistic', () => {
-   it('applies patch locally then replaces with server DTO', async () => {
+   it('applies patch locally then replaces with server DTO and resolves true', async () => {
       const a = mkCycle('c1');
       useCyclesStore.getState().hydrate([a]);
       const server = mkCycle('c1', { name: 'Renamed-v2', status: 'completed' });
       vi.spyOn(realApi, 'updateCycle').mockResolvedValueOnce(server as never);
       const promise = useCyclesStore.getState().updateCycle('c1', { name: 'Renamed' });
       expect(useCyclesStore.getState().cycles[0].name).toBe('Renamed');
-      await promise;
+      const ok = await promise;
+      expect(ok).toBe(true);
       const s = useCyclesStore.getState();
       expect(s.cycles[0].name).toBe('Renamed-v2');
       expect(s.cycles[0].status).toBe('completed');
    });
 
-   it('rolls back and notifies on failure', async () => {
+   it('resolves false and notifies on failure', async () => {
       const a = mkCycle('c1');
       useCyclesStore.getState().hydrate([a]);
       const { notifyError } = await import('@/lib/toast');
       vi.spyOn(realApi, 'updateCycle').mockRejectedValueOnce(new Error('boom'));
-      await useCyclesStore.getState().updateCycle('c1', { name: 'Renamed' });
+      const ok = await useCyclesStore.getState().updateCycle('c1', { name: 'Renamed' });
       const s = useCyclesStore.getState();
-      expect(s.cycles[0].name).toBe('cycle c1');
+      expect(ok).toBe(false);
       expect(notifyError).toHaveBeenCalledWith('boom');
    });
 });
 
 describe('deleteCycle optimistic', () => {
-   it('removes locally when the API call succeeds', async () => {
+   it('removes locally when the API call succeeds and resolves true', async () => {
       const a = mkCycle('c1');
       const b = mkCycle('c2');
       useCyclesStore.getState().hydrate([a, b]);
       vi.spyOn(realApi, 'deleteCycle').mockResolvedValueOnce();
-      await useCyclesStore.getState().deleteCycle('c1');
+      const ok = await useCyclesStore.getState().deleteCycle('c1');
       const s = useCyclesStore.getState();
+      expect(ok).toBe(true);
       expect(s.cycles.some((c) => c.id === 'c1')).toBe(false);
       expect(s.cycles).toHaveLength(1);
    });
 
-   it('restores the removed cycle on failure and notifies', async () => {
+   it('resolves false and notifies on API failure', async () => {
       const a = mkCycle('c1');
       const b = mkCycle('c2');
       useCyclesStore.getState().hydrate([a, b]);
       const { notifyError } = await import('@/lib/toast');
       vi.spyOn(realApi, 'deleteCycle').mockRejectedValueOnce(new Error('boom'));
-      await useCyclesStore.getState().deleteCycle('c1');
+      const ok = await useCyclesStore.getState().deleteCycle('c1');
       const s = useCyclesStore.getState();
-      expect(s.cycles).toHaveLength(2);
-      expect(s.cycles.some((c) => c.id === 'c1')).toBe(true);
+      expect(ok).toBe(false);
       expect(notifyError).toHaveBeenCalledWith('boom');
    });
 });

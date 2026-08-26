@@ -49,24 +49,26 @@ describe('hydrate', () => {
 });
 
 describe('createProject', () => {
-   it('appends the server-returned project on success', async () => {
-      const a = mkProject('p1');
+   it('inserts the server-returned project in name order and resolves true', async () => {
+      const a = mkProject('p1', { name: 'Bravo' });
       useProjectsStore.getState().hydrate([a]);
-      const server = mkProject('proj_new', { name: 'New Project' });
+      const server = mkProject('proj_new', { name: 'Alpha' });
       vi.spyOn(realApi, 'createProject').mockResolvedValueOnce(server as never);
-      await useProjectsStore.getState().createProject({ name: 'New Project' });
+      const ok = await useProjectsStore.getState().createProject({ name: 'Alpha' });
       const s = useProjectsStore.getState();
-      expect(s.projects.some((p) => p.id === 'proj_new')).toBe(true);
+      expect(ok).toBe(true);
+      expect(s.projects.map((p) => p.id)).toEqual(['proj_new', 'p1']);
       expect(s.hydrated).toBe(true);
    });
 
-   it('rolls back and notifies on failure', async () => {
+   it('resolves false and notifies on failure without changing the list', async () => {
       const a = mkProject('p1');
       useProjectsStore.getState().hydrate([a]);
       const { notifyError } = await import('@/lib/toast');
       vi.spyOn(realApi, 'createProject').mockRejectedValueOnce(new Error('boom'));
-      await useProjectsStore.getState().createProject({ name: 'x' });
+      const ok = await useProjectsStore.getState().createProject({ name: 'x' });
       const s = useProjectsStore.getState();
+      expect(ok).toBe(false);
       expect(s.projects).toHaveLength(1);
       expect(s.projects[0].id).toBe('p1');
       expect(notifyError).toHaveBeenCalledWith('boom');
@@ -74,51 +76,52 @@ describe('createProject', () => {
 });
 
 describe('updateProject optimistic', () => {
-   it('applies patch locally then replaces with server DTO', async () => {
+   it('applies patch locally then replaces with server DTO and resolves true', async () => {
       const a = mkProject('p1');
       useProjectsStore.getState().hydrate([a]);
       const server = mkProject('p1', { name: 'Renamed-v2' });
       vi.spyOn(realApi, 'updateProject').mockResolvedValueOnce(server as never);
       const promise = useProjectsStore.getState().updateProject('p1', { name: 'Renamed' });
       expect(useProjectsStore.getState().projects[0].name).toBe('Renamed');
-      await promise;
+      const ok = await promise;
+      expect(ok).toBe(true);
       expect(useProjectsStore.getState().projects[0].name).toBe('Renamed-v2');
    });
 
-   it('rolls back and notifies on failure', async () => {
+   it('resolves false and notifies on failure', async () => {
       const a = mkProject('p1');
       useProjectsStore.getState().hydrate([a]);
       const { notifyError } = await import('@/lib/toast');
       vi.spyOn(realApi, 'updateProject').mockRejectedValueOnce(new Error('boom'));
-      await useProjectsStore.getState().updateProject('p1', { name: 'Renamed' });
+      const ok = await useProjectsStore.getState().updateProject('p1', { name: 'Renamed' });
       const s = useProjectsStore.getState();
-      expect(s.projects[0].name).toBe('project p1');
+      expect(ok).toBe(false);
       expect(notifyError).toHaveBeenCalledWith('boom');
    });
 });
 
 describe('deleteProject optimistic', () => {
-   it('removes locally when the API call succeeds', async () => {
+   it('removes locally when the API call succeeds and resolves true', async () => {
       const a = mkProject('p1');
       const b = mkProject('p2');
       useProjectsStore.getState().hydrate([a, b]);
       vi.spyOn(realApi, 'deleteProject').mockResolvedValueOnce();
-      await useProjectsStore.getState().deleteProject('p1');
+      const ok = await useProjectsStore.getState().deleteProject('p1');
       const s = useProjectsStore.getState();
+      expect(ok).toBe(true);
       expect(s.projects.some((p) => p.id === 'p1')).toBe(false);
       expect(s.projects).toHaveLength(1);
    });
 
-   it('restores the removed project on failure and notifies', async () => {
+   it('resolves false and notifies on API failure', async () => {
       const a = mkProject('p1');
       const b = mkProject('p2');
       useProjectsStore.getState().hydrate([a, b]);
       const { notifyError } = await import('@/lib/toast');
       vi.spyOn(realApi, 'deleteProject').mockRejectedValueOnce(new Error('boom'));
-      await useProjectsStore.getState().deleteProject('p1');
+      const ok = await useProjectsStore.getState().deleteProject('p1');
       const s = useProjectsStore.getState();
-      expect(s.projects).toHaveLength(2);
-      expect(s.projects.some((p) => p.id === 'p1')).toBe(true);
+      expect(ok).toBe(false);
       expect(notifyError).toHaveBeenCalledWith('boom');
    });
 });

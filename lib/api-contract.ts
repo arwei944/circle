@@ -53,7 +53,10 @@ export const createProjectSchema = z
       labels: z.array(z.string()).optional().default([]),
    })
    .strip();
-export const updateProjectSchema = createProjectSchema.partial();
+export const updateProjectSchema = createProjectSchema
+   .partial()
+   .strip()
+   .refine((v) => Object.keys(v).length > 0, { message: 'empty update' });
 export const createProjectUpdateSchema = z
    .object({
       message: z.string().trim().min(1).max(4000),
@@ -66,12 +69,15 @@ export const createCycleSchema = z
       name: z.string().trim().min(1).max(200),
       teamId: z.string().optional(),
       status: z.enum(['planned', 'upcoming', 'current', 'completed']).optional(),
-      startDate: z.string().min(1),
-      endDate: z.string().min(1),
+      startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'invalid date'),
+      endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'invalid date'),
       capacity: z.number().int().min(0).max(1000).optional(),
    })
    .strip();
-export const updateCycleSchema = createCycleSchema.partial();
+export const updateCycleSchema = createCycleSchema
+   .partial()
+   .strip()
+   .refine((v) => Object.keys(v).length > 0, { message: 'empty update' });
 
 export interface ApiErrorBody {
    code: string;

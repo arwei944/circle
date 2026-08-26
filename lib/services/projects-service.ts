@@ -247,6 +247,7 @@ export function createProject(db: Db, input: CreateProjectInput): LeanProjectAgg
 export function updateProject(db: Db, id: string, input: UpdateProjectInput): LeanProjectAgg {
    const existing = db.select().from(projects).where(eq(projects.id, id)).get();
    if (!existing) throw new Error(`project not found: ${id}`);
+   if (input.name !== undefined && !input.name.trim()) throw new Error('project name required');
 
    const statusId = input.statusId ?? existing.statusId;
    const priority = input.priority ?? existing.priority;

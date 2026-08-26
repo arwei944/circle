@@ -122,13 +122,18 @@ export function ProjectFormDialog({
       setSaving(true);
       try {
          if (isEdit && projectId) {
-            await updateProject(projectId, input);
-            notifySuccess(t('editDialog.updated'));
+            const ok = await updateProject(projectId, input);
+            if (ok) {
+               notifySuccess(t('editDialog.updated'));
+               setOpen(false);
+            }
          } else {
-            await createProject(input);
-            notifySuccess(t('createDialog.created'));
+            const ok = await createProject(input);
+            if (ok) {
+               notifySuccess(t('createDialog.created'));
+               setOpen(false);
+            }
          }
-         setOpen(false);
       } finally {
          setSaving(false);
       }
@@ -138,9 +143,11 @@ export function ProjectFormDialog({
       if (!projectId) return;
       setSaving(true);
       try {
-         await deleteProject(projectId);
-         notifySuccess(t('editDialog.deleted'));
-         setOpen(false);
+         const ok = await deleteProject(projectId);
+         if (ok) {
+            notifySuccess(t('editDialog.deleted'));
+            setOpen(false);
+         }
       } finally {
          setSaving(false);
       }

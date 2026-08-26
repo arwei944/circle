@@ -11,7 +11,7 @@ vi.mock('@/lib/api-projects', async () => {
 vi.mock('@/lib/toast', () => ({ notifyError: vi.fn(), notifySuccess: vi.fn() }));
 
 beforeEach(() => {
-   useProjectUpdatesStore.setState({ updatesByProject: {}, postedUpdates: {} });
+   useProjectUpdatesStore.setState({ updatesByProject: {} });
    vi.clearAllMocks();
 });
 
@@ -52,18 +52,6 @@ describe('create project update', () => {
       const s = useProjectUpdatesStore.getState();
       expect(s.updatesByProject['proj_1'] ?? []).toHaveLength(0);
       expect(notifyError).toHaveBeenCalledWith('boom');
-   });
-});
-
-describe('legacy postUpdate', () => {
-   it('writes only the legacy postedUpdates key, not the real updates key', () => {
-      useProjectUpdatesStore.getState().hydrateForProject('proj_1', [mkLeanUpdate('u1')]);
-      useProjectUpdatesStore.getState().postUpdate('proj_1', 'on-track', 'first para\n\nsecond');
-      const s = useProjectUpdatesStore.getState();
-      expect(s.postedUpdates['proj_1']).toHaveLength(1);
-      expect(s.postedUpdates['proj_1'][0].id).toMatch(/^posted-/);
-      expect(s.postedUpdates['proj_1'][0].blocks).toHaveLength(2);
-      expect(s.updatesByProject['proj_1'].map((u) => u.id)).toEqual(['u1']);
    });
 });
 

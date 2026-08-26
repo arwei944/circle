@@ -129,13 +129,18 @@ export function CycleFormDialog({ trigger, open, onOpenChange, cycleId }: CycleF
       setSaving(true);
       try {
          if (isEdit && cycleId) {
-            await updateCycle(cycleId, input);
-            notifySuccess(t('editDialog.updated'));
+            const ok = await updateCycle(cycleId, input);
+            if (ok) {
+               notifySuccess(t('editDialog.updated'));
+               setOpen(false);
+            }
          } else {
-            await createCycle(input);
-            notifySuccess(t('createDialog.created'));
+            const ok = await createCycle(input);
+            if (ok) {
+               notifySuccess(t('createDialog.created'));
+               setOpen(false);
+            }
          }
-         setOpen(false);
       } finally {
          setSaving(false);
       }
@@ -145,9 +150,11 @@ export function CycleFormDialog({ trigger, open, onOpenChange, cycleId }: CycleF
       if (!cycleId) return;
       setSaving(true);
       try {
-         await deleteCycle(cycleId);
-         notifySuccess(t('editDialog.deleted'));
-         setOpen(false);
+         const ok = await deleteCycle(cycleId);
+         if (ok) {
+            notifySuccess(t('editDialog.deleted'));
+            setOpen(false);
+         }
       } finally {
          setSaving(false);
       }
