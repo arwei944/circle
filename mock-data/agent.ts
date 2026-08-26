@@ -45,7 +45,7 @@ interface CannedReply {
 
 const CANNED_REPLIES: CannedReply[] = [
    {
-      keywords: ['project', 'create', 'scope'],
+      keywords: ['project', 'create', 'scope', '项目', '创建', '起草', '里程碑'],
       reply: `这是基于你的想法整理出来的清晰草案：
 
 **项目 — 文档命令面板**
@@ -61,7 +61,19 @@ const CANNED_REPLIES: CannedReply[] = [
 需要我用这些里程碑创建项目并分配第一批问题吗？`,
    },
    {
-      keywords: ['research', 'know', 'accessib', 'combobox', 'backlog'],
+      keywords: [
+         'research',
+         'know',
+         'accessib',
+         'combobox',
+         'backlog',
+         '调研',
+         '了解',
+         '组合框',
+         '无障碍',
+         '待办',
+         '主题',
+      ],
       reply: `我浏览了整个待办区 — 以下是最值得关注的：
 
 **组合框无障碍 — 7 个相关问题**
@@ -76,7 +88,19 @@ const CANNED_REPLIES: CannedReply[] = [
 **建议** — 将这三个开放问题归入一个「组合框无障碍」标签，让它们进入同一个周期。需要我来操作吗？`,
    },
    {
-      keywords: ['loop', 'weekly', 'triage', 'automat'],
+      keywords: [
+         'loop',
+         'weekly',
+         'triage',
+         'automat',
+         '自动化',
+         '流程',
+         '每周',
+         '待归类',
+         '归类',
+         '周报',
+         '总结',
+      ],
       reply: `自动化流程会按计划运行并作用于你的工作区。下面是我建议设置的一个：
 
 **每周待归类流程 — Core 团队**
@@ -89,7 +113,7 @@ const CANNED_REPLIES: CannedReply[] = [
 需要我为 LNDev Core 团队启用它吗？`,
    },
    {
-      keywords: ['cycle', 'progress', 'status'],
+      keywords: ['cycle', 'progress', 'status', '周期', '进度', '状态', '延期', '进行中'],
       reply: `**周期 21 — 第 12 天 / 共 14 天**
 
 - **范围** 111 个问题（自开始以来 +44%）
