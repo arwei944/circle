@@ -3,6 +3,8 @@ import { AppSidebar } from '@/components/layout/sidebar/app-sidebar';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { CreateIssueModalProvider } from '@/components/common/issues/create-issue-modal-provider';
 import { IssuesDataProvider } from '@/components/common/issues/issues-data-provider';
+import { ProjectsDataProvider } from '@/components/common/projects/projects-data-provider';
+import { CyclesDataProvider } from '@/components/common/cycles/cycles-data-provider';
 import { CommandPalette } from '@/components/layout/command-palette';
 import { cn } from '@/lib/utils';
 
@@ -38,6 +40,8 @@ export default function MainLayout({ children, header, headersNumber = 2 }: Main
          <CreateIssueModalProvider />
          <CommandPalette />
          <IssuesDataProvider />
+         <ProjectsDataProvider />
+         <CyclesDataProvider />
          <AppSidebar />
          <div className="h-svh overflow-hidden lg:p-2 w-full">
             <div className="lg:border lg:rounded-md overflow-hidden flex flex-col items-center justify-start bg-container h-full w-full">
