@@ -15,10 +15,30 @@ export interface LeanProject {
    name: string;
    iconIndex: number;
    color: string;
+   description?: string;
+   statusId?: string;
+   health?: string;
+   priority?: string;
+   leadId?: string | null;
    teamId: string;
    startDate?: string | null;
    targetDate?: string | null;
    percentComplete: number;
+   initiative?: string | null;
+   labels?: LeanLabel[];
+   totalIssues?: number;
+   completedIssues?: number;
+   healthUpdatedAgoDays?: number;
+   lead?: LeanUser | null;
+}
+
+export interface LeanProjectUpdate {
+   id: string;
+   projectId: string;
+   message: string;
+   health: string;
+   authorId: string | null;
+   createdAt: number;
 }
 
 export interface LeanLabel {
