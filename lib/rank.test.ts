@@ -33,6 +33,6 @@ describe('topRankFrom', () => {
       expect(topRankFrom('a3c') > 'a3c').toBe(true);
    });
    it('falls back to a3c when empty', () => {
-      expect(topRankFrom(null)).toBe('a3c');
+      expect(topRankFrom(null)).toBe('0|a3c');
    });
 });

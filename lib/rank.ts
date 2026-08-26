@@ -38,6 +38,6 @@ export function computeRankBetween(lo: string | null, hi: string | null): string
 }
 
 export function topRankFrom(currentTop: string | null): string {
-   if (!currentTop) return 'a3c';
+   if (!currentTop) return LexoRank.from('0|a3c').toString(); // '0|a3c'（full 格式，与 seed 生态一致）
    return computeRankBetween(currentTop, null);
 }

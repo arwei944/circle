@@ -32,6 +32,7 @@ export async function ensureDb(): Promise<void> {
       (db as { _migrated?: boolean })._migrated = true;
    }
    if (process.env.SKIP_SEED !== '1') {
+      // 仅全新空库才 seed（哨兵：issues 表，与 runSeed 一致）
       const { c } = db.$client.prepare('SELECT COUNT(*) AS c FROM issues').get() as { c: number };
       if (c === 0) await runSeed(db);
    }

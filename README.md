@@ -46,6 +46,7 @@ pnpm dev
 - 前端：`issues-data-provider` 灌入 `issues-store`，所有问题写操作乐观更新、失败自动回滚
 - 命令：`pnpm db:generate` / `db:migrate` / `db:seed` / `backup` / `test`
 - 备份：`pnpm backup`（保留最近 7 份）
+- 注：列内拖拽排序为未来能力；当前跨列拖拽变更状态已持久化。
 
 ## Star History
 

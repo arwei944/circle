@@ -13,7 +13,8 @@ const toEpochMs = (iso: string | undefined): number => {
 };
 
 export async function runSeed(db: Db): Promise<void> {
-   const { c } = db.$client.prepare('SELECT COUNT(*) AS c FROM users').get() as { c: number };
+   // 哨兵：仅全新空库（issues 为 0）才 seed；与 ensureDb 保持一致
+   const { c } = db.$client.prepare('SELECT COUNT(*) AS c FROM issues').get() as { c: number };
    if (c > 0) return; // 幂等：已有数据则跳过
 
    db.$client.transaction(() => {
@@ -105,4 +106,26 @@ export async function runSeed(db: Db): Promise<void> {
       }
       if (rels.length > 0) db.insert(issueLabels).values(rels).run();
    })();
+}
+
+export async function main(): Promise<void> {
+   const { createSqliteClient } = await import('./client');
+   const { migrate } = await import('drizzle-orm/better-sqlite3/migrator');
+   const path = await import('node:path');
+   const dbPath = process.env.CIRCLE_DB_PATH ?? path.join(process.cwd(), 'data', 'circle.db');
+   const db = createSqliteClient(dbPath);
+   migrate(db, { migrationsFolder: path.join(process.cwd(), 'db', 'migrations') });
+   await runSeed(db);
+   const { c } = db.$client.prepare('SELECT COUNT(*) AS c FROM issues').get() as { c: number };
+   console.log(`seed ok. issues: ${c}`);
+   db.$client.close();
+}
+
+if (process.argv[1]?.endsWith('seed.ts')) {
+   main()
+      .then(() => process.exit(0))
+      .catch((e) => {
+         console.error(e);
+         process.exit(1);
+      });
 }
