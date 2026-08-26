@@ -37,6 +37,8 @@
       "cycles": "周期",
       "noCycles": "暂无周期。",
       "loading": "正在加载团队…",
+      "error": "无法加载该团队。",
+      "retry": "重试",
       "notFound": "未找到该团队。",
       "members": "成员",
       "goTo": "跳转到",

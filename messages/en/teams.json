@@ -37,6 +37,8 @@
       "cycles": "Cycles",
       "noCycles": "No cycles yet.",
       "loading": "Loading team…",
+      "error": "Couldn't load this team.",
+      "retry": "Retry",
       "notFound": "Team not found.",
       "members": "Members",
       "goTo": "Go to",
