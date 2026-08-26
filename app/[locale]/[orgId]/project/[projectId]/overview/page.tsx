@@ -1,18 +1,20 @@
 import ProjectOverview from '@/components/common/projects/details/project-overview';
 import Header from '@/components/layout/headers/project/header';
 import MainLayout from '@/components/layout/main-layout';
-import { getProjectById } from '@/mock-data/projects';
+import { ensureDb, getDb } from '@/db/client';
+import { getProject } from '@/lib/services/projects-service';
 import { notFound } from 'next/navigation';
 
 interface ProjectPageProps {
    params: Promise<{ projectId: string }>;
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProjectPage({ params }: ProjectPageProps) {
    const { projectId } = await params;
-   const project = getProjectById(projectId);
-
-   if (!project) {
+   await ensureDb();
+   if (!getProject(getDb(), projectId)) {
       notFound();
    }
 

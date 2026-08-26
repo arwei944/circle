@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useFilterStore } from '@/store/filter-store';
 import { useIssuesStore } from '@/store/issues-store';
+import { useProjectsStore } from '@/store/projects-store';
 import { getIssueFilterColumns } from './issue-filter-columns';
 
 /**
@@ -16,9 +17,10 @@ import { getIssueFilterColumns } from './issue-filter-columns';
  */
 export function IssueFilterTrigger() {
    const { issues } = useIssuesStore();
+   const projects = useProjectsStore((s) => s.projects);
    const { filters, setFilters } = useFilterStore();
    const t = useTranslations('issues');
-   const columnsConfig = useMemo(() => getIssueFilterColumns(t), [t]);
+   const columnsConfig = useMemo(() => getIssueFilterColumns(t, projects), [t, projects]);
 
    const { columns, actions, strategy } = useDataTableFilters({
       strategy: 'client',

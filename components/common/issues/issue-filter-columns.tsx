@@ -10,8 +10,8 @@ import { labels } from '@/mock-data/labels';
 import { priorities } from '@/mock-data/priorities';
 import { status, StatusCategory } from '@/mock-data/status';
 import { users } from '@/mock-data/users';
-import { useProjectsStore } from '@/store/projects-store';
 import { iconByIndex } from '@/lib/project-icons';
+import type { LeanProjectAgg } from '@/lib/dto';
 import {
    BarChart3,
    CircleCheck,
@@ -81,14 +81,15 @@ const labelOptions: ColumnOption[] = labels.map((label) => ({
    icon: <span className="size-2.5 rounded-full" style={{ backgroundColor: label.color }} />,
 }));
 
-const projectOptions: ColumnOption[] = useProjectsStore.getState().projects.map((project) => {
-   const Icon = iconByIndex(project.iconIndex);
-   return {
-      value: project.id,
-      label: project.name,
-      icon: <Icon className="size-4 text-muted-foreground" />,
-   };
-});
+const buildProjectOptions = (projects: LeanProjectAgg[]): ColumnOption[] =>
+   projects.map((project) => {
+      const Icon = iconByIndex(project.iconIndex);
+      return {
+         value: project.id,
+         label: project.name,
+         icon: <Icon className="size-4 text-muted-foreground" />,
+      };
+   });
 
 const cycleOptions = (t: TranslateFn): ColumnOption[] => [
    {
@@ -109,7 +110,7 @@ const cycleOptions = (t: TranslateFn): ColumnOption[] => [
 
 const dtf = createColumnConfigHelper<Issue>();
 
-const buildIssueFilterColumns = (t: TranslateFn) =>
+const buildIssueFilterColumns = (t: TranslateFn, projects: LeanProjectAgg[]) =>
    [
       dtf
          .option()
@@ -157,7 +158,7 @@ const buildIssueFilterColumns = (t: TranslateFn) =>
          .accessor((issue: Issue) => issue.project?.id ?? '')
          .displayName(t('filter.columns.project'))
          .icon(Folder)
-         .options(projectOptions)
+         .options(buildProjectOptions(projects))
          .build(),
       dtf
          .option()
@@ -170,13 +171,14 @@ const buildIssueFilterColumns = (t: TranslateFn) =>
    ] as const;
 
 /**
- * Translated column config for the filter UI (display names + static
- * option labels). Built per-locale via the passed `t` function.
+ * Translated column config for the filter UI (display names + option labels).
+ * `projects` supplies the live project options (from the hydrated store).
  */
-export const getIssueFilterColumns = (t: TranslateFn) => buildIssueFilterColumns(t);
+export const getIssueFilterColumns = (t: TranslateFn, projects: LeanProjectAgg[]) =>
+   buildIssueFilterColumns(t, projects);
 
 /** Non-translated config used by `applyIssueFilters` (accessors only). */
-export const issueFilterColumns = buildIssueFilterColumns((key) => key);
+export const issueFilterColumns = buildIssueFilterColumns((key) => key, []);
 
 const columnById = new Map<string, (typeof issueFilterColumns)[number]>(
    issueFilterColumns.map((column) => [column.id, column])
