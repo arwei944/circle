@@ -1,3 +1,5 @@
+import type { CycleBurnupPoint } from '@/lib/compute-burnup';
+
 export interface LeanUser {
    id: string;
    name: string;
@@ -52,6 +54,21 @@ export interface LeanLabel {
    id: string;
    name: string;
    color: string;
+}
+
+export interface LeanCycle {
+   id: string;
+   name: string;
+   teamId: string;
+   status: string;
+   startDate: string;
+   endDate: string;
+   capacity: number;
+   scope: number;
+   started: number;
+   completed: number;
+   successRate?: number;
+   burnup?: CycleBurnupPoint[];
 }
 
 export interface LeanIssue {
