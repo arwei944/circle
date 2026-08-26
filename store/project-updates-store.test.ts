@@ -55,6 +55,18 @@ describe('create project update', () => {
    });
 });
 
+describe('legacy postUpdate', () => {
+   it('writes only the legacy postedUpdates key, not the real updates key', () => {
+      useProjectUpdatesStore.getState().hydrateForProject('proj_1', [mkLeanUpdate('u1')]);
+      useProjectUpdatesStore.getState().postUpdate('proj_1', 'on-track', 'first para\n\nsecond');
+      const s = useProjectUpdatesStore.getState();
+      expect(s.postedUpdates['proj_1']).toHaveLength(1);
+      expect(s.postedUpdates['proj_1'][0].id).toMatch(/^posted-/);
+      expect(s.postedUpdates['proj_1'][0].blocks).toHaveLength(2);
+      expect(s.updatesByProject['proj_1'].map((u) => u.id)).toEqual(['u1']);
+   });
+});
+
 describe('remove project update', () => {
    it('removes the update locally when the API call succeeds', async () => {
       useProjectUpdatesStore

@@ -25,16 +25,16 @@ let nextId = 1;
 /**
  * Runtime project updates (the "Post update" composer) + real persisted
  * `project_updates`. The legacy `postUpdate` stays for the existing Activity
- * composer and mirrors its optimistic update into both keys; only the new
- * `create` action writes to the real API.
+ * composer and only writes the legacy `postedUpdates` key; the real
+ * `updatesByProject` key is written exclusively by `hydrateForProject` /
+ * `create` (server-backed data).
  */
 export const useProjectUpdatesStore = create<ProjectUpdatesState>((set, get) => ({
    postedUpdates: {},
    postUpdate: (projectId, health, text) =>
       set((state) => {
-         const id = `posted-${nextId++}`;
          const update: ProjectUpdate = {
-            id,
+            id: `posted-${nextId++}`,
             author: users[0],
             date: new Date().toISOString().slice(0, 10),
             health,
@@ -43,22 +43,10 @@ export const useProjectUpdatesStore = create<ProjectUpdatesState>((set, get) => 
                .filter((paragraph) => paragraph.trim() !== '')
                .map((paragraph) => ({ type: 'paragraph', text: paragraph.trim() })),
          };
-         const lean: LeanProjectUpdate = {
-            id,
-            projectId,
-            message: text,
-            health,
-            authorId: null,
-            createdAt: Date.now(),
-         };
          return {
             postedUpdates: {
                ...state.postedUpdates,
                [projectId]: [update, ...(state.postedUpdates[projectId] ?? [])],
-            },
-            updatesByProject: {
-               ...state.updatesByProject,
-               [projectId]: [lean, ...(state.updatesByProject[projectId] ?? [])],
             },
          };
       }),
