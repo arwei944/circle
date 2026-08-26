@@ -7,6 +7,7 @@ import { useMemo } from 'react';
 import { useFilterStore } from '@/store/filter-store';
 import { useIssuesStore } from '@/store/issues-store';
 import { useProjectsStore } from '@/store/projects-store';
+import { useCyclesStore } from '@/store/cycles-store';
 import { getIssueFilterColumns } from './issue-filter-columns';
 
 /**
@@ -22,9 +23,14 @@ import { getIssueFilterColumns } from './issue-filter-columns';
 export function IssueFilterBar() {
    const { issues } = useIssuesStore();
    const projects = useProjectsStore((s) => s.projects);
+   const cycles = useCyclesStore((s) => s.cycles);
    const { filters, setFilters } = useFilterStore();
    const t = useTranslations('issues');
-   const columnsConfig = useMemo(() => getIssueFilterColumns(t, projects), [t, projects]);
+   const tCycles = useTranslations('cycles');
+   const columnsConfig = useMemo(
+      () => getIssueFilterColumns(t, tCycles, projects, cycles),
+      [t, tCycles, projects, cycles]
+   );
 
    const { columns, actions, strategy } = useDataTableFilters({
       strategy: 'client',

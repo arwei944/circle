@@ -2,9 +2,9 @@
 
 import { CyclePlayIcon } from '@/components/common/cycles/cycle-line';
 import { Button } from '@/components/ui/button';
-import { getCycleById } from '@/mock-data/cycles';
 import { IssueDetail } from '@/mock-data/issue-details';
 import { Issue } from '@/mock-data/issues';
+import { useCyclesStore } from '@/store/cycles-store';
 import { Ban, GitPullRequestArrow, Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { AssigneeUser } from '../assignee-user';
@@ -32,7 +32,8 @@ function Section({ title, children }: { title: string; children: React.ReactNode
  * assignee), cycle, labels, project + milestone, relations and linked PRs.
  */
 export function IssuePropertiesPanel({ issue, detail }: IssuePropertiesPanelProps) {
-   const cycle = issue.cycleId ? getCycleById(issue.cycleId) : undefined;
+   const cycles = useCyclesStore((s) => s.cycles);
+   const cycle = issue.cycleId ? cycles.find((c) => c.id === issue.cycleId) : undefined;
    const t = useTranslations('issues');
 
    return (

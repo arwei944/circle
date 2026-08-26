@@ -4,14 +4,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { createColumnConfigHelper } from '@/components/data-table-filter/core/filters';
 import type { ColumnOption, FiltersState } from '@/components/data-table-filter/core/types';
 import { multiOptionFilterFn, optionFilterFn } from '@/components/data-table-filter/lib/filter-fns';
-import { cycles, cycleStatusLabel } from '@/mock-data/cycles';
+import { cycleStatusLabel, type CycleStatus } from '@/components/common/cycles/cycle-utils';
 import { Issue } from '@/mock-data/issues';
 import { labels } from '@/mock-data/labels';
 import { priorities } from '@/mock-data/priorities';
 import { status, StatusCategory } from '@/mock-data/status';
 import { users } from '@/mock-data/users';
 import { iconByIndex } from '@/lib/project-icons';
-import type { LeanProjectAgg } from '@/lib/dto';
+import type { LeanCycle, LeanProjectAgg } from '@/lib/dto';
 import {
    BarChart3,
    CircleCheck,
@@ -91,17 +91,24 @@ const buildProjectOptions = (projects: LeanProjectAgg[]): ColumnOption[] =>
       };
    });
 
-const cycleOptions = (t: TranslateFn): ColumnOption[] => [
+const cycleOptions = (
+   t: TranslateFn,
+   tCycles: TranslateFn,
+   cycles: LeanCycle[]
+): ColumnOption[] => [
    {
       value: 'no-cycle',
       label: t('filter.columns.noCycle'),
       icon: <RefreshCcw className="size-4 text-muted-foreground" />,
    },
-   ...cycles.map((cycle) => ({
-      value: cycle.id,
-      label: `${cycle.name} (${cycleStatusLabel[cycle.status]})`,
-      icon: <RefreshCcw className="size-4 text-muted-foreground" />,
-   })),
+   ...cycles.map((cycle) => {
+      const statusKey = cycleStatusLabel[cycle.status as CycleStatus] ?? cycle.status;
+      return {
+         value: cycle.id,
+         label: `${cycle.name} (${tCycles(statusKey)})`,
+         icon: <RefreshCcw className="size-4 text-muted-foreground" />,
+      };
+   }),
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -110,7 +117,12 @@ const cycleOptions = (t: TranslateFn): ColumnOption[] => [
 
 const dtf = createColumnConfigHelper<Issue>();
 
-const buildIssueFilterColumns = (t: TranslateFn, projects: LeanProjectAgg[]) =>
+const buildIssueFilterColumns = (
+   t: TranslateFn,
+   tCycles: TranslateFn,
+   projects: LeanProjectAgg[],
+   cycles: LeanCycle[]
+) =>
    [
       dtf
          .option()
@@ -166,19 +178,29 @@ const buildIssueFilterColumns = (t: TranslateFn, projects: LeanProjectAgg[]) =>
          .accessor((issue: Issue) => (issue.cycleId === '' ? 'no-cycle' : issue.cycleId))
          .displayName(t('filter.columns.cycle'))
          .icon(RefreshCcw)
-         .options(cycleOptions(t))
+         .options(cycleOptions(t, tCycles, cycles))
          .build(),
    ] as const;
 
 /**
  * Translated column config for the filter UI (display names + option labels).
- * `projects` supplies the live project options (from the hydrated store).
+ * `projects` / `cycles` supply the live options (from the hydrated stores),
+ * passed in by the calling components which subscribe to them.
  */
-export const getIssueFilterColumns = (t: TranslateFn, projects: LeanProjectAgg[]) =>
-   buildIssueFilterColumns(t, projects);
+export const getIssueFilterColumns = (
+   t: TranslateFn,
+   tCycles: TranslateFn,
+   projects: LeanProjectAgg[],
+   cycles: LeanCycle[]
+) => buildIssueFilterColumns(t, tCycles, projects, cycles);
 
 /** Non-translated config used by `applyIssueFilters` (accessors only). */
-export const issueFilterColumns = buildIssueFilterColumns((key) => key, []);
+export const issueFilterColumns = buildIssueFilterColumns(
+   (key) => key,
+   (key) => key,
+   [],
+   []
+);
 
 const columnById = new Map<string, (typeof issueFilterColumns)[number]>(
    issueFilterColumns.map((column) => [column.id, column])
