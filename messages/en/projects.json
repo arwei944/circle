@@ -212,10 +212,51 @@
       "writeWithAgent": "Write with Agent",
       "postUpdate": "Post update",
       "postComment": "Post comment",
+      "deleteUpdate": "Delete",
+      "issueCreated": "Created {title}",
+      "createdIssues": "Recently created issues",
+      "noCreatedIssues": "No issues have been created in this project yet.",
+      "health": {
+         "on-track": "On track",
+         "at-risk": "At risk",
+         "off-track": "Off track",
+         "no-update": "No update"
+      },
       "empty": "No updates yet — post the first one to keep the team in the loop.",
       "mode": {
          "comment": "Comment",
          "update": "Update"
       }
+   },
+   "createDialog": {
+      "title": "Create project",
+      "description": "Set up a new project and pick its properties.",
+      "name": "Name",
+      "namePlaceholder": "e.g. Mobile redesign",
+      "team": "Team",
+      "health": "Health",
+      "priority": "Priority",
+      "lead": "Lead",
+      "noLead": "No lead",
+      "startDate": "Start date",
+      "targetDate": "Target date",
+      "save": "Create",
+      "cancel": "Cancel",
+      "created": "Project created"
+   },
+   "editDialog": {
+      "title": "Edit project",
+      "description": "Update this project’s details.",
+      "save": "Save changes",
+      "delete": "Delete project",
+      "updated": "Project updated",
+      "deleted": "Project deleted"
+   },
+   "deleteDialog": {
+      "title": "Delete project",
+      "unlink": "All issues associated with this project will no longer be linked to it — the issues themselves are kept.",
+      "confirmText": "This action cannot be undone.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
    }
 }

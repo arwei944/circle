@@ -7,11 +7,15 @@ import { useProjectsDisplayStore } from '@/store/projects-display-store';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
+import { useTranslations } from 'next-intl';
+import { Pencil } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { HealthPopover } from './health-popover';
 import { PrioritySelector } from './priority-selector';
 import { LeadSelector } from './lead-selector';
 import { StatusWithPercent } from './status-with-percent';
 import { DatePicker } from './date-picker';
+import { ProjectFormDialog } from './project-form-dialog';
 
 interface ProjectLineProps {
    project: Project;
@@ -22,6 +26,7 @@ const countIssues = (issues: Issue[], projectId: string) =>
 
 export default function ProjectLine({ project }: ProjectLineProps) {
    const { orgId } = useParams<{ orgId: string }>();
+   const t = useTranslations('projects');
    const { issues } = useIssuesStore();
    const { displayProperties } = useProjectsDisplayStore();
    const issueCount = useMemo(() => countIssues(issues, project.id), [issues, project.id]);
@@ -90,6 +95,21 @@ export default function ProjectLine({ project }: ProjectLineProps) {
                />
             </div>
          )}
+         <div className="shrink-0 pl-1">
+            <ProjectFormDialog
+               projectId={project.id}
+               trigger={
+                  <Button
+                     variant="ghost"
+                     size="icon"
+                     className="size-7 text-muted-foreground"
+                     aria-label={t('editDialog.title')}
+                  >
+                     <Pencil className="size-3.5" />
+                  </Button>
+               }
+            />
+         </div>
       </div>
    );
 }

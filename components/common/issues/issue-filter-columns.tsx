@@ -9,8 +9,9 @@ import { Issue } from '@/mock-data/issues';
 import { labels } from '@/mock-data/labels';
 import { priorities } from '@/mock-data/priorities';
 import { status, StatusCategory } from '@/mock-data/status';
-import { projects } from '@/mock-data/projects';
 import { users } from '@/mock-data/users';
+import { useProjectsStore } from '@/store/projects-store';
+import { iconByIndex } from '@/lib/project-icons';
 import {
    BarChart3,
    CircleCheck,
@@ -80,11 +81,14 @@ const labelOptions: ColumnOption[] = labels.map((label) => ({
    icon: <span className="size-2.5 rounded-full" style={{ backgroundColor: label.color }} />,
 }));
 
-const projectOptions: ColumnOption[] = projects.map((project) => ({
-   value: project.id,
-   label: project.name,
-   icon: <project.icon className="size-4 text-muted-foreground" />,
-}));
+const projectOptions: ColumnOption[] = useProjectsStore.getState().projects.map((project) => {
+   const Icon = iconByIndex(project.iconIndex);
+   return {
+      value: project.id,
+      label: project.name,
+      icon: <Icon className="size-4 text-muted-foreground" />,
+   };
+});
 
 const cycleOptions = (t: TranslateFn): ColumnOption[] => [
    {

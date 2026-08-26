@@ -10,11 +10,22 @@ import { Project } from '@/mock-data/projects';
 import { teams } from '@/mock-data/teams';
 import { PanelFilterTarget, usePanelFilter } from '@/components/common/issues/use-panel-filter';
 import { cn } from '@/lib/utils';
+import { useProjectsStore } from '@/store/projects-store';
 import { format, parseISO } from 'date-fns';
 import { ProjectProgressChart } from './project-progress-chart';
-import { ArrowRight, Calendar, Check, Compass, Plus, Slack, Tag, UserPlus } from 'lucide-react';
+import { ArrowRight, Check, Compass, Plus, Slack, Tag, UserPlus } from 'lucide-react';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
+import { DatePicker } from '../date-picker';
+import { LabelSelector } from '../label-selector';
+import { LeadSelector } from '../lead-selector';
+import { PrioritySelector } from '../priority-selector';
+import { StatusWithPercent } from '../status-with-percent';
+import { PROJECT_UPDATE_HEALTH_COLORS } from './project-activity-data';
+import { buildProjectActivity } from './project-activity-data';
+import { useProjectUpdates } from './use-project-updates';
 
 interface ProjectPropertiesPanelProps {
    project: Project;
@@ -25,6 +36,8 @@ interface ProjectPropertiesPanelProps {
 const isCompleted = (issue: Issue) => issue.status.category === 'completed';
 
 const formatDay = (iso?: string) => (iso ? format(parseISO(iso), 'MMM do') : '—');
+
+const isoOf = (date?: Date): string | null => (date ? date.toISOString().slice(0, 10) : null);
 
 interface BreakdownRow {
    key: string;
@@ -112,12 +125,16 @@ function PropertyRow({ label, children }: { label: string; children: React.React
 }
 
 /**
- * Right-side panel of the project pages: properties, milestones,
- * progress breakdowns and a compact activity feed.
+ * Right-side panel of the project pages: properties (editable via
+ * `updateProject`), milestones, progress breakdowns and a compact activity
+ * feed built from real updates + issue-creation events.
  */
 export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPropertiesPanelProps) {
    const t = useTranslations('projects');
+   const { orgId } = useParams<{ orgId: string }>();
    const panelFilter = usePanelFilter();
+   const updateProject = useProjectsStore((s) => s.updateProject);
+   const updates = useProjectUpdates(project.id);
    const completed = issues.filter(isCompleted).length;
 
    const team = teams.find((candidate) => candidate.id === project.teamId);
@@ -134,6 +151,8 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
             return true;
          });
    }, [issues]);
+
+   const activity = useMemo(() => buildProjectActivity(issues, updates), [issues, updates]);
 
    const assigneeRows = useMemo(
       () =>
@@ -208,19 +227,25 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
             <h3 className="text-sm font-medium mb-2.5">{t('properties.title')}</h3>
             <div className="flex flex-col gap-1">
                <PropertyRow label={t('properties.status')}>
-                  <project.status.icon />
-                  <span>{project.status.name}</span>
+                  <StatusWithPercent
+                     status={project.status}
+                     percentComplete={project.percentComplete}
+                     onStatusChange={(statusId) => void updateProject(project.id, { statusId })}
+                  />
                </PropertyRow>
                <PropertyRow label={t('properties.priority')}>
-                  <project.priority.icon className="size-3.5 text-muted-foreground" />
-                  <span>{project.priority.name}</span>
+                  <PrioritySelector
+                     priority={project.priority}
+                     onPriorityChange={(priorityId) =>
+                        void updateProject(project.id, { priority: priorityId })
+                     }
+                  />
                </PropertyRow>
                <PropertyRow label={t('properties.lead')}>
-                  <Avatar className="size-5">
-                     <AvatarImage src={project.lead.avatarUrl} alt={project.lead.name} />
-                     <AvatarFallback>{project.lead.name[0]}</AvatarFallback>
-                  </Avatar>
-                  <span className="truncate max-w-36">{project.lead.name}</span>
+                  <LeadSelector
+                     lead={project.lead}
+                     onLeadChange={(userId) => void updateProject(project.id, { leadId: userId })}
+                  />
                </PropertyRow>
                <PropertyRow label={t('properties.members')}>
                   {members.length > 0 ? (
@@ -243,15 +268,21 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
                   )}
                </PropertyRow>
                <PropertyRow label={t('properties.dates')}>
-                  <span className="inline-flex items-center gap-1">
-                     <Calendar className="size-3.5 text-muted-foreground" />
-                     {formatDay(project.startDate)}
-                  </span>
+                  <DatePicker
+                     key={`start-${project.startDate ?? ''}`}
+                     date={
+                        project.startDate ? new Date(`${project.startDate}T00:00:00`) : undefined
+                     }
+                     onDateChange={(d) => void updateProject(project.id, { startDate: isoOf(d) })}
+                  />
                   <ArrowRight className="size-3 text-muted-foreground" />
-                  <span className="inline-flex items-center gap-1">
-                     <Calendar className="size-3.5 text-muted-foreground" />
-                     {project.targetDate ? formatDay(project.targetDate) : t('properties.target')}
-                  </span>
+                  <DatePicker
+                     key={`target-${project.targetDate ?? ''}`}
+                     date={
+                        project.targetDate ? new Date(`${project.targetDate}T00:00:00`) : undefined
+                     }
+                     onDateChange={(d) => void updateProject(project.id, { targetDate: isoOf(d) })}
+                  />
                </PropertyRow>
                <PropertyRow label={t('properties.teams')}>
                   <span className="inline-flex items-center gap-1.5">
@@ -294,9 +325,12 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
                            {label.name}
                         </span>
                      ))}
-                     <button className="text-muted-foreground hover:text-foreground transition-colors">
-                        <Plus className="size-3.5" />
-                     </button>
+                     <LabelSelector
+                        selected={project.labels}
+                        onLabelsChange={(next) =>
+                           void updateProject(project.id, { labels: next.map((l) => l.id) })
+                        }
+                     />
                   </div>
                </PropertyRow>
             </div>
@@ -414,24 +448,42 @@ export function ProjectPropertiesPanel({ project, detail, issues }: ProjectPrope
          <div className="px-5 py-4">
             <div className="flex items-center justify-between mb-2">
                <h3 className="text-sm font-medium">{t('properties.activity')}</h3>
-               <button className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+               <Link
+                  href={`/${orgId}/project/${project.id}/activity`}
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+               >
                   {t('properties.seeAll')}
-               </button>
+               </Link>
             </div>
-            <div className="flex flex-col gap-3">
-               {detail.activity.map((event) => (
-                  <div key={event.id} className="flex items-start gap-2 text-xs">
-                     <Avatar className="size-4 mt-0.5 shrink-0">
-                        <AvatarImage src={event.user.avatarUrl} alt={event.user.name} />
-                        <AvatarFallback>{event.user.name[0]}</AvatarFallback>
-                     </Avatar>
-                     <p className="text-muted-foreground leading-relaxed">
-                        <span className="text-foreground">{event.user.name}</span> {event.text} ·{' '}
-                        {formatDay(event.date)}
-                     </p>
-                  </div>
-               ))}
-            </div>
+            {activity.length === 0 ? (
+               <p className="text-xs text-muted-foreground">{t('activity.empty')}</p>
+            ) : (
+               <div className="flex flex-col gap-3">
+                  {activity.slice(0, 6).map((item) => (
+                     <div key={item.id} className="flex items-start gap-2 text-xs">
+                        <span
+                           className="size-2 mt-1 rounded-full shrink-0"
+                           style={{
+                              backgroundColor:
+                                 item.kind === 'update'
+                                    ? (PROJECT_UPDATE_HEALTH_COLORS[item.health ?? ''] ?? '#8f9299')
+                                    : '#6771c5',
+                           }}
+                        />
+                        <p className="min-w-0 text-muted-foreground leading-relaxed">
+                           {item.kind === 'update' ? (
+                              <span className="line-clamp-2 block">{item.message}</span>
+                           ) : (
+                              t('activity.issueCreated', { title: item.issueTitle ?? '' })
+                           )}
+                           <span className="ml-1 whitespace-nowrap opacity-70">
+                              {format(new Date(item.date), 'MMM d')}
+                           </span>
+                        </p>
+                     </div>
+                  ))}
+               </div>
+            )}
          </div>
       </div>
    );

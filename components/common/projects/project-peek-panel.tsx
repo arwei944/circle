@@ -2,9 +2,9 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { getProjectDetail } from '@/mock-data/project-details';
-import { getProjectById } from '@/mock-data/projects';
 import { teams } from '@/mock-data/teams';
 import { useIssuesStore } from '@/store/issues-store';
+import { useProjectsStore } from '@/store/projects-store';
 import { format, parseISO } from 'date-fns';
 import {
    ArrowRight,
@@ -23,6 +23,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo } from 'react';
+import { toProjectViewModel } from './project-adapter';
 import { ProjectProgressChart } from './details/project-progress-chart';
 
 interface ProjectPeekPanelProps {
@@ -59,7 +60,7 @@ export function ProjectPeekPanel({ projectId, onClose }: ProjectPeekPanelProps) 
    const { orgId } = useParams<{ orgId: string }>();
    const { issues: allIssues } = useIssuesStore();
 
-   const project = getProjectById(projectId);
+   const lean = useProjectsStore((s) => s.projects.find((p) => p.id === projectId));
    const detail = getProjectDetail(projectId);
 
    const issues = useMemo(
@@ -86,7 +87,8 @@ export function ProjectPeekPanel({ projectId, onClose }: ProjectPeekPanelProps) 
          });
    }, [issues]);
 
-   if (!project) return null;
+   if (!lean) return null;
+   const project = toProjectViewModel(lean);
 
    const team = teams.find((candidate) => candidate.id === project.teamId);
    const started = issues.filter((issue) => issue.status.category === 'started').length;

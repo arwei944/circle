@@ -35,13 +35,14 @@ import {
    MessageSquare,
    Clipboard,
 } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useIssuesStore } from '@/store/issues-store';
+import { useProjectsStore } from '@/store/projects-store';
+import { toProjectViewModels } from '@/components/common/projects/project-adapter';
 import { status } from '@/mock-data/status';
 import { priorities } from '@/mock-data/priorities';
 import { users } from '@/mock-data/users';
 import { labels } from '@/mock-data/labels';
-import { projects } from '@/mock-data/projects';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 
@@ -53,6 +54,8 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
    const [isSubscribed, setIsSubscribed] = useState(false);
    const [isFavorite, setIsFavorite] = useState(false);
    const t = useTranslations('issues');
+   const leanProjects = useProjectsStore((s) => s.projects);
+   const projects = useMemo(() => toProjectViewModels(leanProjects), [leanProjects]);
 
    const {
       updateIssueStatus,

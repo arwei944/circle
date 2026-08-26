@@ -4,11 +4,12 @@ import { GroupedIssuesView } from '@/components/common/issues/grouped-issues-vie
 import { applyIssueFilters } from '@/components/common/issues/issue-filter-columns';
 import { IssueFilterBar } from '@/components/common/issues/issue-filter-bar';
 import { getProjectDetail } from '@/mock-data/project-details';
-import { getProjectById } from '@/mock-data/projects';
 import { displayOrderedStatus } from '@/mock-data/status';
 import { useFilterStore } from '@/store/filter-store';
 import { useIssuesStore } from '@/store/issues-store';
+import { useProjectsStore } from '@/store/projects-store';
 import { useMemo } from 'react';
+import { toProjectViewModel } from '../project-adapter';
 import { ProjectSidePanel } from './project-side-panel';
 
 interface ProjectIssuesProps {
@@ -17,19 +18,22 @@ interface ProjectIssuesProps {
 
 /** Project "Issues" tab: the project's issues grouped by status. */
 export default function ProjectIssues({ projectId }: ProjectIssuesProps) {
-   const project = getProjectById(projectId)!;
+   const lean = useProjectsStore((s) => s.projects.find((p) => p.id === projectId));
    const detail = getProjectDetail(projectId);
    const { issues: allIssues } = useIssuesStore();
    const { filters } = useFilterStore();
 
    const issues = useMemo(
-      () => allIssues.filter((issue) => issue.project?.id === project.id),
-      [allIssues, project.id]
+      () => allIssues.filter((issue) => issue.project?.id === projectId),
+      [allIssues, projectId]
    );
 
    // Filters (filter bar + click-to-filter from the insights panel) apply
    // on top of the project scope.
    const displayedIssues = useMemo(() => applyIssueFilters(issues, filters), [issues, filters]);
+
+   if (!lean) return null;
+   const project = toProjectViewModel(lean);
 
    return (
       <div className="w-full h-full flex flex-col overflow-hidden">

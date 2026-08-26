@@ -11,9 +11,11 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useIssuesStore } from '@/store/issues-store';
-import { Project, projects } from '@/mock-data/projects';
+import { useProjectsStore } from '@/store/projects-store';
+import { Project } from '@/mock-data/projects';
+import { toProjectViewModels } from '@/components/common/projects/project-adapter';
 import { Box, CheckIcon, FolderIcon } from 'lucide-react';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 interface ProjectSelectorProps {
@@ -28,6 +30,8 @@ export function ProjectSelector({ project, onChange }: ProjectSelectorProps) {
    const [value, setValue] = useState<string | undefined>(project?.id);
 
    const { filterByProject } = useIssuesStore();
+   const leanProjects = useProjectsStore((s) => s.projects);
+   const projects = useMemo(() => toProjectViewModels(leanProjects), [leanProjects]);
 
    useEffect(() => {
       setValue(project?.id);

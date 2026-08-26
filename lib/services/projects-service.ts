@@ -35,7 +35,7 @@ export interface CreateProjectInput {
    labels?: string[];
 }
 
-export interface UpdateProjectInput extends Partial<CreateProjectInput> {}
+export type UpdateProjectInput = Partial<CreateProjectInput>;
 
 type CountedProject = typeof projects.$inferSelect & {
    totalIssues: number;

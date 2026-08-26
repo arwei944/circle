@@ -3,9 +3,11 @@
 import { ContentBlocks } from '@/components/common/issues/details/content-blocks';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { getProjectDetail } from '@/mock-data/project-details';
-import { getProjectById } from '@/mock-data/projects';
 import { useIssuesStore } from '@/store/issues-store';
 import { teams } from '@/mock-data/teams';
+import { useProjectsStore } from '@/store/projects-store';
+import { toProjectViewModel } from '../project-adapter';
+import { useProjectUpdates } from './use-project-updates';
 import { format, parseISO } from 'date-fns';
 import { ArrowRight, ChevronDown, FileText, PenLine, Plus } from 'lucide-react';
 import Link from 'next/link';
@@ -24,18 +26,22 @@ const formatDay = (iso?: string) => (iso ? format(parseISO(iso), 'MMM do') : 'â€
 /** Project "Overview" tab: description column + properties side panel. */
 export default function ProjectOverview({ projectId }: ProjectOverviewProps) {
    const t = useTranslations('projects');
-   const project = getProjectById(projectId)!;
+   const lean = useProjectsStore((s) => s.projects.find((p) => p.id === projectId));
    const detail = getProjectDetail(projectId);
+   const updates = useProjectUpdates(projectId);
    const { issues: allIssues } = useIssuesStore();
    const issues = useMemo(
-      () => allIssues.filter((issue) => issue.project?.id === project.id),
-      [allIssues, project.id]
+      () => allIssues.filter((issue) => issue.project?.id === projectId),
+      [allIssues, projectId]
    );
 
    const { orgId } = useParams<{ orgId: string }>();
-   const team = teams.find((candidate) => candidate.id === project.teamId);
    const scrollRef = useRef<HTMLDivElement>(null);
    const outlineItems = useMemo(() => getOutlineItems(detail.description), [detail.description]);
+
+   if (!lean) return null;
+   const project = toProjectViewModel(lean);
+   const team = teams.find((candidate) => candidate.id === project.teamId);
 
    return (
       <div className="w-full h-full flex overflow-hidden">
@@ -156,7 +162,7 @@ export default function ProjectOverview({ projectId }: ProjectOverviewProps) {
                      className="mt-8 flex items-center justify-center gap-2 border rounded-lg py-4 text-sm text-muted-foreground hover:text-foreground hover:bg-accent/30 transition-colors"
                   >
                      <PenLine className="size-4" />
-                     {detail.updates.length === 0
+                     {updates.length === 0
                         ? t('overview.writeFirstUpdate')
                         : t('overview.writeUpdate')}
                   </Link>

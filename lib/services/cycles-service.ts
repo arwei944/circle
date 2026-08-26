@@ -24,7 +24,7 @@ export interface CreateCycleInput {
    endDate: string; // 'yyyy-MM-dd'
    capacity?: number;
 }
-export interface UpdateCycleInput extends Partial<CreateCycleInput> {}
+export type UpdateCycleInput = Partial<CreateCycleInput>;
 
 type CycleAgg = {
    scope: number;

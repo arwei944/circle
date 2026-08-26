@@ -9,5 +9,7 @@ export const updateProject = async (id: string, patch: Record<string, unknown>) 
 export const deleteProject = async (id: string) => sendJson<void>('DELETE', `/api/projects/${id}`);
 export const createProjectUpdate = async (id: string, input: Record<string, unknown>) =>
    (await sendJson<{ update: unknown }>('POST', `/api/projects/${id}/updates`, input)).update;
+export const fetchProjectUpdates = async (id: string) =>
+   (await getJson<{ updates: unknown[] }>(`/api/projects/${id}/updates`)).updates;
 export const deleteProjectUpdate = async (id: string, updateId: string) =>
    sendJson<void>('DELETE', `/api/projects/${id}/updates/${updateId}`);

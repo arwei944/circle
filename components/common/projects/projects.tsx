@@ -2,16 +2,19 @@
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { projects as allProjects, Project } from '@/mock-data/projects';
+import { Project } from '@/mock-data/projects';
 import { teams } from '@/mock-data/teams';
+import { useProjectsStore } from '@/store/projects-store';
 import { useProjectsFilterStore } from '@/store/projects-filter-store';
 import { useProjectsDisplayStore } from '@/store/projects-display-store';
 import { useRightPanelStore } from '@/store/right-panel-store';
-import { BarChart3 } from 'lucide-react';
+import { BarChart3, Plus } from 'lucide-react';
 import { parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useMemo } from 'react';
 import { Filter } from '@/components/layout/headers/projects/filter';
 import { useTranslations } from 'next-intl';
+import { toProjectViewModels } from './project-adapter';
+import { ProjectFormDialog } from './project-form-dialog';
 import ProjectsBoard from './projects-board';
 import { ProjectsDisplayOptions } from './projects-display-options';
 import ProjectsInsightsPanel from './projects-insights-panel';
@@ -43,6 +46,7 @@ const CLOSED_CATEGORIES = new Set(['completed', 'canceled']);
  */
 export default function Projects({ teamId }: { teamId?: string }) {
    const t = useTranslations('projects');
+   const leanProjects = useProjectsStore((s) => s.projects);
    const { filters } = useProjectsFilterStore();
    const { viewTypes, grouping, ordering, closedProjects, showEmptyGroups } =
       useProjectsDisplayStore();
@@ -51,7 +55,7 @@ export default function Projects({ teamId }: { teamId?: string }) {
    const viewType = viewTypes[tab];
 
    const displayed = useMemo(() => {
-      let list = allProjects.slice();
+      let list = toProjectViewModels(leanProjects);
 
       if (teamId) {
          list = list.filter((project) => project.teamId === teamId);
@@ -83,7 +87,7 @@ export default function Projects({ teamId }: { teamId?: string }) {
          }
       };
       return list.sort(compare);
-   }, [tab, closedProjects, filters, ordering, teamId]);
+   }, [leanProjects, tab, closedProjects, filters, ordering, teamId]);
 
    const groups = useMemo<ProjectGroup[]>(() => {
       if (grouping === 'none') {
@@ -124,6 +128,14 @@ export default function Projects({ teamId }: { teamId?: string }) {
                })}
             </div>
             <div className="flex items-center gap-1">
+               <ProjectFormDialog
+                  trigger={
+                     <Button size="xs" className="gap-1.5">
+                        <Plus className="size-4" />
+                        {t('projectsHeader.createProject')}
+                     </Button>
+                  }
+               />
                <Filter />
                <ProjectsDisplayOptions />
                <Button

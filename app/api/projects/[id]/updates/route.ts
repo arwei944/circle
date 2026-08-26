@@ -1,9 +1,23 @@
 import { NextResponse } from 'next/server';
 import { ensureDb, getDb } from '@/db/client';
 import { apiError, createProjectUpdateSchema } from '@/lib/api-contract';
-import { createProjectUpdate, getProject } from '@/lib/services/projects-service';
+import {
+   createProjectUpdate,
+   getProject,
+   listProjectUpdates,
+} from '@/lib/services/projects-service';
 
 export const runtime = 'nodejs';
+
+export async function GET(_: Request, ctx: { params: Promise<{ id: string }> }) {
+   await ensureDb();
+   const db = getDb();
+   const { id } = await ctx.params;
+   if (!getProject(db, id)) {
+      return NextResponse.json(apiError('NOT_FOUND', 'project not found'), { status: 404 });
+   }
+   return NextResponse.json({ updates: listProjectUpdates(db, id) });
+}
 
 export async function POST(request: Request, ctx: { params: Promise<{ id: string }> }) {
    await ensureDb();
