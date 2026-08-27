@@ -3,10 +3,12 @@
 ' jobs in parallel:
 '   1) ensure the server is running (hidden)  2) open the app window once ready.
 
-Dim shell
+Dim shell, fso
 Set shell = CreateObject("WScript.Shell")
+Set fso = CreateObject("Scripting.FileSystemObject")
 
-scriptDir = "C:\work\test\circle\scripts"
+' scripts/ directory = folder of this .vbs (path-independent)
+scriptDir = fso.GetParentFolderName(WScript.ScriptFullName)
 
 cmdEnsure = "powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File """ & scriptDir & "\ensure-server.ps1"""
 cmdOpen   = "powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File """ & scriptDir & "\open-app-window.ps1"""

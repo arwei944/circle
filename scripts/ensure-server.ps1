@@ -3,7 +3,8 @@
 # - otherwise builds if needed and starts `pnpm start --port 3100` hidden.
 
 $ErrorActionPreference = 'SilentlyContinue'
-$root = 'C:\work\test\circle'
+# repo root = parent of the scripts/ directory (path-independent)
+$root = Split-Path -Parent $PSScriptRoot
 $logDir = Join-Path $env:TEMP 'circle-app'
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 $out = Join-Path $logDir 'server.out.log'
